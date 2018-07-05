@@ -36,16 +36,21 @@ Public Class InGameOptions
         If (currentPlayerNum > Me.PlayerCountInput.Value - 1) Then
             MsgBox("Player Count Specified has been exceeded")
         Else
-            Dim currentPlayer = New Player(New Coordinate(0, 0), New Coordinate(0, 0), Me.currentPlayerNum, Image.FromFile(TankImage.ImageLocation), Me.NameInput.Text)
+            Dim currentPlayer = New Player(New Coordinate(0, 0), New Coordinate(0, 0), Me.currentPlayerNum, Image.FromFile(TankImage.ImageLocation), Me.NameInput.Text, getCurrentPlayerStats())
             Me.players.Add(currentPlayer)
             Me.currentPlayerNum += 1
             Me.NameInput.Text = ""
             If Me.currentPlayerNum = Me.PlayerCountInput.Value Then
                 StartGameButton.Show()
                 AddPlayerButton.Hide()
+                StartPromptText.Hide()
             End If
         End If
     End Sub
+
+    Private Function getCurrentPlayerStats()
+        Return New PlayerStats
+    End Function
 
     Private Sub TankImageButton_Click(sender As Object, e As EventArgs) Handles TankImageButton.Click
         Dim fileDialog As New OpenFileDialog()
@@ -61,10 +66,6 @@ Public Class InGameOptions
         GridBoxImage.ImageLocation = Me.defaultGridBoxLocation
         SelectedBoxImage.ImageLocation = Me.defaultSelectionBoxLocation
         HighLightImageBox.ImageLocation = Me.defaultHighLightBoxLocation
-    End Sub
-
-    Private Sub RowsInput_ValueChanged(sender As Object, e As EventArgs) Handles RowsInput.ValueChanged
-
     End Sub
 
     Private Sub RowsInput_Validating(sender As Object, e As CancelEventArgs) Handles RowsInput.Validating
@@ -110,4 +111,8 @@ Public Class InGameOptions
         End If
     End Sub
 
+    Private Sub TeamsModeCheck_CheckedChanged(sender As Object, e As EventArgs) Handles TeamsModeCheck.CheckedChanged
+        TeamModeText.Visible = Not TeamModeText.Visible
+        TeamList.Visible = Not TeamList.Visible
+    End Sub
 End Class

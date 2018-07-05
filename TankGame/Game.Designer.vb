@@ -23,6 +23,7 @@ Partial Class Game
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
         Me.GameHudGroup = New System.Windows.Forms.GroupBox()
+        Me.ActionPointsLabel = New System.Windows.Forms.Label()
         Me.PlayerHealth = New System.Windows.Forms.Label()
         Me.PlayerName = New System.Windows.Forms.Label()
         Me.TurnNumLabel = New System.Windows.Forms.Label()
@@ -36,6 +37,7 @@ Partial Class Game
         '
         'GameHudGroup
         '
+        Me.GameHudGroup.Controls.Add(Me.ActionPointsLabel)
         Me.GameHudGroup.Controls.Add(Me.PlayerHealth)
         Me.GameHudGroup.Controls.Add(Me.PlayerName)
         Me.GameHudGroup.Controls.Add(Me.TurnNumLabel)
@@ -53,6 +55,16 @@ Partial Class Game
         Me.GameHudGroup.TabStop = False
         Me.GameHudGroup.Text = "Game Hud"
         '
+        'ActionPointsLabel
+        '
+        Me.ActionPointsLabel.AutoSize = True
+        Me.ActionPointsLabel.Location = New System.Drawing.Point(246, 30)
+        Me.ActionPointsLabel.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
+        Me.ActionPointsLabel.Name = "ActionPointsLabel"
+        Me.ActionPointsLabel.Size = New System.Drawing.Size(94, 17)
+        Me.ActionPointsLabel.TabIndex = 8
+        Me.ActionPointsLabel.Text = "Action Points:"
+        '
         'PlayerHealth
         '
         Me.PlayerHealth.AutoSize = True
@@ -66,7 +78,7 @@ Partial Class Game
         'PlayerName
         '
         Me.PlayerName.AutoSize = True
-        Me.PlayerName.Location = New System.Drawing.Point(20, 96)
+        Me.PlayerName.Location = New System.Drawing.Point(20, 30)
         Me.PlayerName.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
         Me.PlayerName.Name = "PlayerName"
         Me.PlayerName.Size = New System.Drawing.Size(53, 17)
@@ -76,7 +88,7 @@ Partial Class Game
         'TurnNumLabel
         '
         Me.TurnNumLabel.AutoSize = True
-        Me.TurnNumLabel.Location = New System.Drawing.Point(16, 39)
+        Me.TurnNumLabel.Location = New System.Drawing.Point(463, 30)
         Me.TurnNumLabel.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
         Me.TurnNumLabel.Name = "TurnNumLabel"
         Me.TurnNumLabel.Size = New System.Drawing.Size(100, 17)
@@ -85,52 +97,52 @@ Partial Class Game
         '
         'EndTurnButton
         '
-        Me.EndTurnButton.Location = New System.Drawing.Point(615, 90)
+        Me.EndTurnButton.Location = New System.Drawing.Point(645, 88)
         Me.EndTurnButton.Margin = New System.Windows.Forms.Padding(4)
         Me.EndTurnButton.Name = "EndTurnButton"
-        Me.EndTurnButton.Size = New System.Drawing.Size(100, 28)
+        Me.EndTurnButton.Size = New System.Drawing.Size(100, 58)
         Me.EndTurnButton.TabIndex = 4
-        Me.EndTurnButton.Text = "End Turn"
+        Me.EndTurnButton.Text = "End Turn (T)"
         Me.EndTurnButton.UseVisualStyleBackColor = True
         '
         'TurretButton
         '
-        Me.TurretButton.Location = New System.Drawing.Point(493, 90)
+        Me.TurretButton.Location = New System.Drawing.Point(491, 88)
         Me.TurretButton.Margin = New System.Windows.Forms.Padding(4)
         Me.TurretButton.Name = "TurretButton"
-        Me.TurretButton.Size = New System.Drawing.Size(100, 28)
+        Me.TurretButton.Size = New System.Drawing.Size(100, 58)
         Me.TurretButton.TabIndex = 3
-        Me.TurretButton.Text = "Turret"
+        Me.TurretButton.Text = "Turret (R)"
         Me.TurretButton.UseVisualStyleBackColor = True
         '
         'BuildButton
         '
-        Me.BuildButton.Location = New System.Drawing.Point(376, 90)
+        Me.BuildButton.Location = New System.Drawing.Point(337, 88)
         Me.BuildButton.Margin = New System.Windows.Forms.Padding(4)
         Me.BuildButton.Name = "BuildButton"
-        Me.BuildButton.Size = New System.Drawing.Size(100, 28)
+        Me.BuildButton.Size = New System.Drawing.Size(100, 58)
         Me.BuildButton.TabIndex = 2
-        Me.BuildButton.Text = "Build"
+        Me.BuildButton.Text = "Build (E)"
         Me.BuildButton.UseVisualStyleBackColor = True
         '
         'MoveButton
         '
-        Me.MoveButton.Location = New System.Drawing.Point(252, 90)
+        Me.MoveButton.Location = New System.Drawing.Point(176, 88)
         Me.MoveButton.Margin = New System.Windows.Forms.Padding(4)
         Me.MoveButton.Name = "MoveButton"
-        Me.MoveButton.Size = New System.Drawing.Size(100, 28)
+        Me.MoveButton.Size = New System.Drawing.Size(100, 58)
         Me.MoveButton.TabIndex = 1
-        Me.MoveButton.Text = "Move"
+        Me.MoveButton.Text = "Move (W)"
         Me.MoveButton.UseVisualStyleBackColor = True
         '
         'ShootButton
         '
-        Me.ShootButton.Location = New System.Drawing.Point(144, 90)
+        Me.ShootButton.Location = New System.Drawing.Point(23, 88)
         Me.ShootButton.Margin = New System.Windows.Forms.Padding(4)
         Me.ShootButton.Name = "ShootButton"
-        Me.ShootButton.Size = New System.Drawing.Size(100, 28)
+        Me.ShootButton.Size = New System.Drawing.Size(100, 58)
         Me.ShootButton.TabIndex = 0
-        Me.ShootButton.Text = "Shoot"
+        Me.ShootButton.Text = "Shoot (Q)"
         Me.ShootButton.UseVisualStyleBackColor = True
         '
         'Game
@@ -142,6 +154,7 @@ Partial Class Game
         Me.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch
         Me.ClientSize = New System.Drawing.Size(782, 953)
         Me.Controls.Add(Me.GameHudGroup)
+        Me.KeyPreview = True
         Me.Margin = New System.Windows.Forms.Padding(4)
         Me.Name = "Game"
         Me.Text = "Form1"
@@ -160,4 +173,5 @@ Partial Class Game
     Friend WithEvents PlayerHealth As Label
     Friend WithEvents PlayerName As Label
     Friend WithEvents TurnNumLabel As Label
+    Friend WithEvents ActionPointsLabel As Label
 End Class

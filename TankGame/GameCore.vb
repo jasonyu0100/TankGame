@@ -22,7 +22,7 @@
         Me.startTurn()
     End Sub
 
-    Public Sub setUpPlayers()
+    Private Sub setUpPlayers()
         For playerNum = 0 To playerCount - 1
             Dim startingCoord As Coordinate = startingCoordinate(playerNum)
             Dim actualCoord As Coordinate = New Coordinate(startingCoord.y * Me.grid.squareSize, startingCoord.x * Me.grid.squareSize)
@@ -34,7 +34,7 @@
         Next
     End Sub
 
-    Public Function startingCoordinate(playerNum As Integer)
+    Private Function startingCoordinate(playerNum As Integer)
         Dim coordinate As Coordinate = New Coordinate(0, 0)
         If playerNum = 0 Then
             coordinate.x = 0
@@ -66,7 +66,7 @@
         Game.PlayerName.Text = "Health: " & currentPlayer.playerHealth
     End Sub
 
-    Public Sub setSquareStyle(style As SquareStyleEnum, coordinate As Coordinate)
+    Private Sub setSquareStyle(style As SquareStyleEnum, coordinate As Coordinate)
         Me.grid.squares(coordinate.y)(coordinate.x).setImageFile(style)
     End Sub
 
@@ -80,7 +80,7 @@
         Me.updateHud(currentPlayer)
     End Sub
 
-    Public Function validCoord(coord As Coordinate)
+    Private Function validCoord(coord As Coordinate)
         Dim x = coord.x
         Dim y = coord.y
         If x < 0 Or y < 0 Then
@@ -103,7 +103,7 @@
         Next
     End Sub
 
-    Public Function availablePositions(range As Integer)
+    Private Function availablePositions(range As Integer)
         Dim currentPlayer = Me.getCurrentPlayer()
         Dim available = New List(Of Coordinate)
         Dim x = currentPlayer.gridCoordinate.x
@@ -119,7 +119,7 @@
         Return available
     End Function
 
-    Public Function availableDirectionPositions(x As Integer, y As Integer, direction As Coordinate, range As Integer, available As List(Of Coordinate))
+    Private Function availableDirectionPositions(x As Integer, y As Integer, direction As Coordinate, range As Integer, available As List(Of Coordinate))
         Dim counter = 1
         Dim valid = True
         While counter <= range And valid
@@ -139,7 +139,8 @@
         Dim selectedEntityType = Me.grid.grid(gridCoord.y)(gridCoord.x).entityType
         Select Case selectedEntityType
             Case EntityType.Player
-                MsgBox("You have shot at x:" & gridCoord.x & " y:" & gridCoord.y & " which has hit player: ")
+                Dim otherPlayer As Player = currentPlayer
+                MsgBox("You have shot at x:" & gridCoord.x & " y:" & gridCoord.y & " which has hit player: " & otherPlayer.playerName)
             Case EntityType.Empty
                 MsgBox("You have shot at x:" & gridCoord.x & " y:" & gridCoord.y & " which is empty")
             Case Else
@@ -188,7 +189,3 @@ Public Enum EntityType
     Empty
     Player
 End Enum
-
-Public Structure ActionPoints
-
-End Structure

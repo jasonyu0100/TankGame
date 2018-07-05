@@ -34,8 +34,9 @@ Partial Class InGameOptions
         Me.AddPlayerButton = New System.Windows.Forms.Button()
         Me.PlayerCreationGroup = New System.Windows.Forms.GroupBox()
         Me.GroupBox1 = New System.Windows.Forms.GroupBox()
-        Me.TauntLabel = New System.Windows.Forms.Label()
-        Me.TauntInput = New System.Windows.Forms.TextBox()
+        Me.TeamModeText = New System.Windows.Forms.TextBox()
+        Me.TeamList = New System.Windows.Forms.ComboBox()
+        Me.TeamLabel = New System.Windows.Forms.Label()
         Me.TankImage = New System.Windows.Forms.PictureBox()
         Me.TankImageButton = New System.Windows.Forms.Button()
         Me.StatsGroup = New System.Windows.Forms.GroupBox()
@@ -64,19 +65,20 @@ Partial Class InGameOptions
         Me.Label3 = New System.Windows.Forms.Label()
         Me.BindingSource1 = New System.Windows.Forms.BindingSource(Me.components)
         Me.ImportMapButton = New System.Windows.Forms.Button()
-        Me.GroupBox2 = New System.Windows.Forms.GroupBox()
-        Me.TextBox2 = New System.Windows.Forms.TextBox()
-        Me.CheckBox5 = New System.Windows.Forms.CheckBox()
-        Me.CheckBox4 = New System.Windows.Forms.CheckBox()
-        Me.CheckBox2 = New System.Windows.Forms.CheckBox()
+        Me.GameplaySettingsGroup = New System.Windows.Forms.GroupBox()
+        Me.TeamsModeCheck = New System.Windows.Forms.CheckBox()
+        Me.TextBox7 = New System.Windows.Forms.TextBox()
+        Me.AntiFortniteModeCheck = New System.Windows.Forms.CheckBox()
+        Me.GunSlingerModeCheck = New System.Windows.Forms.CheckBox()
+        Me.EnvironmentalModeCheck = New System.Windows.Forms.CheckBox()
         Me.TextBox5 = New System.Windows.Forms.TextBox()
         Me.TextBox4 = New System.Windows.Forms.TextBox()
         Me.TextBox3 = New System.Windows.Forms.TextBox()
         Me.TextBox1 = New System.Windows.Forms.TextBox()
-        Me.CheckBox1 = New System.Windows.Forms.CheckBox()
-        Me.TextBox7 = New System.Windows.Forms.TextBox()
-        Me.CheckBox3 = New System.Windows.Forms.CheckBox()
-        Me.GroupBox3 = New System.Windows.Forms.GroupBox()
+        Me.BlizModeCheck = New System.Windows.Forms.CheckBox()
+        Me.TextBox2 = New System.Windows.Forms.TextBox()
+        Me.MiscGroup = New System.Windows.Forms.GroupBox()
+        Me.StartPromptText = New System.Windows.Forms.TextBox()
         CType(Me.RowsInput, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.PlayerCountInput, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.PlayerCreationGroup.SuspendLayout()
@@ -93,8 +95,8 @@ Partial Class InGameOptions
         Me.GameStylingGroup.SuspendLayout()
         CType(Me.HighLightImageBox, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.BindingSource1, System.ComponentModel.ISupportInitialize).BeginInit()
-        Me.GroupBox2.SuspendLayout()
-        Me.GroupBox3.SuspendLayout()
+        Me.GameplaySettingsGroup.SuspendLayout()
+        Me.MiscGroup.SuspendLayout()
         Me.SuspendLayout()
         '
         'StartGameButton
@@ -148,10 +150,10 @@ Partial Class InGameOptions
         '
         'NameInput
         '
-        Me.NameInput.Location = New System.Drawing.Point(186, 54)
+        Me.NameInput.Location = New System.Drawing.Point(186, 56)
         Me.NameInput.Margin = New System.Windows.Forms.Padding(4)
         Me.NameInput.Name = "NameInput"
-        Me.NameInput.Size = New System.Drawing.Size(148, 22)
+        Me.NameInput.Size = New System.Drawing.Size(164, 22)
         Me.NameInput.TabIndex = 11
         '
         'NameLabel
@@ -199,8 +201,9 @@ Partial Class InGameOptions
         '
         'GroupBox1
         '
-        Me.GroupBox1.Controls.Add(Me.TauntLabel)
-        Me.GroupBox1.Controls.Add(Me.TauntInput)
+        Me.GroupBox1.Controls.Add(Me.TeamModeText)
+        Me.GroupBox1.Controls.Add(Me.TeamList)
+        Me.GroupBox1.Controls.Add(Me.TeamLabel)
         Me.GroupBox1.Controls.Add(Me.TankImage)
         Me.GroupBox1.Controls.Add(Me.ImageLabel)
         Me.GroupBox1.Controls.Add(Me.AddPlayerButton)
@@ -214,23 +217,35 @@ Partial Class InGameOptions
         Me.GroupBox1.TabStop = False
         Me.GroupBox1.Text = "Appearance"
         '
-        'TauntLabel
+        'TeamModeText
         '
-        Me.TauntLabel.AutoSize = True
-        Me.TauntLabel.Location = New System.Drawing.Point(237, 161)
-        Me.TauntLabel.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
-        Me.TauntLabel.Name = "TauntLabel"
-        Me.TauntLabel.Size = New System.Drawing.Size(45, 17)
-        Me.TauntLabel.TabIndex = 21
-        Me.TauntLabel.Text = "Taunt"
+        Me.TeamModeText.Location = New System.Drawing.Point(185, 137)
+        Me.TeamModeText.Multiline = True
+        Me.TeamModeText.Name = "TeamModeText"
+        Me.TeamModeText.Size = New System.Drawing.Size(165, 37)
+        Me.TeamModeText.TabIndex = 34
+        Me.TeamModeText.Text = "For playing Team Mode"
         '
-        'TauntInput
+        'TeamList
         '
-        Me.TauntInput.Location = New System.Drawing.Point(186, 182)
-        Me.TauntInput.Margin = New System.Windows.Forms.Padding(4)
-        Me.TauntInput.Name = "TauntInput"
-        Me.TauntInput.Size = New System.Drawing.Size(148, 22)
-        Me.TauntInput.TabIndex = 20
+        Me.TeamList.Cursor = System.Windows.Forms.Cursors.Default
+        Me.TeamList.FormattingEnabled = True
+        Me.TeamList.Items.AddRange(New Object() {"Light Tank", "Medium Tank", "Heavy Tank", "Blitzer", "Engineer"})
+        Me.TeamList.Location = New System.Drawing.Point(186, 137)
+        Me.TeamList.Name = "TeamList"
+        Me.TeamList.Size = New System.Drawing.Size(165, 24)
+        Me.TeamList.TabIndex = 33
+        Me.TeamList.Visible = False
+        '
+        'TeamLabel
+        '
+        Me.TeamLabel.AutoSize = True
+        Me.TeamLabel.Location = New System.Drawing.Point(238, 102)
+        Me.TeamLabel.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
+        Me.TeamLabel.Name = "TeamLabel"
+        Me.TeamLabel.Size = New System.Drawing.Size(44, 17)
+        Me.TeamLabel.TabIndex = 20
+        Me.TeamLabel.Text = "Team"
         '
         'TankImage
         '
@@ -293,6 +308,7 @@ Partial Class InGameOptions
         '
         'TankTypesList
         '
+        Me.TankTypesList.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.TankTypesList.FormattingEnabled = True
         Me.TankTypesList.Items.AddRange(New Object() {"Light Tank", "Medium Tank", "Heavy Tank", "Blitzer", "Engineer"})
         Me.TankTypesList.Location = New System.Drawing.Point(10, 54)
@@ -522,63 +538,73 @@ Partial Class InGameOptions
         Me.ImportMapButton.Text = "Import Map"
         Me.ImportMapButton.UseVisualStyleBackColor = True
         '
-        'GroupBox2
+        'GameplaySettingsGroup
         '
-        Me.GroupBox2.Controls.Add(Me.CheckBox3)
-        Me.GroupBox2.Controls.Add(Me.TextBox7)
-        Me.GroupBox2.Controls.Add(Me.CheckBox5)
-        Me.GroupBox2.Controls.Add(Me.CheckBox4)
-        Me.GroupBox2.Controls.Add(Me.CheckBox2)
-        Me.GroupBox2.Controls.Add(Me.TextBox5)
-        Me.GroupBox2.Controls.Add(Me.TextBox4)
-        Me.GroupBox2.Controls.Add(Me.TextBox3)
-        Me.GroupBox2.Controls.Add(Me.TextBox1)
-        Me.GroupBox2.Controls.Add(Me.CheckBox1)
-        Me.GroupBox2.Location = New System.Drawing.Point(12, 211)
-        Me.GroupBox2.Name = "GroupBox2"
-        Me.GroupBox2.Size = New System.Drawing.Size(412, 304)
-        Me.GroupBox2.TabIndex = 32
-        Me.GroupBox2.TabStop = False
-        Me.GroupBox2.Text = "Gameplay Settings"
+        Me.GameplaySettingsGroup.Controls.Add(Me.TeamsModeCheck)
+        Me.GameplaySettingsGroup.Controls.Add(Me.TextBox7)
+        Me.GameplaySettingsGroup.Controls.Add(Me.AntiFortniteModeCheck)
+        Me.GameplaySettingsGroup.Controls.Add(Me.GunSlingerModeCheck)
+        Me.GameplaySettingsGroup.Controls.Add(Me.EnvironmentalModeCheck)
+        Me.GameplaySettingsGroup.Controls.Add(Me.TextBox5)
+        Me.GameplaySettingsGroup.Controls.Add(Me.TextBox4)
+        Me.GameplaySettingsGroup.Controls.Add(Me.TextBox3)
+        Me.GameplaySettingsGroup.Controls.Add(Me.TextBox1)
+        Me.GameplaySettingsGroup.Controls.Add(Me.BlizModeCheck)
+        Me.GameplaySettingsGroup.Location = New System.Drawing.Point(12, 211)
+        Me.GameplaySettingsGroup.Name = "GameplaySettingsGroup"
+        Me.GameplaySettingsGroup.Size = New System.Drawing.Size(412, 304)
+        Me.GameplaySettingsGroup.TabIndex = 32
+        Me.GameplaySettingsGroup.TabStop = False
+        Me.GameplaySettingsGroup.Text = "Gameplay Settings"
         '
-        'TextBox2
+        'TeamsModeCheck
         '
-        Me.TextBox2.Location = New System.Drawing.Point(205, 21)
-        Me.TextBox2.Multiline = True
-        Me.TextBox2.Name = "TextBox2"
-        Me.TextBox2.Size = New System.Drawing.Size(192, 40)
-        Me.TextBox2.TabIndex = 10
-        Me.TextBox2.Text = "Custom Maps can be imported"
+        Me.TeamsModeCheck.AutoSize = True
+        Me.TeamsModeCheck.Location = New System.Drawing.Point(22, 247)
+        Me.TeamsModeCheck.Name = "TeamsModeCheck"
+        Me.TeamsModeCheck.Size = New System.Drawing.Size(73, 21)
+        Me.TeamsModeCheck.TabIndex = 11
+        Me.TeamsModeCheck.Text = "Teams"
+        Me.TeamsModeCheck.UseVisualStyleBackColor = True
         '
-        'CheckBox5
+        'TextBox7
         '
-        Me.CheckBox5.AutoSize = True
-        Me.CheckBox5.Location = New System.Drawing.Point(22, 198)
-        Me.CheckBox5.Name = "CheckBox5"
-        Me.CheckBox5.Size = New System.Drawing.Size(146, 21)
-        Me.CheckBox5.TabIndex = 9
-        Me.CheckBox5.Text = "Anti-Fortnite Mode"
-        Me.CheckBox5.UseVisualStyleBackColor = True
+        Me.TextBox7.Location = New System.Drawing.Point(205, 245)
+        Me.TextBox7.Multiline = True
+        Me.TextBox7.Name = "TextBox7"
+        Me.TextBox7.Size = New System.Drawing.Size(192, 23)
+        Me.TextBox7.TabIndex = 10
+        Me.TextBox7.Text = "Team gameplay"
         '
-        'CheckBox4
+        'AntiFortniteModeCheck
         '
-        Me.CheckBox4.AutoSize = True
-        Me.CheckBox4.Location = New System.Drawing.Point(22, 150)
-        Me.CheckBox4.Name = "CheckBox4"
-        Me.CheckBox4.Size = New System.Drawing.Size(144, 21)
-        Me.CheckBox4.TabIndex = 8
-        Me.CheckBox4.Text = "Gun Slinger Mode"
-        Me.CheckBox4.UseVisualStyleBackColor = True
+        Me.AntiFortniteModeCheck.AutoSize = True
+        Me.AntiFortniteModeCheck.Location = New System.Drawing.Point(22, 198)
+        Me.AntiFortniteModeCheck.Name = "AntiFortniteModeCheck"
+        Me.AntiFortniteModeCheck.Size = New System.Drawing.Size(146, 21)
+        Me.AntiFortniteModeCheck.TabIndex = 9
+        Me.AntiFortniteModeCheck.Text = "Anti-Fortnite Mode"
+        Me.AntiFortniteModeCheck.UseVisualStyleBackColor = True
         '
-        'CheckBox2
+        'GunSlingerModeCheck
         '
-        Me.CheckBox2.AutoSize = True
-        Me.CheckBox2.Location = New System.Drawing.Point(22, 95)
-        Me.CheckBox2.Name = "CheckBox2"
-        Me.CheckBox2.Size = New System.Drawing.Size(159, 21)
-        Me.CheckBox2.TabIndex = 6
-        Me.CheckBox2.Text = "Environmental Mode"
-        Me.CheckBox2.UseVisualStyleBackColor = True
+        Me.GunSlingerModeCheck.AutoSize = True
+        Me.GunSlingerModeCheck.Location = New System.Drawing.Point(22, 150)
+        Me.GunSlingerModeCheck.Name = "GunSlingerModeCheck"
+        Me.GunSlingerModeCheck.Size = New System.Drawing.Size(144, 21)
+        Me.GunSlingerModeCheck.TabIndex = 8
+        Me.GunSlingerModeCheck.Text = "Gun Slinger Mode"
+        Me.GunSlingerModeCheck.UseVisualStyleBackColor = True
+        '
+        'EnvironmentalModeCheck
+        '
+        Me.EnvironmentalModeCheck.AutoSize = True
+        Me.EnvironmentalModeCheck.Location = New System.Drawing.Point(22, 95)
+        Me.EnvironmentalModeCheck.Name = "EnvironmentalModeCheck"
+        Me.EnvironmentalModeCheck.Size = New System.Drawing.Size(159, 21)
+        Me.EnvironmentalModeCheck.TabIndex = 6
+        Me.EnvironmentalModeCheck.Text = "Environmental Mode"
+        Me.EnvironmentalModeCheck.UseVisualStyleBackColor = True
         '
         'TextBox5
         '
@@ -616,53 +642,53 @@ Partial Class InGameOptions
         Me.TextBox1.TabIndex = 1
         Me.TextBox1.Text = "Players have double the action points and have bonus damage every 5th turn."
         '
-        'CheckBox1
+        'BlizModeCheck
         '
-        Me.CheckBox1.AutoSize = True
-        Me.CheckBox1.Location = New System.Drawing.Point(22, 49)
-        Me.CheckBox1.Name = "CheckBox1"
-        Me.CheckBox1.Size = New System.Drawing.Size(95, 21)
-        Me.CheckBox1.TabIndex = 0
-        Me.CheckBox1.Text = "Blitz Mode"
-        Me.CheckBox1.UseVisualStyleBackColor = True
+        Me.BlizModeCheck.AutoSize = True
+        Me.BlizModeCheck.Location = New System.Drawing.Point(22, 49)
+        Me.BlizModeCheck.Name = "BlizModeCheck"
+        Me.BlizModeCheck.Size = New System.Drawing.Size(95, 21)
+        Me.BlizModeCheck.TabIndex = 0
+        Me.BlizModeCheck.Text = "Blitz Mode"
+        Me.BlizModeCheck.UseVisualStyleBackColor = True
         '
-        'TextBox7
+        'TextBox2
         '
-        Me.TextBox7.Location = New System.Drawing.Point(205, 245)
-        Me.TextBox7.Multiline = True
-        Me.TextBox7.Name = "TextBox7"
-        Me.TextBox7.Size = New System.Drawing.Size(192, 23)
-        Me.TextBox7.TabIndex = 10
-        Me.TextBox7.Text = "Team gameplay"
+        Me.TextBox2.Location = New System.Drawing.Point(205, 21)
+        Me.TextBox2.Multiline = True
+        Me.TextBox2.Name = "TextBox2"
+        Me.TextBox2.Size = New System.Drawing.Size(192, 40)
+        Me.TextBox2.TabIndex = 10
+        Me.TextBox2.Text = "Custom Maps can be imported"
         '
-        'CheckBox3
+        'MiscGroup
         '
-        Me.CheckBox3.AutoSize = True
-        Me.CheckBox3.Location = New System.Drawing.Point(22, 247)
-        Me.CheckBox3.Name = "CheckBox3"
-        Me.CheckBox3.Size = New System.Drawing.Size(73, 21)
-        Me.CheckBox3.TabIndex = 11
-        Me.CheckBox3.Text = "Teams"
-        Me.CheckBox3.UseVisualStyleBackColor = True
+        Me.MiscGroup.Controls.Add(Me.TextBox2)
+        Me.MiscGroup.Controls.Add(Me.ImportMapButton)
+        Me.MiscGroup.Location = New System.Drawing.Point(12, 520)
+        Me.MiscGroup.Name = "MiscGroup"
+        Me.MiscGroup.Size = New System.Drawing.Size(412, 67)
+        Me.MiscGroup.TabIndex = 33
+        Me.MiscGroup.TabStop = False
+        Me.MiscGroup.Text = "Misc."
         '
-        'GroupBox3
+        'StartPromptText
         '
-        Me.GroupBox3.Controls.Add(Me.TextBox2)
-        Me.GroupBox3.Controls.Add(Me.ImportMapButton)
-        Me.GroupBox3.Location = New System.Drawing.Point(12, 520)
-        Me.GroupBox3.Name = "GroupBox3"
-        Me.GroupBox3.Size = New System.Drawing.Size(412, 67)
-        Me.GroupBox3.TabIndex = 33
-        Me.GroupBox3.TabStop = False
-        Me.GroupBox3.Text = "Misc."
+        Me.StartPromptText.Location = New System.Drawing.Point(841, 538)
+        Me.StartPromptText.Multiline = True
+        Me.StartPromptText.Name = "StartPromptText"
+        Me.StartPromptText.Size = New System.Drawing.Size(165, 37)
+        Me.StartPromptText.TabIndex = 35
+        Me.StartPromptText.Text = "Create all players"
         '
         'InGameOptions
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(8.0!, 16.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(1019, 597)
-        Me.Controls.Add(Me.GroupBox3)
-        Me.Controls.Add(Me.GroupBox2)
+        Me.Controls.Add(Me.StartPromptText)
+        Me.Controls.Add(Me.MiscGroup)
+        Me.Controls.Add(Me.GameplaySettingsGroup)
         Me.Controls.Add(Me.GameStylingGroup)
         Me.Controls.Add(Me.GeneralGameSettingsGroup)
         Me.Controls.Add(Me.PlayerCreationGroup)
@@ -690,11 +716,12 @@ Partial Class InGameOptions
         Me.GameStylingGroup.PerformLayout()
         CType(Me.HighLightImageBox, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.BindingSource1, System.ComponentModel.ISupportInitialize).EndInit()
-        Me.GroupBox2.ResumeLayout(False)
-        Me.GroupBox2.PerformLayout()
-        Me.GroupBox3.ResumeLayout(False)
-        Me.GroupBox3.PerformLayout()
+        Me.GameplaySettingsGroup.ResumeLayout(False)
+        Me.GameplaySettingsGroup.PerformLayout()
+        Me.MiscGroup.ResumeLayout(False)
+        Me.MiscGroup.PerformLayout()
         Me.ResumeLayout(False)
+        Me.PerformLayout()
 
     End Sub
 
@@ -723,8 +750,6 @@ Partial Class InGameOptions
     Friend WithEvents TankTypeLabel As Label
     Friend WithEvents TankTypesList As ComboBox
     Friend WithEvents GroupBox1 As GroupBox
-    Friend WithEvents TauntLabel As Label
-    Friend WithEvents TauntInput As TextBox
     Friend WithEvents StatsGroup As GroupBox
     Friend WithEvents AttackLabel As Label
     Friend WithEvents AvailablePointsLabel As Label
@@ -738,18 +763,22 @@ Partial Class InGameOptions
     Friend WithEvents Label3 As Label
     Friend WithEvents HighLightBoxButton As Button
     Friend WithEvents HighLightImageBox As PictureBox
-    Friend WithEvents GroupBox2 As GroupBox
+    Friend WithEvents GameplaySettingsGroup As GroupBox
     Friend WithEvents TextBox2 As TextBox
-    Friend WithEvents CheckBox5 As CheckBox
-    Friend WithEvents CheckBox4 As CheckBox
-    Friend WithEvents CheckBox2 As CheckBox
+    Friend WithEvents AntiFortniteModeCheck As CheckBox
+    Friend WithEvents GunSlingerModeCheck As CheckBox
+    Friend WithEvents EnvironmentalModeCheck As CheckBox
     Friend WithEvents TextBox5 As TextBox
     Friend WithEvents TextBox4 As TextBox
     Friend WithEvents TextBox3 As TextBox
     Friend WithEvents TextBox1 As TextBox
-    Friend WithEvents CheckBox1 As CheckBox
+    Friend WithEvents BlizModeCheck As CheckBox
     Friend WithEvents TextBox6 As TextBox
-    Friend WithEvents CheckBox3 As CheckBox
+    Friend WithEvents TeamsModeCheck As CheckBox
     Friend WithEvents TextBox7 As TextBox
-    Friend WithEvents GroupBox3 As GroupBox
+    Friend WithEvents MiscGroup As GroupBox
+    Friend WithEvents TeamModeText As TextBox
+    Friend WithEvents TeamList As ComboBox
+    Friend WithEvents TeamLabel As Label
+    Friend WithEvents StartPromptText As TextBox
 End Class

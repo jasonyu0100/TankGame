@@ -1,13 +1,13 @@
 ﻿Public Class Grid
     Public rows As Integer
     Public cols As Integer
-    Public grid As List(Of List(Of Entity))
+    Public grid As List(Of ArrayList)
     Public squares As List(Of List(Of Square))
     Public squareSize As Double
     Public shiftPercent = 0.1
 
     Public Sub New(rows As Integer, cols As Integer)
-        Me.grid = New List(Of List(Of Entity))
+        Me.grid = New List(Of ArrayList)
         Me.rows = rows
         Me.cols = cols
         Me.squareSize = Me.getSquareSize()
@@ -16,7 +16,7 @@
 
     Public Sub fillGrid()
         For r As Integer = 0 To Me.rows
-            grid.Add(New List(Of Entity))
+            grid.Add(New ArrayList)
             For c As Integer = 0 To Me.cols
                 Dim current = New Empty(New Coordinate(r, c), New Coordinate(r * Me.squareSize, c * Me.squareSize))
                 grid(r).Add(current)
@@ -24,7 +24,7 @@
         Next
     End Sub
 
-    Public Function gridCoordToActual(currentCoordinate As Coordinate)
+    Private Function gridCoordToActual(currentCoordinate As Coordinate)
         Dim actualCoordinate = New Coordinate(currentCoordinate.y * Me.squareSize, currentCoordinate.x * Me.squareSize)
         Return actualCoordinate
     End Function
@@ -50,10 +50,6 @@
         value.gridCoordinate = endCoordinate
     End Sub
 
-    Public Function getEntity(givenCoordinate As Coordinate)
-        Return Me.grid(givenCoordinate.y)(givenCoordinate.x)
-    End Function
-
     Public Sub createSquareGrid(squareImages As SquareImages)
         Me.squares = New List(Of List(Of Square))
         For r = 0 To Me.rows - 1
@@ -67,7 +63,7 @@
         Next
     End Sub
 
-    Public Function getSquareSize()
+    Private Function getSquareSize()
         Dim width = Game.Size.Width
         Dim selectedSize As Double
         If Me.cols > Me.rows Then
@@ -89,7 +85,7 @@
         Next
     End Sub
 
-    Public Function getImageLocation(coordinate As Coordinate)
+    Private Function getImageLocation(coordinate As Coordinate)
         Dim imageLocation = gridCoordToActual(coordinate)
         imageLocation.x += squareSize * Me.shiftPercent
         imageLocation.y += squareSize * Me.shiftPercent

@@ -10,7 +10,7 @@
     Public shiftPercent = 0.1
     Public actionPoints As Integer
 
-    Public Sub New(gridCoordinate As Coordinate, actualCoordinate As Coordinate, playerNum As Integer, imageFile As Image, playerName As String)
+    Public Sub New(gridCoordinate As Coordinate, actualCoordinate As Coordinate, playerNum As Integer, imageFile As Image, playerName As String, playerStats As PlayerStats)
         MyBase.New(gridCoordinate, actualCoordinate, imageFile)
         Me.playerNum = playerNum
         Me.playerName = playerName
@@ -37,3 +37,11 @@
         End If
     End Sub
 End Class
+
+Public Structure PlayerStats
+    Public health As Integer
+    Public attack As Integer
+    Public speed As Integer
+    Public armor As Integer
+    Public actionPoints As Integer
+End Structure

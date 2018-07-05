@@ -26,3 +26,17 @@ C:\Users\Jason Yu\Desktop\TankGame\TankGame\TankGame\obj\Debug\TankGame.vbproj.C
 C:\Users\Jason Yu\Desktop\TankGame\TankGame\TankGame\obj\Debug\TankGame.exe
 C:\Users\Jason Yu\Desktop\TankGame\TankGame\TankGame\obj\Debug\TankGame.xml
 C:\Users\Jason Yu\Desktop\TankGame\TankGame\TankGame\obj\Debug\TankGame.pdb
+C:\Users\Jason Yu\Documents\GitHub\TankGame\TankGame\bin\Debug\TankGame.exe.config
+C:\Users\Jason Yu\Documents\GitHub\TankGame\TankGame\bin\Debug\TankGame.exe
+C:\Users\Jason Yu\Documents\GitHub\TankGame\TankGame\bin\Debug\TankGame.pdb
+C:\Users\Jason Yu\Documents\GitHub\TankGame\TankGame\bin\Debug\TankGame.xml
+C:\Users\Jason Yu\Documents\GitHub\TankGame\TankGame\obj\Debug\TankGame.vbprojAssemblyReference.cache
+C:\Users\Jason Yu\Documents\GitHub\TankGame\TankGame\obj\Debug\TankGame.Game.resources
+C:\Users\Jason Yu\Documents\GitHub\TankGame\TankGame\obj\Debug\TankGame.InGameOptions.resources
+C:\Users\Jason Yu\Documents\GitHub\TankGame\TankGame\obj\Debug\TankGame.Resources.resources
+C:\Users\Jason Yu\Documents\GitHub\TankGame\TankGame\obj\Debug\TankGame.StartUp.resources
+C:\Users\Jason Yu\Documents\GitHub\TankGame\TankGame\obj\Debug\TankGame.vbproj.GenerateResource.cache
+C:\Users\Jason Yu\Documents\GitHub\TankGame\TankGame\obj\Debug\TankGame.vbproj.CoreCompileInputs.cache
+C:\Users\Jason Yu\Documents\GitHub\TankGame\TankGame\obj\Debug\TankGame.exe
+C:\Users\Jason Yu\Documents\GitHub\TankGame\TankGame\obj\Debug\TankGame.xml
+C:\Users\Jason Yu\Documents\GitHub\TankGame\TankGame\obj\Debug\TankGame.pdb
