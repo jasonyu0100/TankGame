@@ -3,6 +3,7 @@
     Public gridCoordinate As Coordinate
     Public imageFile As Image
     Public pictureElement As PictureBox
+    Public entityType As EntityType
 
     Public Sub New(gridCoordinate As Coordinate, actualCoordinate As Coordinate, imageFile As Image)
         Me.actualCoordinate = actualCoordinate

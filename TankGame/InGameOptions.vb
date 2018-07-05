@@ -6,7 +6,9 @@ Public Class InGameOptions
     Public defaultTankLocation = Application.StartupPath() & "\resources\tank.jpg"
     Public defaultGridBoxLocation = Application.StartupPath() & "\resources\tile.jpg"
     Public defaultSelectionBoxLocation = Application.StartupPath() & "\resources\red.jpg"
+    Public defaultHighLightBoxLocation = Application.StartupPath() & "\resources\green.jpg"
     Public gameInfo As GameInformation
+    Public squareImages As SquareImages
 
     Private Sub InGameOptions_Closed(sender As Object, e As EventArgs) Handles Me.Closed
         StartUp.Close()
@@ -20,7 +22,10 @@ Public Class InGameOptions
             Me.gameInfo.playerCount = Me.PlayerCountInput.Value
             Me.gameInfo.rows = Me.RowsInput.Value
             Me.gameInfo.cols = Me.ColumnsInput.Value
-            Dim gameCore = New GameCore(Me.gameInfo)
+            Me.squareImages.normalImage = Image.FromFile(GridBoxImage.ImageLocation)
+            Me.squareImages.selectedImage = Image.FromFile(SelectedBoxImage.ImageLocation)
+            Me.squareImages.highLightedImage = Image.FromFile(HighLightImageBox.ImageLocation)
+            Dim gameCore = New GameCore(Me.gameInfo, Me.squareImages)
             Game.loadGameCore(gameCore)
             Game.Show()
             Me.Hide()
@@ -54,9 +59,8 @@ Public Class InGameOptions
     Private Sub InGameOptions_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         TankImage.ImageLocation = Me.defaultTankLocation
         GridBoxImage.ImageLocation = Me.defaultGridBoxLocation
-        SelectionBoxImage.ImageLocation = Me.defaultSelectionBoxLocation
-        Me.gameInfo.gridBoxImage = GridBoxImage.ImageLocation
-        Me.gameInfo.selectionBoxImage = SelectionBoxImage.ImageLocation
+        SelectedBoxImage.ImageLocation = Me.defaultSelectionBoxLocation
+        HighLightImageBox.ImageLocation = Me.defaultHighLightBoxLocation
     End Sub
 
     Private Sub RowsInput_ValueChanged(sender As Object, e As EventArgs) Handles RowsInput.ValueChanged
@@ -79,13 +83,31 @@ Public Class InGameOptions
         End If
     End Sub
 
-End Class
+    Private Sub GridBoxButton_Click(sender As Object, e As EventArgs) Handles GridBoxButton.Click
+        Dim fileDialog As New OpenFileDialog()
+        fileDialog.Filter = "JPG Files|*.jpg"
+        fileDialog.Title = "Select a JPG file"
+        If fileDialog.ShowDialog() = System.Windows.Forms.DialogResult.OK Then
+            GridBoxImage.ImageLocation = fileDialog.FileName
+        End If
+    End Sub
 
-Public Structure GameInformation
-    Public gridBoxImage As String
-    Public selectionBoxImage As String
-    Public players As List(Of Player)
-    Public playerCount As Integer
-    Public rows As Integer
-    Public cols As Integer
-End Structure
+    Private Sub SelectionBoxButton_Click(sender As Object, e As EventArgs) Handles SelectedBoxButton.Click
+        Dim fileDialog As New OpenFileDialog()
+        fileDialog.Filter = "JPG Files|*.jpg"
+        fileDialog.Title = "Select a JPG file"
+        If fileDialog.ShowDialog() = System.Windows.Forms.DialogResult.OK Then
+            SelectedBoxImage.ImageLocation = fileDialog.FileName
+        End If
+    End Sub
+
+    Private Sub HighLightBoxButton_Click(sender As Object, e As EventArgs) Handles HighLightBoxButton.Click
+        Dim fileDialog As New OpenFileDialog()
+        fileDialog.Filter = "JPG Files|*.jpg"
+        fileDialog.Title = "Select a JPG file"
+        If fileDialog.ShowDialog() = System.Windows.Forms.DialogResult.OK Then
+            HighLightImageBox.ImageLocation = fileDialog.FileName
+        End If
+    End Sub
+
+End Class

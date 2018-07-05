@@ -54,15 +54,13 @@
         Return Me.grid(givenCoordinate.y)(givenCoordinate.x)
     End Function
 
-    Public Sub createSquareGrid(gridSquare As String, selectionSquare As String)
-        Dim normalSquare = Image.FromFile(gridSquare)
-        Dim selectedSquare = Image.FromFile(selectionSquare)
+    Public Sub createSquareGrid(squareImages As SquareImages)
         Me.squares = New List(Of List(Of Square))
         For r = 0 To Me.rows - 1
             Me.squares.Add(New List(Of Square))
             For c = 0 To Me.cols - 1
                 Dim coord = New Coordinate(r * Me.squareSize, c * Me.squareSize)
-                Dim currentSquare = New Square(New Coordinate(r, c), New Coordinate(r * Me.squareSize, c * Me.squareSize), normalSquare, selectedSquare)
+                Dim currentSquare = New Square(New Coordinate(r, c), New Coordinate(r * Me.squareSize, c * Me.squareSize), squareImages)
                 currentSquare.createElement(Me.squareSize, Game)
                 Me.squares(r).Add(currentSquare)
             Next
@@ -83,8 +81,8 @@
     Public Sub clearSelected()
         For Each row In Me.squares
             For Each square In row
-                If square.selected = True Then
-                    square.selected = False
+                If square.changed = True Then
+                    square.changed = False
                     square.pictureElement.Image = square.imageFile
                 End If
             Next

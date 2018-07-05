@@ -2,16 +2,26 @@
     'Displays a grid square
     Inherits Entity
     Public selectImageFile As Image
-    Public selected As Boolean = False
-    Public Sub New(gridCoordinate As Coordinate, actualCoordinate As Coordinate, imageFile As Image, selectImageFile As Image)
-        MyBase.New(gridCoordinate, actualCoordinate, imageFile)
-        Me.selected = False
-        Me.selectImageFile = selectImageFile
+    Public changed As Boolean = False
+    Public squareImages As SquareImages
+    Public Sub New(gridCoordinate As Coordinate, actualCoordinate As Coordinate, squareImages As SquareImages)
+        MyBase.New(gridCoordinate, actualCoordinate, squareImages.normalImage)
+        Me.squareImages = squareImages
+        Me.changed = False
     End Sub
 
-    Public Sub setSelectImageFile()
-        Me.pictureElement.Image = Me.selectImageFile
-        Me.selected = True
+    Public Sub setImageFile(style As SquareStyleEnum)
+        Select Case style
+            Case SquareStyleEnum.Normal
+                Me.pictureElement.Image = Me.squareImages.normalImage
+            Case SquareStyleEnum.Selected
+                Me.pictureElement.Image = Me.squareImages.selectedImage
+                Me.changed = True
+            Case SquareStyleEnum.Highlight
+                Me.pictureElement.Image = Me.squareImages.highLightedImage
+            Case Else
+                Throw New Exception("Style is invalid: " & style.ToString)
+        End Select
     End Sub
 
     Public Overloads Sub createElement(squareSize As Double, form As Form)
@@ -27,8 +37,20 @@
     End Sub
 
     Private Sub pictureElement_Click(ByVal sender As Object, ByVal e As EventArgs)
-        If Me.selected = True Then
+        If Me.changed = True Then
             Game.executeAction(Me.gridCoordinate)
         End If
     End Sub
 End Class
+
+Public Enum SquareStyleEnum
+    Normal
+    Selected
+    Highlight
+End Enum
+
+Public Structure SquareImages
+    Public normalImage As Image
+    Public selectedImage As Image
+    Public highLightedImage As Image
+End Structure

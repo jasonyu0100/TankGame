@@ -6,10 +6,11 @@
     Public players As List(Of Player)
     Public turnNumber = 0
     Public gameInfo As GameInformation
-    Public actionPoints As ActionPoints
+    Public squareImages As SquareImages
 
-    Public Sub New(gameInfo As GameInformation)
+    Public Sub New(gameInfo As GameInformation, squareImages As SquareImages)
         Me.gameInfo = gameInfo
+        Me.squareImages = squareImages
         Me.rows = gameInfo.rows
         Me.cols = gameInfo.cols
         Me.playerCount = gameInfo.playerCount
@@ -17,7 +18,7 @@
         Me.grid = New Grid(Me.rows, Me.cols)
         'Setup Game
         Me.setUpPlayers()
-        Me.grid.createSquareGrid(gameInfo.gridBoxImage, gameInfo.selectionBoxImage)
+        Me.grid.createSquareGrid(squareImages)
         Me.startTurn()
     End Sub
 
@@ -59,17 +60,24 @@
         Return currentPlayer
     End Function
 
-    Public Sub updateHud()
+    Public Sub updateHud(currentPlayer As Player)
         Game.TurnNumLabel.Text = "Turn Number: " & Me.turnNumber
-        Dim currentPlayer = getCurrentPlayer()
         Game.PlayerHealth.Text = "Name: " & currentPlayer.playerName
         Game.PlayerName.Text = "Health: " & currentPlayer.playerHealth
     End Sub
 
+    Public Sub setSquareStyle(style As SquareStyleEnum, coordinate As Coordinate)
+        Me.grid.squares(coordinate.y)(coordinate.x).setImageFile(style)
+    End Sub
+
+
     Public Sub startTurn()
         Me.grid.clearSelected()
+        setSquareStyle(SquareStyleEnum.Normal, Me.getCurrentPlayer().gridCoordinate)
         Me.turnNumber += 1
-        Me.updateHud()
+        Dim currentPlayer = getCurrentPlayer()
+        setSquareStyle(SquareStyleEnum.Highlight, currentPlayer.gridCoordinate)
+        Me.updateHud(currentPlayer)
     End Sub
 
     Public Function validCoord(coord As Coordinate)
@@ -91,7 +99,7 @@
             Dim row = current.y
             Dim col = current.x
             Dim square = Me.grid.squares(row)(col)
-            square.setSelectImageFile()
+            square.setImageFile(SquareStyleEnum.Selected)
         Next
     End Sub
 
@@ -125,38 +133,62 @@
         Return available
     End Function
 
-    Public Sub shoot(coord As Coordinate)
+    Public Sub shoot(gridCoord As Coordinate)
         Me.grid.clearSelected()
         Dim currentPlayer = Me.getCurrentPlayer()
-        MsgBox("You have shot at x:" & coord.x & " y:" & coord.y)
+        Dim selectedEntityType = Me.grid.grid(gridCoord.y)(gridCoord.x).entityType
+        Select Case selectedEntityType
+            Case EntityType.Player
+                MsgBox("You have shot at x:" & gridCoord.x & " y:" & gridCoord.y & " which has hit player: ")
+            Case EntityType.Empty
+                MsgBox("You have shot at x:" & gridCoord.x & " y:" & gridCoord.y & " which is empty")
+            Case Else
+                Throw New Exception("Entity type is invalid: " & selectedEntityType.ToString)
+        End Select
     End Sub
 
-    Public Sub move(coord As Coordinate)
+    Public Sub move(gridCoord As Coordinate)
         Me.grid.clearSelected()
         Dim currentPlayer = Me.getCurrentPlayer()
-        Me.grid.moveEntity(currentPlayer.gridCoordinate, coord)
-
-        MsgBox("You have moved to x:" & coord.x & " y:" & coord.y)
+        Dim selectedEntityType = Me.grid.grid(gridCoord.y)(gridCoord.x).entityType
+        Select Case selectedEntityType
+            Case EntityType.Player
+                MsgBox("Can't move to another players location")
+            Case EntityType.Empty
+                setSquareStyle(SquareStyleEnum.Normal, currentPlayer.gridCoordinate)
+                Me.grid.moveEntity(currentPlayer.gridCoordinate, gridCoord)
+                setSquareStyle(SquareStyleEnum.Highlight, gridCoord)
+                MsgBox("You have moved to x:" & gridCoord.x & " y:" & gridCoord.y)
+            Case Else
+                Throw New Exception("Entity type is invalid: " & selectedEntityType.ToString)
+        End Select
     End Sub
 
-    Public Sub build(coord As Coordinate)
+    Public Sub build(gridCoord As Coordinate)
         Me.grid.clearSelected()
         Dim currentPlayer = Me.getCurrentPlayer()
-        MsgBox("You have built at x:" & coord.x & " y:" & coord.y)
+        MsgBox("You have built at x:" & gridCoord.x & " y:" & gridCoord.y)
     End Sub
 
-    Public Sub turret(coord As Coordinate)
+    Public Sub turret(gridCoord As Coordinate)
         Me.grid.clearSelected()
         Dim currentPlayer = Me.getCurrentPlayer()
-        MsgBox("You have shot the turret at x:" & coord.x & " y:" & coord.y)
+        MsgBox("You have shot the turret at x:" & gridCoord.x & " y:" & gridCoord.y)
     End Sub
 End Class
 
+Public Structure GameInformation
+    Public players As List(Of Player)
+    Public playerCount As Integer
+    Public rows As Integer
+    Public cols As Integer
+End Structure
+
+Public Enum EntityType
+    Empty
+    Player
+End Enum
+
 Public Structure ActionPoints
-    'Settings can be tweaked based on gameplay
-    Public actionPoints As Integer
-    Public move As Integer
-    Public attack As Integer
-    Public build As Integer
-    Public turret As Integer
+
 End Structure

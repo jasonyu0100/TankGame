@@ -12,7 +12,6 @@ W:\Student Work\Industrial Arts\2018 Submissions\11SDs\YU Jason-432518663\TankGa
 W:\Student Work\Industrial Arts\2018 Submissions\11SDs\YU Jason-432518663\TankGame\TankGame\TankGame\obj\Debug\TankGame.xml
 W:\Student Work\Industrial Arts\2018 Submissions\11SDs\YU Jason-432518663\TankGame\TankGame\TankGame\obj\Debug\TankGame.pdb
 W:\Student Work\Industrial Arts\2018 Submissions\11SDs\YU Jason-432518663\TankGame\TankGame\TankGame\obj\Debug\TankGame.InGameOptions.resources
-W:\Student Work\Industrial Arts\2018 Submissions\11SDs\YU Jason-432518663\TankGame\TankGame\TankGame\obj\Debug\TankGame.Options.resources
 C:\Users\Jason Yu\Desktop\TankGame\TankGame\TankGame\bin\Debug\TankGame.exe.config
 C:\Users\Jason Yu\Desktop\TankGame\TankGame\TankGame\bin\Debug\TankGame.exe
 C:\Users\Jason Yu\Desktop\TankGame\TankGame\TankGame\bin\Debug\TankGame.pdb
