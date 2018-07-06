@@ -22,9 +22,44 @@
     End Sub
 
     Private Sub handleMove(move As GameMoves)
-        Dim range = Me.currentGame.getCurrentPlayer().shootRange
-        Me.currentGame.displayActionPositions(range)
-        Me.selectedAction = move
+        Dim currentPlayer = Me.currentGame.getCurrentPlayer()
+        Dim currentPlayerStats = currentPlayer.playerStats
+        Dim range As Integer
+        Dim flag = False
+        Select Case move
+            Case GameMoves.shoot
+                If currentPlayerStats.actionPoints < Me.currentGame.moveCosts.shoot Then
+                    flag = True
+                Else
+                    range = currentPlayerStats.shootRange
+                End If
+            Case GameMoves.move
+                If currentPlayerStats.actionPoints < Me.currentGame.moveCosts.move Then
+                    flag = True
+                Else
+                    range = currentPlayerStats.moveRange
+                End If
+            Case GameMoves.build
+                If currentPlayerStats.actionPoints < Me.currentGame.moveCosts.build Then
+                    flag = True
+                Else
+                    range = currentPlayerStats.buildRange
+                End If
+            Case GameMoves.turret
+                If currentPlayerStats.actionPoints < Me.currentGame.moveCosts.turret Then
+                    flag = True
+                Else
+                    range = currentPlayerStats.turretRange
+                End If
+            Case Else
+                MsgBox("Move is invalid")
+        End Select
+        If flag = True Then
+            MsgBox("Not enough action points")
+        Else
+            Me.currentGame.displayActionPositions(range)
+            Me.selectedAction = move
+        End If
     End Sub
 
     Private Sub ShootButton_Click(sender As Object, e As EventArgs) Handles ShootButton.Click
@@ -81,6 +116,7 @@
         build
         turret
     End Enum
+
 End Class
 
 Public Structure GameKeyMapping

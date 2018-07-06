@@ -2,24 +2,19 @@
     Inherits Entity
     Public playerNum As Integer
     Public playerName As String
-    Public playerHealth As Integer = 100
-    Public shootRange = 4
-    Public buildRange = 1
-    Public moveRange = 2
-    Public turretRange = 1
     Public shiftPercent = 0.1
-    Public actionPoints As Integer
+    Public playerStats As PlayerStats
 
     Public Sub New(gridCoordinate As Coordinate, actualCoordinate As Coordinate, playerNum As Integer, imageFile As Image, playerName As String, playerStats As PlayerStats)
         MyBase.New(gridCoordinate, actualCoordinate, imageFile)
         Me.playerNum = playerNum
         Me.playerName = playerName
         Me.entityType = EntityType.Player
+        Me.playerStats = playerStats
     End Sub
 
     Public Overloads Sub createElement(squareSize As Double, form As Form)
         Dim shift As Double = squareSize * Me.shiftPercent
-
         Dim pictureElement = New System.Windows.Forms.PictureBox()
         form.Controls.Add(pictureElement)
         pictureElement.Image = Me.imageFile
@@ -43,5 +38,9 @@ Public Structure PlayerStats
     Public attack As Integer
     Public speed As Integer
     Public armor As Integer
+    Public shootRange As Integer
+    Public moveRange As Integer
+    Public buildRange As Integer
+    Public turretRange As Integer
     Public actionPoints As Integer
 End Structure

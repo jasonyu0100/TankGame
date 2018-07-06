@@ -9,6 +9,7 @@ Public Class InGameOptions
     Public defaultHighLightBoxLocation = Application.StartupPath() & "\resources\green.jpg"
     Public gameInfo As GameInformation
     Public squareImages As SquareImages
+    Public moveCosts As MoveCosts
 
     Private Sub InGameOptions_Closed(sender As Object, e As EventArgs) Handles Me.Closed
         StartUp.Close()
@@ -22,6 +23,7 @@ Public Class InGameOptions
             Me.gameInfo.playerCount = Me.PlayerCountInput.Value
             Me.gameInfo.rows = Me.RowsInput.Value
             Me.gameInfo.cols = Me.ColumnsInput.Value
+            Me.gameInfo.moveCosts = Me.moveCosts
             Me.squareImages.normalImage = Image.FromFile(GridBoxImage.ImageLocation)
             Me.squareImages.selectedImage = Image.FromFile(SelectedBoxImage.ImageLocation)
             Me.squareImages.highLightedImage = Image.FromFile(HighLightImageBox.ImageLocation)
@@ -36,7 +38,7 @@ Public Class InGameOptions
         If (currentPlayerNum > Me.PlayerCountInput.Value - 1) Then
             MsgBox("Player Count Specified has been exceeded")
         Else
-            Dim currentPlayer = New Player(New Coordinate(0, 0), New Coordinate(0, 0), Me.currentPlayerNum, Image.FromFile(TankImage.ImageLocation), Me.NameInput.Text, getCurrentPlayerStats())
+            Dim currentPlayer = New Player(New Coordinate(0, 0), New Coordinate(0, 0), Me.currentPlayerNum, Image.FromFile(TankImage.ImageLocation), Me.NameInput.Text, Me.getCurrentPlayerStats())
             Me.players.Add(currentPlayer)
             Me.currentPlayerNum += 1
             Me.NameInput.Text = ""
@@ -49,7 +51,17 @@ Public Class InGameOptions
     End Sub
 
     Private Function getCurrentPlayerStats()
-        Return New PlayerStats
+        Dim currentPlayerStats = New PlayerStats
+        currentPlayerStats.health = 100
+        currentPlayerStats.attack = 30
+        currentPlayerStats.speed = 5
+        currentPlayerStats.armor = 5
+        currentPlayerStats.shootRange = 6
+        currentPlayerStats.moveRange = 3
+        currentPlayerStats.buildRange = 1
+        currentPlayerStats.turretRange = 4
+        currentPlayerStats.actionPoints = 10
+        Return currentPlayerStats
     End Function
 
     Private Sub TankImageButton_Click(sender As Object, e As EventArgs) Handles TankImageButton.Click
@@ -66,6 +78,10 @@ Public Class InGameOptions
         GridBoxImage.ImageLocation = Me.defaultGridBoxLocation
         SelectedBoxImage.ImageLocation = Me.defaultSelectionBoxLocation
         HighLightImageBox.ImageLocation = Me.defaultHighLightBoxLocation
+        Me.moveCosts.shoot = 5
+        Me.moveCosts.move = 1
+        Me.moveCosts.build = 10
+        Me.moveCosts.turret = 3
     End Sub
 
     Private Sub RowsInput_Validating(sender As Object, e As CancelEventArgs) Handles RowsInput.Validating
@@ -116,3 +132,10 @@ Public Class InGameOptions
         TeamList.Visible = Not TeamList.Visible
     End Sub
 End Class
+
+Public Structure MoveCosts
+    Public shoot As Integer
+    Public move As Integer
+    Public turret As Integer
+    Public build As Integer
+End Structure

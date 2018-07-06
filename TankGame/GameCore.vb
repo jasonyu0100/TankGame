@@ -7,9 +7,11 @@
     Public turnNumber = 0
     Public gameInfo As GameInformation
     Public squareImages As SquareImages
+    Public moveCosts As MoveCosts
 
     Public Sub New(gameInfo As GameInformation, squareImages As SquareImages)
         Me.gameInfo = gameInfo
+        Me.moveCosts = Me.gameInfo.moveCosts
         Me.squareImages = squareImages
         Me.rows = gameInfo.rows
         Me.cols = gameInfo.cols
@@ -19,7 +21,10 @@
         'Setup Game
         Me.setUpPlayers()
         Me.grid.createSquareGrid(squareImages)
-        Me.startTurn()
+        'Sets up first turn
+        Dim currentPlayer = getCurrentPlayer()
+        setSquareStyle(SquareStyleEnum.Highlight, currentPlayer.gridCoordinate)
+        Me.updateHud(currentPlayer)
     End Sub
 
     Private Sub setUpPlayers()
@@ -63,7 +68,8 @@
     Public Sub updateHud(currentPlayer As Player)
         Game.TurnNumLabel.Text = "Turn Number: " & Me.turnNumber
         Game.PlayerHealth.Text = "Name: " & currentPlayer.playerName
-        Game.PlayerName.Text = "Health: " & currentPlayer.playerHealth
+        Game.PlayerName.Text = "Health: " & currentPlayer.playerStats.health
+        Game.ActionPointsLabel.Text = "Action Points: " & currentPlayer.playerStats.actionPoints
     End Sub
 
     Private Sub setSquareStyle(style As SquareStyleEnum, coordinate As Coordinate)
@@ -133,18 +139,25 @@
         Return available
     End Function
 
+    Private Sub updateActionPoints(cost As Integer, currentPlayer As Player)
+        currentPlayer.playerStats.actionPoints -= cost
+        Game.ActionPointsLabel.Text = "Action Points: " & (currentPlayer.playerStats.actionPoints).ToString
+    End Sub
+
     Public Sub shoot(gridCoord As Coordinate)
         Me.grid.clearSelected()
         Dim currentPlayer = Me.getCurrentPlayer()
-        Dim selectedEntityType = Me.grid.grid(gridCoord.y)(gridCoord.x).entityType
-        Select Case selectedEntityType
+        Dim selectedEntity = Me.grid.grid(gridCoord.y)(gridCoord.x)
+        Select Case selectedEntity.entityType
             Case EntityType.Player
-                Dim otherPlayer As Player = currentPlayer
+                Dim otherPlayer As Player = selectedEntity
                 MsgBox("You have shot at x:" & gridCoord.x & " y:" & gridCoord.y & " which has hit player: " & otherPlayer.playerName)
+                otherPlayer.playerStats.health -= currentPlayer.playerstats.attack - otherPlayer.playerStats.armor
+                updateActionPoints(Me.moveCosts.shoot, currentPlayer)
             Case EntityType.Empty
                 MsgBox("You have shot at x:" & gridCoord.x & " y:" & gridCoord.y & " which is empty")
             Case Else
-                Throw New Exception("Entity type is invalid: " & selectedEntityType.ToString)
+                Throw New Exception("Entity type is invalid: " & selectedEntity.entityType.ToString)
         End Select
     End Sub
 
@@ -160,6 +173,7 @@
                 Me.grid.moveEntity(currentPlayer.gridCoordinate, gridCoord)
                 setSquareStyle(SquareStyleEnum.Highlight, gridCoord)
                 MsgBox("You have moved to x:" & gridCoord.x & " y:" & gridCoord.y)
+                updateActionPoints(Me.moveCosts.move, currentPlayer)
             Case Else
                 Throw New Exception("Entity type is invalid: " & selectedEntityType.ToString)
         End Select
@@ -168,13 +182,20 @@
     Public Sub build(gridCoord As Coordinate)
         Me.grid.clearSelected()
         Dim currentPlayer = Me.getCurrentPlayer()
+        currentPlayer.playerStats.actionsPoints -= Me.moveCosts.build
+        currentPlayer.playerStats.actionsPoints -= Me.moveCosts.shoot
         MsgBox("You have built at x:" & gridCoord.x & " y:" & gridCoord.y)
+        updateActionPoints(Me.moveCosts.build, currentPlayer)
+
     End Sub
 
     Public Sub turret(gridCoord As Coordinate)
         Me.grid.clearSelected()
         Dim currentPlayer = Me.getCurrentPlayer()
+        currentPlayer.playerStats.actionsPoints -= Me.moveCosts.turret
+        currentPlayer.playerStats.actionsPoints -= Me.moveCosts.shoot
         MsgBox("You have shot the turret at x:" & gridCoord.x & " y:" & gridCoord.y)
+        updateActionPoints(Me.moveCosts.turret, currentPlayer)
     End Sub
 End Class
 
@@ -183,6 +204,7 @@ Public Structure GameInformation
     Public playerCount As Integer
     Public rows As Integer
     Public cols As Integer
+    Public moveCosts As MoveCosts
 End Structure
 
 Public Enum EntityType
