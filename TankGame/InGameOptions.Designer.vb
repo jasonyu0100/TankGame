@@ -34,7 +34,7 @@ Partial Class InGameOptions
         Me.AddPlayerButton = New System.Windows.Forms.Button()
         Me.PlayerCreationGroup = New System.Windows.Forms.GroupBox()
         Me.GroupBox1 = New System.Windows.Forms.GroupBox()
-        Me.TeamModeText = New System.Windows.Forms.TextBox()
+        Me.TeamModeText = New System.Windows.Forms.Label()
         Me.TeamList = New System.Windows.Forms.ComboBox()
         Me.TeamLabel = New System.Windows.Forms.Label()
         Me.TankImage = New System.Windows.Forms.PictureBox()
@@ -46,11 +46,11 @@ Partial Class InGameOptions
         Me.TankTypeLabel = New System.Windows.Forms.Label()
         Me.AttackInput = New System.Windows.Forms.NumericUpDown()
         Me.ArmorLabel = New System.Windows.Forms.Label()
-        Me.ActionPointsInput = New System.Windows.Forms.NumericUpDown()
-        Me.ActionPoints = New System.Windows.Forms.Label()
+        Me.SpeedInput = New System.Windows.Forms.NumericUpDown()
+        Me.SpeedLabel = New System.Windows.Forms.Label()
         Me.ArmorInput = New System.Windows.Forms.NumericUpDown()
         Me.GeneralGameSettingsGroup = New System.Windows.Forms.GroupBox()
-        Me.TextBox6 = New System.Windows.Forms.TextBox()
+        Me.GridInfoLabel = New System.Windows.Forms.Label()
         Me.ColumnsLabel = New System.Windows.Forms.Label()
         Me.ColumnsInput = New System.Windows.Forms.NumericUpDown()
         Me.GridBoxImage = New System.Windows.Forms.PictureBox()
@@ -66,19 +66,20 @@ Partial Class InGameOptions
         Me.BindingSource1 = New System.Windows.Forms.BindingSource(Me.components)
         Me.ImportMapButton = New System.Windows.Forms.Button()
         Me.GameplaySettingsGroup = New System.Windows.Forms.GroupBox()
+        Me.ImportMapLabel = New System.Windows.Forms.Label()
+        Me.TeamModeLabel = New System.Windows.Forms.Label()
+        Me.NoBuildingLabel = New System.Windows.Forms.Label()
+        Me.NoTurretLabel = New System.Windows.Forms.Label()
+        Me.EnvironmentModeLabel = New System.Windows.Forms.Label()
+        Me.BlitzText = New System.Windows.Forms.Label()
         Me.TeamsModeCheck = New System.Windows.Forms.CheckBox()
-        Me.TextBox7 = New System.Windows.Forms.TextBox()
         Me.AntiFortniteModeCheck = New System.Windows.Forms.CheckBox()
         Me.GunSlingerModeCheck = New System.Windows.Forms.CheckBox()
         Me.EnvironmentalModeCheck = New System.Windows.Forms.CheckBox()
-        Me.TextBox5 = New System.Windows.Forms.TextBox()
-        Me.TextBox4 = New System.Windows.Forms.TextBox()
-        Me.TextBox3 = New System.Windows.Forms.TextBox()
-        Me.TextBox1 = New System.Windows.Forms.TextBox()
         Me.BlizModeCheck = New System.Windows.Forms.CheckBox()
-        Me.TextBox2 = New System.Windows.Forms.TextBox()
-        Me.MiscGroup = New System.Windows.Forms.GroupBox()
-        Me.StartPromptText = New System.Windows.Forms.TextBox()
+        Me.StartPromptText = New System.Windows.Forms.Label()
+        Me.TurretImage = New System.Windows.Forms.PictureBox()
+        Me.TurretImageButton = New System.Windows.Forms.Button()
         CType(Me.RowsInput, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.PlayerCountInput, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.PlayerCreationGroup.SuspendLayout()
@@ -86,7 +87,7 @@ Partial Class InGameOptions
         CType(Me.TankImage, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.StatsGroup.SuspendLayout()
         CType(Me.AttackInput, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.ActionPointsInput, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.SpeedInput, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.ArmorInput, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.GeneralGameSettingsGroup.SuspendLayout()
         CType(Me.ColumnsInput, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -96,12 +97,12 @@ Partial Class InGameOptions
         CType(Me.HighLightImageBox, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.BindingSource1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.GameplaySettingsGroup.SuspendLayout()
-        Me.MiscGroup.SuspendLayout()
+        CType(Me.TurretImage, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'StartGameButton
         '
-        Me.StartGameButton.Location = New System.Drawing.Point(906, 546)
+        Me.StartGameButton.Location = New System.Drawing.Point(869, 548)
         Me.StartGameButton.Margin = New System.Windows.Forms.Padding(4)
         Me.StartGameButton.Name = "StartGameButton"
         Me.StartGameButton.Size = New System.Drawing.Size(100, 28)
@@ -150,7 +151,7 @@ Partial Class InGameOptions
         '
         'NameInput
         '
-        Me.NameInput.Location = New System.Drawing.Point(186, 56)
+        Me.NameInput.Location = New System.Drawing.Point(101, 23)
         Me.NameInput.Margin = New System.Windows.Forms.Padding(4)
         Me.NameInput.Name = "NameInput"
         Me.NameInput.Size = New System.Drawing.Size(164, 22)
@@ -159,7 +160,7 @@ Partial Class InGameOptions
         'NameLabel
         '
         Me.NameLabel.AutoSize = True
-        Me.NameLabel.Location = New System.Drawing.Point(237, 33)
+        Me.NameLabel.Location = New System.Drawing.Point(31, 27)
         Me.NameLabel.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
         Me.NameLabel.Name = "NameLabel"
         Me.NameLabel.Size = New System.Drawing.Size(45, 17)
@@ -169,16 +170,16 @@ Partial Class InGameOptions
         'ImageLabel
         '
         Me.ImageLabel.AutoSize = True
-        Me.ImageLabel.Location = New System.Drawing.Point(63, 33)
+        Me.ImageLabel.Location = New System.Drawing.Point(31, 90)
         Me.ImageLabel.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
         Me.ImageLabel.Name = "ImageLabel"
-        Me.ImageLabel.Size = New System.Drawing.Size(46, 17)
+        Me.ImageLabel.Size = New System.Drawing.Size(82, 17)
         Me.ImageLabel.TabIndex = 15
-        Me.ImageLabel.Text = "Image"
+        Me.ImageLabel.Text = "Tank Image"
         '
         'AddPlayerButton
         '
-        Me.AddPlayerButton.Location = New System.Drawing.Point(234, 220)
+        Me.AddPlayerButton.Location = New System.Drawing.Point(438, 260)
         Me.AddPlayerButton.Margin = New System.Windows.Forms.Padding(4)
         Me.AddPlayerButton.Name = "AddPlayerButton"
         Me.AddPlayerButton.Size = New System.Drawing.Size(100, 28)
@@ -190,48 +191,49 @@ Partial Class InGameOptions
         '
         Me.PlayerCreationGroup.Controls.Add(Me.GroupBox1)
         Me.PlayerCreationGroup.Controls.Add(Me.StatsGroup)
+        Me.PlayerCreationGroup.Controls.Add(Me.AddPlayerButton)
         Me.PlayerCreationGroup.Location = New System.Drawing.Point(431, 211)
         Me.PlayerCreationGroup.Margin = New System.Windows.Forms.Padding(4)
         Me.PlayerCreationGroup.Name = "PlayerCreationGroup"
         Me.PlayerCreationGroup.Padding = New System.Windows.Forms.Padding(4)
-        Me.PlayerCreationGroup.Size = New System.Drawing.Size(578, 304)
+        Me.PlayerCreationGroup.Size = New System.Drawing.Size(578, 329)
         Me.PlayerCreationGroup.TabIndex = 20
         Me.PlayerCreationGroup.TabStop = False
         Me.PlayerCreationGroup.Text = "Player Creation"
         '
         'GroupBox1
         '
+        Me.GroupBox1.Controls.Add(Me.TurretImageButton)
+        Me.GroupBox1.Controls.Add(Me.TurretImage)
         Me.GroupBox1.Controls.Add(Me.TeamModeText)
         Me.GroupBox1.Controls.Add(Me.TeamList)
         Me.GroupBox1.Controls.Add(Me.TeamLabel)
         Me.GroupBox1.Controls.Add(Me.TankImage)
         Me.GroupBox1.Controls.Add(Me.ImageLabel)
-        Me.GroupBox1.Controls.Add(Me.AddPlayerButton)
         Me.GroupBox1.Controls.Add(Me.NameInput)
         Me.GroupBox1.Controls.Add(Me.TankImageButton)
         Me.GroupBox1.Controls.Add(Me.NameLabel)
         Me.GroupBox1.Location = New System.Drawing.Point(7, 20)
         Me.GroupBox1.Name = "GroupBox1"
-        Me.GroupBox1.Size = New System.Drawing.Size(357, 270)
+        Me.GroupBox1.Size = New System.Drawing.Size(357, 302)
         Me.GroupBox1.TabIndex = 40
         Me.GroupBox1.TabStop = False
         Me.GroupBox1.Text = "Appearance"
         '
         'TeamModeText
         '
-        Me.TeamModeText.Location = New System.Drawing.Point(185, 137)
-        Me.TeamModeText.Multiline = True
+        Me.TeamModeText.Location = New System.Drawing.Point(98, 49)
         Me.TeamModeText.Name = "TeamModeText"
-        Me.TeamModeText.Size = New System.Drawing.Size(165, 37)
-        Me.TeamModeText.TabIndex = 34
-        Me.TeamModeText.Text = "For playing Team Mode"
+        Me.TeamModeText.Size = New System.Drawing.Size(181, 36)
+        Me.TeamModeText.TabIndex = 37
+        Me.TeamModeText.Text = "Optionally Select Team Mode"
         '
         'TeamList
         '
         Me.TeamList.Cursor = System.Windows.Forms.Cursors.Default
         Me.TeamList.FormattingEnabled = True
         Me.TeamList.Items.AddRange(New Object() {"Light Tank", "Medium Tank", "Heavy Tank", "Blitzer", "Engineer"})
-        Me.TeamList.Location = New System.Drawing.Point(186, 137)
+        Me.TeamList.Location = New System.Drawing.Point(101, 56)
         Me.TeamList.Name = "TeamList"
         Me.TeamList.Size = New System.Drawing.Size(165, 24)
         Me.TeamList.TabIndex = 33
@@ -240,7 +242,7 @@ Partial Class InGameOptions
         'TeamLabel
         '
         Me.TeamLabel.AutoSize = True
-        Me.TeamLabel.Location = New System.Drawing.Point(238, 102)
+        Me.TeamLabel.Location = New System.Drawing.Point(31, 56)
         Me.TeamLabel.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
         Me.TeamLabel.Name = "TeamLabel"
         Me.TeamLabel.Size = New System.Drawing.Size(44, 17)
@@ -250,7 +252,7 @@ Partial Class InGameOptions
         'TankImage
         '
         Me.TankImage.ImageLocation = ""
-        Me.TankImage.Location = New System.Drawing.Point(19, 54)
+        Me.TankImage.Location = New System.Drawing.Point(7, 118)
         Me.TankImage.Margin = New System.Windows.Forms.Padding(4)
         Me.TankImage.Name = "TankImage"
         Me.TankImage.Size = New System.Drawing.Size(150, 150)
@@ -260,7 +262,7 @@ Partial Class InGameOptions
         '
         'TankImageButton
         '
-        Me.TankImageButton.Location = New System.Drawing.Point(18, 215)
+        Me.TankImageButton.Location = New System.Drawing.Point(7, 267)
         Me.TankImageButton.Margin = New System.Windows.Forms.Padding(4)
         Me.TankImageButton.Name = "TankImageButton"
         Me.TankImageButton.Size = New System.Drawing.Size(151, 28)
@@ -276,12 +278,12 @@ Partial Class InGameOptions
         Me.StatsGroup.Controls.Add(Me.TankTypeLabel)
         Me.StatsGroup.Controls.Add(Me.AttackInput)
         Me.StatsGroup.Controls.Add(Me.ArmorLabel)
-        Me.StatsGroup.Controls.Add(Me.ActionPointsInput)
-        Me.StatsGroup.Controls.Add(Me.ActionPoints)
+        Me.StatsGroup.Controls.Add(Me.SpeedInput)
+        Me.StatsGroup.Controls.Add(Me.SpeedLabel)
         Me.StatsGroup.Controls.Add(Me.ArmorInput)
         Me.StatsGroup.Location = New System.Drawing.Point(370, 20)
         Me.StatsGroup.Name = "StatsGroup"
-        Me.StatsGroup.Size = New System.Drawing.Size(198, 276)
+        Me.StatsGroup.Size = New System.Drawing.Size(198, 233)
         Me.StatsGroup.TabIndex = 39
         Me.StatsGroup.TabStop = False
         Me.StatsGroup.Text = "Tank Options"
@@ -289,7 +291,7 @@ Partial Class InGameOptions
         'AttackLabel
         '
         Me.AttackLabel.AutoSize = True
-        Me.AttackLabel.Location = New System.Drawing.Point(7, 128)
+        Me.AttackLabel.Location = New System.Drawing.Point(10, 125)
         Me.AttackLabel.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
         Me.AttackLabel.Name = "AttackLabel"
         Me.AttackLabel.Size = New System.Drawing.Size(47, 17)
@@ -310,8 +312,8 @@ Partial Class InGameOptions
         '
         Me.TankTypesList.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.TankTypesList.FormattingEnabled = True
-        Me.TankTypesList.Items.AddRange(New Object() {"Light Tank", "Medium Tank", "Heavy Tank", "Blitzer", "Engineer"})
-        Me.TankTypesList.Location = New System.Drawing.Point(10, 54)
+        Me.TankTypesList.Items.AddRange(New Object() {"Light Tank", "Medium Tank", "Heavy Tank"})
+        Me.TankTypesList.Location = New System.Drawing.Point(6, 56)
         Me.TankTypesList.Name = "TankTypesList"
         Me.TankTypesList.Size = New System.Drawing.Size(121, 24)
         Me.TankTypesList.TabIndex = 32
@@ -328,54 +330,51 @@ Partial Class InGameOptions
         '
         'AttackInput
         '
-        Me.AttackInput.Location = New System.Drawing.Point(110, 126)
+        Me.AttackInput.Location = New System.Drawing.Point(105, 123)
         Me.AttackInput.Margin = New System.Windows.Forms.Padding(4)
         Me.AttackInput.Name = "AttackInput"
         Me.AttackInput.Size = New System.Drawing.Size(49, 22)
         Me.AttackInput.TabIndex = 31
-        Me.AttackInput.Value = New Decimal(New Integer() {2, 0, 0, 0})
         '
         'ArmorLabel
         '
         Me.ArmorLabel.AutoSize = True
-        Me.ArmorLabel.Location = New System.Drawing.Point(10, 213)
+        Me.ArmorLabel.Location = New System.Drawing.Point(13, 189)
         Me.ArmorLabel.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
         Me.ArmorLabel.Name = "ArmorLabel"
         Me.ArmorLabel.Size = New System.Drawing.Size(46, 17)
         Me.ArmorLabel.TabIndex = 37
         Me.ArmorLabel.Text = "Armor"
         '
-        'ActionPointsInput
+        'SpeedInput
         '
-        Me.ActionPointsInput.Location = New System.Drawing.Point(110, 167)
-        Me.ActionPointsInput.Margin = New System.Windows.Forms.Padding(4)
-        Me.ActionPointsInput.Name = "ActionPointsInput"
-        Me.ActionPointsInput.Size = New System.Drawing.Size(49, 22)
-        Me.ActionPointsInput.TabIndex = 33
-        Me.ActionPointsInput.Value = New Decimal(New Integer() {2, 0, 0, 0})
+        Me.SpeedInput.Location = New System.Drawing.Point(105, 156)
+        Me.SpeedInput.Margin = New System.Windows.Forms.Padding(4)
+        Me.SpeedInput.Name = "SpeedInput"
+        Me.SpeedInput.Size = New System.Drawing.Size(49, 22)
+        Me.SpeedInput.TabIndex = 33
         '
-        'ActionPoints
+        'SpeedLabel
         '
-        Me.ActionPoints.AutoSize = True
-        Me.ActionPoints.Location = New System.Drawing.Point(7, 167)
-        Me.ActionPoints.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
-        Me.ActionPoints.Name = "ActionPoints"
-        Me.ActionPoints.Size = New System.Drawing.Size(49, 17)
-        Me.ActionPoints.TabIndex = 36
-        Me.ActionPoints.Text = "Speed"
+        Me.SpeedLabel.AutoSize = True
+        Me.SpeedLabel.Location = New System.Drawing.Point(10, 158)
+        Me.SpeedLabel.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
+        Me.SpeedLabel.Name = "SpeedLabel"
+        Me.SpeedLabel.Size = New System.Drawing.Size(49, 17)
+        Me.SpeedLabel.TabIndex = 36
+        Me.SpeedLabel.Text = "Speed"
         '
         'ArmorInput
         '
-        Me.ArmorInput.Location = New System.Drawing.Point(110, 211)
+        Me.ArmorInput.Location = New System.Drawing.Point(105, 189)
         Me.ArmorInput.Margin = New System.Windows.Forms.Padding(4)
         Me.ArmorInput.Name = "ArmorInput"
         Me.ArmorInput.Size = New System.Drawing.Size(49, 22)
         Me.ArmorInput.TabIndex = 34
-        Me.ArmorInput.Value = New Decimal(New Integer() {2, 0, 0, 0})
         '
         'GeneralGameSettingsGroup
         '
-        Me.GeneralGameSettingsGroup.Controls.Add(Me.TextBox6)
+        Me.GeneralGameSettingsGroup.Controls.Add(Me.GridInfoLabel)
         Me.GeneralGameSettingsGroup.Controls.Add(Me.ColumnsLabel)
         Me.GeneralGameSettingsGroup.Controls.Add(Me.ColumnsInput)
         Me.GeneralGameSettingsGroup.Controls.Add(Me.RowsLabel)
@@ -389,15 +388,14 @@ Partial Class InGameOptions
         Me.GeneralGameSettingsGroup.TabStop = False
         Me.GeneralGameSettingsGroup.Text = "General Game Settings"
         '
-        'TextBox6
+        'GridInfoLabel
         '
-        Me.TextBox6.Location = New System.Drawing.Point(205, 35)
-        Me.TextBox6.Multiline = True
-        Me.TextBox6.Name = "TextBox6"
-        Me.TextBox6.Size = New System.Drawing.Size(192, 86)
-        Me.TextBox6.TabIndex = 12
-        Me.TextBox6.Text = "Rows and columns of game grid. Larger maps generally have longer games, while sma" &
-    "lls maps have short and intense games." & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10)
+        Me.GridInfoLabel.Location = New System.Drawing.Point(202, 39)
+        Me.GridInfoLabel.Name = "GridInfoLabel"
+        Me.GridInfoLabel.Size = New System.Drawing.Size(195, 128)
+        Me.GridInfoLabel.TabIndex = 13
+        Me.GridInfoLabel.Text = "Rows and columns of game grid. Larger maps generally have longer games, while sma" &
+    "lls maps have short and intense games."
         '
         'ColumnsLabel
         '
@@ -451,7 +449,7 @@ Partial Class InGameOptions
         '
         'SelectedBoxButton
         '
-        Me.SelectedBoxButton.Location = New System.Drawing.Point(165, 134)
+        Me.SelectedBoxButton.Location = New System.Drawing.Point(232, 134)
         Me.SelectedBoxButton.Margin = New System.Windows.Forms.Padding(4)
         Me.SelectedBoxButton.Name = "SelectedBoxButton"
         Me.SelectedBoxButton.Size = New System.Drawing.Size(110, 43)
@@ -462,7 +460,7 @@ Partial Class InGameOptions
         'SelectedBoxImage
         '
         Me.SelectedBoxImage.ImageLocation = ""
-        Me.SelectedBoxImage.Location = New System.Drawing.Point(167, 39)
+        Me.SelectedBoxImage.Location = New System.Drawing.Point(234, 39)
         Me.SelectedBoxImage.Margin = New System.Windows.Forms.Padding(4)
         Me.SelectedBoxImage.Name = "SelectedBoxImage"
         Me.SelectedBoxImage.Size = New System.Drawing.Size(108, 88)
@@ -473,7 +471,7 @@ Partial Class InGameOptions
         'Label1
         '
         Me.Label1.AutoSize = True
-        Me.Label1.Location = New System.Drawing.Point(151, 16)
+        Me.Label1.Location = New System.Drawing.Point(224, 16)
         Me.Label1.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
         Me.Label1.Name = "Label1"
         Me.Label1.Size = New System.Drawing.Size(135, 17)
@@ -500,7 +498,7 @@ Partial Class InGameOptions
         '
         'HighLightBoxButton
         '
-        Me.HighLightBoxButton.Location = New System.Drawing.Point(313, 135)
+        Me.HighLightBoxButton.Location = New System.Drawing.Point(439, 134)
         Me.HighLightBoxButton.Margin = New System.Windows.Forms.Padding(4)
         Me.HighLightBoxButton.Name = "HighLightBoxButton"
         Me.HighLightBoxButton.Size = New System.Drawing.Size(110, 43)
@@ -511,7 +509,7 @@ Partial Class InGameOptions
         'HighLightImageBox
         '
         Me.HighLightImageBox.ImageLocation = ""
-        Me.HighLightImageBox.Location = New System.Drawing.Point(315, 39)
+        Me.HighLightImageBox.Location = New System.Drawing.Point(439, 39)
         Me.HighLightImageBox.Margin = New System.Windows.Forms.Padding(4)
         Me.HighLightImageBox.Name = "HighLightImageBox"
         Me.HighLightImageBox.Size = New System.Drawing.Size(108, 88)
@@ -522,7 +520,7 @@ Partial Class InGameOptions
         'Label3
         '
         Me.Label3.AutoSize = True
-        Me.Label3.Location = New System.Drawing.Point(311, 16)
+        Me.Label3.Location = New System.Drawing.Point(436, 16)
         Me.Label3.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
         Me.Label3.Name = "Label3"
         Me.Label3.Size = New System.Drawing.Size(114, 17)
@@ -531,7 +529,7 @@ Partial Class InGameOptions
         '
         'ImportMapButton
         '
-        Me.ImportMapButton.Location = New System.Drawing.Point(20, 24)
+        Me.ImportMapButton.Location = New System.Drawing.Point(22, 237)
         Me.ImportMapButton.Name = "ImportMapButton"
         Me.ImportMapButton.Size = New System.Drawing.Size(111, 31)
         Me.ImportMapButton.TabIndex = 0
@@ -540,46 +538,87 @@ Partial Class InGameOptions
         '
         'GameplaySettingsGroup
         '
+        Me.GameplaySettingsGroup.Controls.Add(Me.ImportMapButton)
+        Me.GameplaySettingsGroup.Controls.Add(Me.ImportMapLabel)
+        Me.GameplaySettingsGroup.Controls.Add(Me.TeamModeLabel)
+        Me.GameplaySettingsGroup.Controls.Add(Me.NoBuildingLabel)
+        Me.GameplaySettingsGroup.Controls.Add(Me.NoTurretLabel)
+        Me.GameplaySettingsGroup.Controls.Add(Me.EnvironmentModeLabel)
+        Me.GameplaySettingsGroup.Controls.Add(Me.BlitzText)
         Me.GameplaySettingsGroup.Controls.Add(Me.TeamsModeCheck)
-        Me.GameplaySettingsGroup.Controls.Add(Me.TextBox7)
         Me.GameplaySettingsGroup.Controls.Add(Me.AntiFortniteModeCheck)
         Me.GameplaySettingsGroup.Controls.Add(Me.GunSlingerModeCheck)
         Me.GameplaySettingsGroup.Controls.Add(Me.EnvironmentalModeCheck)
-        Me.GameplaySettingsGroup.Controls.Add(Me.TextBox5)
-        Me.GameplaySettingsGroup.Controls.Add(Me.TextBox4)
-        Me.GameplaySettingsGroup.Controls.Add(Me.TextBox3)
-        Me.GameplaySettingsGroup.Controls.Add(Me.TextBox1)
         Me.GameplaySettingsGroup.Controls.Add(Me.BlizModeCheck)
         Me.GameplaySettingsGroup.Location = New System.Drawing.Point(12, 211)
         Me.GameplaySettingsGroup.Name = "GameplaySettingsGroup"
-        Me.GameplaySettingsGroup.Size = New System.Drawing.Size(412, 304)
+        Me.GameplaySettingsGroup.Size = New System.Drawing.Size(412, 329)
         Me.GameplaySettingsGroup.TabIndex = 32
         Me.GameplaySettingsGroup.TabStop = False
-        Me.GameplaySettingsGroup.Text = "Gameplay Settings"
+        Me.GameplaySettingsGroup.Text = "Gameplay Settings (Optional)"
+        '
+        'ImportMapLabel
+        '
+        Me.ImportMapLabel.Location = New System.Drawing.Point(202, 242)
+        Me.ImportMapLabel.Name = "ImportMapLabel"
+        Me.ImportMapLabel.Size = New System.Drawing.Size(195, 31)
+        Me.ImportMapLabel.TabIndex = 37
+        Me.ImportMapLabel.Text = "Imports map"
+        '
+        'TeamModeLabel
+        '
+        Me.TeamModeLabel.Location = New System.Drawing.Point(202, 211)
+        Me.TeamModeLabel.Name = "TeamModeLabel"
+        Me.TeamModeLabel.Size = New System.Drawing.Size(195, 31)
+        Me.TeamModeLabel.TabIndex = 36
+        Me.TeamModeLabel.Text = "Enables Teams"
+        '
+        'NoBuildingLabel
+        '
+        Me.NoBuildingLabel.Location = New System.Drawing.Point(202, 176)
+        Me.NoBuildingLabel.Name = "NoBuildingLabel"
+        Me.NoBuildingLabel.Size = New System.Drawing.Size(195, 25)
+        Me.NoBuildingLabel.TabIndex = 17
+        Me.NoBuildingLabel.Text = "Disable Buildings"
+        '
+        'NoTurretLabel
+        '
+        Me.NoTurretLabel.Location = New System.Drawing.Point(202, 139)
+        Me.NoTurretLabel.Name = "NoTurretLabel"
+        Me.NoTurretLabel.Size = New System.Drawing.Size(195, 23)
+        Me.NoTurretLabel.TabIndex = 16
+        Me.NoTurretLabel.Text = "Disable Turrets"
+        '
+        'EnvironmentModeLabel
+        '
+        Me.EnvironmentModeLabel.Location = New System.Drawing.Point(202, 90)
+        Me.EnvironmentModeLabel.Name = "EnvironmentModeLabel"
+        Me.EnvironmentModeLabel.Size = New System.Drawing.Size(195, 28)
+        Me.EnvironmentModeLabel.TabIndex = 15
+        Me.EnvironmentModeLabel.Text = "Water, Earth, Fire and Air"
+        '
+        'BlitzText
+        '
+        Me.BlitzText.Location = New System.Drawing.Point(202, 49)
+        Me.BlitzText.Name = "BlitzText"
+        Me.BlitzText.Size = New System.Drawing.Size(195, 30)
+        Me.BlitzText.TabIndex = 14
+        Me.BlitzText.Text = "All Damage is increased"
         '
         'TeamsModeCheck
         '
         Me.TeamsModeCheck.AutoSize = True
-        Me.TeamsModeCheck.Location = New System.Drawing.Point(22, 247)
+        Me.TeamsModeCheck.Location = New System.Drawing.Point(22, 210)
         Me.TeamsModeCheck.Name = "TeamsModeCheck"
         Me.TeamsModeCheck.Size = New System.Drawing.Size(73, 21)
         Me.TeamsModeCheck.TabIndex = 11
         Me.TeamsModeCheck.Text = "Teams"
         Me.TeamsModeCheck.UseVisualStyleBackColor = True
         '
-        'TextBox7
-        '
-        Me.TextBox7.Location = New System.Drawing.Point(205, 245)
-        Me.TextBox7.Multiline = True
-        Me.TextBox7.Name = "TextBox7"
-        Me.TextBox7.Size = New System.Drawing.Size(192, 23)
-        Me.TextBox7.TabIndex = 10
-        Me.TextBox7.Text = "Team gameplay"
-        '
         'AntiFortniteModeCheck
         '
         Me.AntiFortniteModeCheck.AutoSize = True
-        Me.AntiFortniteModeCheck.Location = New System.Drawing.Point(22, 198)
+        Me.AntiFortniteModeCheck.Location = New System.Drawing.Point(22, 174)
         Me.AntiFortniteModeCheck.Name = "AntiFortniteModeCheck"
         Me.AntiFortniteModeCheck.Size = New System.Drawing.Size(146, 21)
         Me.AntiFortniteModeCheck.TabIndex = 9
@@ -589,7 +628,7 @@ Partial Class InGameOptions
         'GunSlingerModeCheck
         '
         Me.GunSlingerModeCheck.AutoSize = True
-        Me.GunSlingerModeCheck.Location = New System.Drawing.Point(22, 150)
+        Me.GunSlingerModeCheck.Location = New System.Drawing.Point(22, 129)
         Me.GunSlingerModeCheck.Name = "GunSlingerModeCheck"
         Me.GunSlingerModeCheck.Size = New System.Drawing.Size(144, 21)
         Me.GunSlingerModeCheck.TabIndex = 8
@@ -599,48 +638,12 @@ Partial Class InGameOptions
         'EnvironmentalModeCheck
         '
         Me.EnvironmentalModeCheck.AutoSize = True
-        Me.EnvironmentalModeCheck.Location = New System.Drawing.Point(22, 95)
+        Me.EnvironmentalModeCheck.Location = New System.Drawing.Point(22, 89)
         Me.EnvironmentalModeCheck.Name = "EnvironmentalModeCheck"
         Me.EnvironmentalModeCheck.Size = New System.Drawing.Size(159, 21)
         Me.EnvironmentalModeCheck.TabIndex = 6
         Me.EnvironmentalModeCheck.Text = "Environmental Mode"
         Me.EnvironmentalModeCheck.UseVisualStyleBackColor = True
-        '
-        'TextBox5
-        '
-        Me.TextBox5.Location = New System.Drawing.Point(205, 196)
-        Me.TextBox5.Multiline = True
-        Me.TextBox5.Name = "TextBox5"
-        Me.TextBox5.Size = New System.Drawing.Size(192, 23)
-        Me.TextBox5.TabIndex = 5
-        Me.TextBox5.Text = "Disable Buildings"
-        '
-        'TextBox4
-        '
-        Me.TextBox4.Location = New System.Drawing.Point(205, 150)
-        Me.TextBox4.Multiline = True
-        Me.TextBox4.Name = "TextBox4"
-        Me.TextBox4.Size = New System.Drawing.Size(192, 23)
-        Me.TextBox4.TabIndex = 4
-        Me.TextBox4.Text = "Disable Turrets"
-        '
-        'TextBox3
-        '
-        Me.TextBox3.Location = New System.Drawing.Point(205, 95)
-        Me.TextBox3.Multiline = True
-        Me.TextBox3.Name = "TextBox3"
-        Me.TextBox3.Size = New System.Drawing.Size(192, 30)
-        Me.TextBox3.TabIndex = 3
-        Me.TextBox3.Text = "Water, Earth, Fire and Air"
-        '
-        'TextBox1
-        '
-        Me.TextBox1.Location = New System.Drawing.Point(205, 24)
-        Me.TextBox1.Multiline = True
-        Me.TextBox1.Name = "TextBox1"
-        Me.TextBox1.Size = New System.Drawing.Size(192, 54)
-        Me.TextBox1.TabIndex = 1
-        Me.TextBox1.Text = "Players have double the action points and have bonus damage every 5th turn."
         '
         'BlizModeCheck
         '
@@ -652,42 +655,41 @@ Partial Class InGameOptions
         Me.BlizModeCheck.Text = "Blitz Mode"
         Me.BlizModeCheck.UseVisualStyleBackColor = True
         '
-        'TextBox2
-        '
-        Me.TextBox2.Location = New System.Drawing.Point(205, 21)
-        Me.TextBox2.Multiline = True
-        Me.TextBox2.Name = "TextBox2"
-        Me.TextBox2.Size = New System.Drawing.Size(192, 40)
-        Me.TextBox2.TabIndex = 10
-        Me.TextBox2.Text = "Custom Maps can be imported"
-        '
-        'MiscGroup
-        '
-        Me.MiscGroup.Controls.Add(Me.TextBox2)
-        Me.MiscGroup.Controls.Add(Me.ImportMapButton)
-        Me.MiscGroup.Location = New System.Drawing.Point(12, 520)
-        Me.MiscGroup.Name = "MiscGroup"
-        Me.MiscGroup.Size = New System.Drawing.Size(412, 67)
-        Me.MiscGroup.TabIndex = 33
-        Me.MiscGroup.TabStop = False
-        Me.MiscGroup.Text = "Misc."
-        '
         'StartPromptText
         '
-        Me.StartPromptText.Location = New System.Drawing.Point(841, 538)
-        Me.StartPromptText.Multiline = True
+        Me.StartPromptText.Location = New System.Drawing.Point(841, 540)
         Me.StartPromptText.Name = "StartPromptText"
-        Me.StartPromptText.Size = New System.Drawing.Size(165, 37)
-        Me.StartPromptText.TabIndex = 35
-        Me.StartPromptText.Text = "Create all players"
+        Me.StartPromptText.Size = New System.Drawing.Size(168, 36)
+        Me.StartPromptText.TabIndex = 38
+        Me.StartPromptText.Text = "Complete all Player Creation"
+        '
+        'TurretImage
+        '
+        Me.TurretImage.ImageLocation = ""
+        Me.TurretImage.Location = New System.Drawing.Point(200, 118)
+        Me.TurretImage.Margin = New System.Windows.Forms.Padding(4)
+        Me.TurretImage.Name = "TurretImage"
+        Me.TurretImage.Size = New System.Drawing.Size(150, 150)
+        Me.TurretImage.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage
+        Me.TurretImage.TabIndex = 38
+        Me.TurretImage.TabStop = False
+        '
+        'TurretImageButton
+        '
+        Me.TurretImageButton.Location = New System.Drawing.Point(200, 267)
+        Me.TurretImageButton.Margin = New System.Windows.Forms.Padding(4)
+        Me.TurretImageButton.Name = "TurretImageButton"
+        Me.TurretImageButton.Size = New System.Drawing.Size(151, 28)
+        Me.TurretImageButton.TabIndex = 39
+        Me.TurretImageButton.Text = "Import Turret Image"
+        Me.TurretImageButton.UseVisualStyleBackColor = True
         '
         'InGameOptions
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(8.0!, 16.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(1019, 597)
+        Me.ClientSize = New System.Drawing.Size(1019, 585)
         Me.Controls.Add(Me.StartPromptText)
-        Me.Controls.Add(Me.MiscGroup)
         Me.Controls.Add(Me.GameplaySettingsGroup)
         Me.Controls.Add(Me.GameStylingGroup)
         Me.Controls.Add(Me.GeneralGameSettingsGroup)
@@ -705,7 +707,7 @@ Partial Class InGameOptions
         Me.StatsGroup.ResumeLayout(False)
         Me.StatsGroup.PerformLayout()
         CType(Me.AttackInput, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.ActionPointsInput, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.SpeedInput, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.ArmorInput, System.ComponentModel.ISupportInitialize).EndInit()
         Me.GeneralGameSettingsGroup.ResumeLayout(False)
         Me.GeneralGameSettingsGroup.PerformLayout()
@@ -718,10 +720,8 @@ Partial Class InGameOptions
         CType(Me.BindingSource1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.GameplaySettingsGroup.ResumeLayout(False)
         Me.GameplaySettingsGroup.PerformLayout()
-        Me.MiscGroup.ResumeLayout(False)
-        Me.MiscGroup.PerformLayout()
+        CType(Me.TurretImage, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
-        Me.PerformLayout()
 
     End Sub
 
@@ -755,8 +755,8 @@ Partial Class InGameOptions
     Friend WithEvents AvailablePointsLabel As Label
     Friend WithEvents AttackInput As NumericUpDown
     Friend WithEvents ArmorLabel As Label
-    Friend WithEvents ActionPointsInput As NumericUpDown
-    Friend WithEvents ActionPoints As Label
+    Friend WithEvents SpeedInput As NumericUpDown
+    Friend WithEvents SpeedLabel As Label
     Friend WithEvents ArmorInput As NumericUpDown
     Friend WithEvents BindingSource1 As BindingSource
     Friend WithEvents ImportMapButton As Button
@@ -764,21 +764,22 @@ Partial Class InGameOptions
     Friend WithEvents HighLightBoxButton As Button
     Friend WithEvents HighLightImageBox As PictureBox
     Friend WithEvents GameplaySettingsGroup As GroupBox
-    Friend WithEvents TextBox2 As TextBox
     Friend WithEvents AntiFortniteModeCheck As CheckBox
     Friend WithEvents GunSlingerModeCheck As CheckBox
     Friend WithEvents EnvironmentalModeCheck As CheckBox
-    Friend WithEvents TextBox5 As TextBox
-    Friend WithEvents TextBox4 As TextBox
-    Friend WithEvents TextBox3 As TextBox
-    Friend WithEvents TextBox1 As TextBox
     Friend WithEvents BlizModeCheck As CheckBox
-    Friend WithEvents TextBox6 As TextBox
     Friend WithEvents TeamsModeCheck As CheckBox
-    Friend WithEvents TextBox7 As TextBox
-    Friend WithEvents MiscGroup As GroupBox
-    Friend WithEvents TeamModeText As TextBox
     Friend WithEvents TeamList As ComboBox
     Friend WithEvents TeamLabel As Label
-    Friend WithEvents StartPromptText As TextBox
+    Friend WithEvents GridInfoLabel As Label
+    Friend WithEvents ImportMapLabel As Label
+    Friend WithEvents TeamModeLabel As Label
+    Friend WithEvents NoBuildingLabel As Label
+    Friend WithEvents NoTurretLabel As Label
+    Friend WithEvents EnvironmentModeLabel As Label
+    Friend WithEvents BlitzText As Label
+    Friend WithEvents TeamModeText As Label
+    Friend WithEvents StartPromptText As Label
+    Friend WithEvents TurretImageButton As Button
+    Friend WithEvents TurretImage As PictureBox
 End Class

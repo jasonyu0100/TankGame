@@ -21,45 +21,38 @@
         Me.currentGame.startTurn()
     End Sub
 
-    Private Sub handleMove(move As GameMoves)
-        Dim currentPlayer = Me.currentGame.getCurrentPlayer()
-        Dim currentPlayerStats = currentPlayer.playerStats
-        Dim range As Integer
-        Dim flag = False
+    Public Sub handleMove(move As GameMoves)
+        Dim currentPlayerStats = Me.currentGame.getCurrentPlayer().playerStats
         Select Case move
             Case GameMoves.shoot
                 If currentPlayerStats.actionPoints < Me.currentGame.moveCosts.shoot Then
-                    flag = True
+                    MsgBox("Not enough action points")
                 Else
-                    range = currentPlayerStats.shootRange
+                    setUpAction(currentPlayerStats.shootRange, move)
                 End If
             Case GameMoves.move
                 If currentPlayerStats.actionPoints < Me.currentGame.moveCosts.move Then
-                    flag = True
+                    MsgBox("Not enough action points")
                 Else
-                    range = currentPlayerStats.moveRange
+                    setUpAction(currentPlayerStats.moveRange, move)
                 End If
             Case GameMoves.build
                 If currentPlayerStats.actionPoints < Me.currentGame.moveCosts.build Then
-                    flag = True
+                    MsgBox("Not enough action points")
                 Else
-                    range = currentPlayerStats.buildRange
+                    setUpAction(currentPlayerStats.buildRange, move)
                 End If
             Case GameMoves.turret
-                If currentPlayerStats.actionPoints < Me.currentGame.moveCosts.turret Then
-                    flag = True
-                Else
-                    range = currentPlayerStats.turretRange
-                End If
+                Me.currentGame.displayPossibleTurrets()
+                Me.selectedAction = move
             Case Else
                 MsgBox("Move is invalid")
         End Select
-        If flag = True Then
-            MsgBox("Not enough action points")
-        Else
-            Me.currentGame.displayActionPositions(range)
-            Me.selectedAction = move
-        End If
+    End Sub
+
+    Public Sub setUpAction(range As Integer, move As GameMoves)
+        Me.currentGame.displayActionPositions(range)
+        Me.selectedAction = move
     End Sub
 
     Private Sub ShootButton_Click(sender As Object, e As EventArgs) Handles ShootButton.Click
@@ -87,13 +80,13 @@
             Case GameMoves.build
                 Me.currentGame.build(selectedCoord)
             Case GameMoves.turret
-                Me.currentGame.turret(selectedCoord)
+                Me.currentGame.turret(selectedCoord) 'Displays turret actions
+            Case GameMoves.turretShoot
+                Me.currentGame.turretShoot(selectedCoord) 'Turret Shoots
             Case Else
                 MsgBox("Action was not selected")
         End Select
     End Sub
-
-
 
     Private Sub Game_KeyPress(sender As Object, e As KeyPressEventArgs) Handles Me.KeyPress
         Select Case e.KeyChar
@@ -110,13 +103,13 @@
         End Select
     End Sub
 
-    Private Enum GameMoves
+    Public Enum GameMoves
         shoot
         move
         build
         turret
+        turretShoot
     End Enum
-
 End Class
 
 Public Structure GameKeyMapping

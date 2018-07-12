@@ -1,22 +1,15 @@
-﻿Public Class Player
+﻿Public Class Turret
     Inherits Entity
-    Public playerNum As Integer
-    Public playerName As String
     Public shiftPercent = 0.1
-    Public playerStats As PlayerStats
     Public turretStats As TurretStats
-    Public turrets As List(Of Turret)
-    Public turretImageFile As Image
+    Public playerNum As Integer
+    Public entityType As EntityType
 
-    Public Sub New(gridCoordinate As Coordinate, actualCoordinate As Coordinate, playerNum As Integer, imageFile As Image, playerName As String, playerStats As PlayerStats, turretStats As TurretStats, turretImageFile As Image)
+    Public Sub New(gridCoordinate As Coordinate, actualCoordinate As Coordinate, playerNum As Integer, imageFile As Image, turretStats As TurretStats)
         MyBase.New(gridCoordinate, actualCoordinate, imageFile)
-        Me.playerNum = playerNum
-        Me.playerName = playerName
-        Me.entityType = EntityType.Player
-        Me.playerStats = playerStats
         Me.turretStats = turretStats
-        Me.turretImageFile = turretImageFile
-        Me.turrets = New List(Of Turret)
+        Me.playerNum = playerNum
+        Me.entityType = EntityType.Turret
     End Sub
 
     Public Overloads Sub createElement(squareSize As Double, form As Form)
@@ -39,14 +32,9 @@
     End Sub
 End Class
 
-Public Structure PlayerStats
+Public Structure TurretStats
     Public health As Integer
     Public attack As Integer
-    Public speed As Integer
     Public armor As Integer
     Public shootRange As Integer
-    Public moveRange As Integer
-    Public buildRange As Integer
-    Public turretRange As Integer
-    Public actionPoints As Integer
 End Structure

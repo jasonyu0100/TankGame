@@ -79,11 +79,19 @@
 
     Public Sub startTurn()
         Me.grid.clearSelected()
-        setSquareStyle(SquareStyleEnum.Normal, Me.getCurrentPlayer().gridCoordinate)
+        Dim previousPlayer As Player = Me.getCurrentPlayer()
+        previousPlayer.playerStats.actionPoints = Me.gameInfo.actionPoints
+        setSquareStyle(SquareStyleEnum.Normal, previousPlayer.gridCoordinate)
         Me.turnNumber += 1
         Dim currentPlayer = getCurrentPlayer()
         setSquareStyle(SquareStyleEnum.Highlight, currentPlayer.gridCoordinate)
         Me.updateHud(currentPlayer)
+    End Sub
+
+    Private Sub setTurretSquareStyle(style As SquareStyleEnum, currentPlayer As Player)
+        For Each turret As Turret In currentPlayer.turrets
+            setSquareStyle(style, turret.gridCoordinate)
+        Next
     End Sub
 
     Private Function validCoord(coord As Coordinate)
@@ -102,9 +110,17 @@
         Dim currentPlayer = Me.getCurrentPlayer()
         Dim availablePositions As List(Of Coordinate) = Me.availablePositions(range)
         For Each current As Coordinate In availablePositions
-            Dim row = current.y
-            Dim col = current.x
-            Dim square = Me.grid.squares(row)(col)
+            Dim square = Me.grid.squares(current.y)(current.x)
+            square.setImageFile(SquareStyleEnum.Selected)
+        Next
+    End Sub
+
+    Public Sub displayPossibleTurrets()
+        Me.grid.clearSelected()
+        Dim currentPlayer = Me.getCurrentPlayer()
+        For Each turret As Turret In currentPlayer.turrets
+            Dim gridCoord = turret.gridCoordinate
+            Dim square = Me.grid.squares(gridCoord.y)(gridCoord.x)
             square.setImageFile(SquareStyleEnum.Selected)
         Next
     End Sub
@@ -152,7 +168,7 @@
             Case EntityType.Player
                 Dim otherPlayer As Player = selectedEntity
                 MsgBox("You have shot at x:" & gridCoord.x & " y:" & gridCoord.y & " which has hit player: " & otherPlayer.playerName)
-                otherPlayer.playerStats.health -= currentPlayer.playerstats.attack - otherPlayer.playerStats.armor
+                otherPlayer.playerStats.health -= currentPlayer.playerstats.attack * 5 - (otherPlayer.playerStats.armor * 0.2)
                 updateActionPoints(Me.moveCosts.shoot, currentPlayer)
             Case EntityType.Empty
                 MsgBox("You have shot at x:" & gridCoord.x & " y:" & gridCoord.y & " which is empty")
@@ -182,20 +198,46 @@
     Public Sub build(gridCoord As Coordinate)
         Me.grid.clearSelected()
         Dim currentPlayer = Me.getCurrentPlayer()
-        currentPlayer.playerStats.actionsPoints -= Me.moveCosts.build
-        currentPlayer.playerStats.actionsPoints -= Me.moveCosts.shoot
-        MsgBox("You have built at x:" & gridCoord.x & " y:" & gridCoord.y)
-        updateActionPoints(Me.moveCosts.build, currentPlayer)
-
+        Dim selectedEntity = Me.grid.grid(gridCoord.y)(gridCoord.x)
+        Dim selectedEntityType = selectedEntity.entityType
+        Select Case selectedEntityType
+            Case EntityType.Player
+                MsgBox("Can't build on another players location")
+            Case EntityType.Empty
+                Dim newTurret As Turret = New Turret(gridCoord, selectedEntity.actualCoordinate, currentPlayer.playerNum, currentPlayer.turretImageFile, currentPlayer.turretStats)
+                newTurret.createElement(Me.grid.squareSize, Game)
+                Me.grid.deleteGridCell(gridCoord)
+                Me.grid.squares(gridCoord.y)(gridCoord.x).pictureElement.SendToBack()
+                Me.grid.grid(gridCoord.y)(gridCoord.x) = newTurret
+                currentPlayer.turrets.add(newTurret)
+                MsgBox("You have built at x:" & gridCoord.x & " y:" & gridCoord.y)
+                updateActionPoints(Me.moveCosts.build, currentPlayer)
+            Case Else
+                Throw New Exception("Entity type is invalid: " & selectedEntityType.ToString)
+        End Select
     End Sub
 
     Public Sub turret(gridCoord As Coordinate)
         Me.grid.clearSelected()
         Dim currentPlayer = Me.getCurrentPlayer()
-        currentPlayer.playerStats.actionsPoints -= Me.moveCosts.turret
-        currentPlayer.playerStats.actionsPoints -= Me.moveCosts.shoot
-        MsgBox("You have shot the turret at x:" & gridCoord.x & " y:" & gridCoord.y)
-        updateActionPoints(Me.moveCosts.turret, currentPlayer)
+        Game.setUpAction(currentPlayer.turretStats.shootRange, Game.GameMoves.turretShoot)
+    End Sub
+
+    Public Sub turretShoot(gridCoord As Coordinate)
+        Me.grid.clearSelected()
+        Dim currentPlayer = Me.getCurrentPlayer()
+        Dim selectedEntity = Me.grid.grid(gridCoord.y)(gridCoord.x)
+        Select Case selectedEntity.entityType
+            Case EntityType.Player
+                Dim otherPlayer As Player = selectedEntity
+                MsgBox("You have shot at x:" & gridCoord.x & " y:" & gridCoord.y & " which has hit player: " & otherPlayer.playerName)
+                otherPlayer.playerStats.health -= currentPlayer.playerstats.attack * 5 - (otherPlayer.playerStats.armor * 0.2)
+                updateActionPoints(Me.moveCosts.turret, currentPlayer)
+            Case EntityType.Empty
+                MsgBox("You have shot at x:" & gridCoord.x & " y:" & gridCoord.y & " which is empty")
+            Case Else
+                Throw New Exception("Entity type is invalid: " & selectedEntity.entityType.ToString)
+        End Select
     End Sub
 End Class
 
@@ -205,9 +247,11 @@ Public Structure GameInformation
     Public rows As Integer
     Public cols As Integer
     Public moveCosts As MoveCosts
+    Public actionPoints As Integer
 End Structure
 
 Public Enum EntityType
     Empty
     Player
+    Turret
 End Enum

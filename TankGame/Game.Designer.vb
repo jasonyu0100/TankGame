@@ -46,9 +46,11 @@ Partial Class Game
         Me.GameHudGroup.Controls.Add(Me.BuildButton)
         Me.GameHudGroup.Controls.Add(Me.MoveButton)
         Me.GameHudGroup.Controls.Add(Me.ShootButton)
-        Me.GameHudGroup.Location = New System.Drawing.Point(0, 645)
+        Me.GameHudGroup.Location = New System.Drawing.Point(13, 747)
+        Me.GameHudGroup.Margin = New System.Windows.Forms.Padding(4)
         Me.GameHudGroup.Name = "GameHudGroup"
-        Me.GameHudGroup.Size = New System.Drawing.Size(586, 130)
+        Me.GameHudGroup.Padding = New System.Windows.Forms.Padding(4)
+        Me.GameHudGroup.Size = New System.Drawing.Size(781, 204)
         Me.GameHudGroup.TabIndex = 0
         Me.GameHudGroup.TabStop = False
         Me.GameHudGroup.Text = "Game Hud"
@@ -56,94 +58,104 @@ Partial Class Game
         'ActionPointsLabel
         '
         Me.ActionPointsLabel.AutoSize = True
-        Me.ActionPointsLabel.Location = New System.Drawing.Point(184, 24)
+        Me.ActionPointsLabel.Location = New System.Drawing.Point(245, 30)
+        Me.ActionPointsLabel.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
         Me.ActionPointsLabel.Name = "ActionPointsLabel"
-        Me.ActionPointsLabel.Size = New System.Drawing.Size(72, 13)
+        Me.ActionPointsLabel.Size = New System.Drawing.Size(94, 17)
         Me.ActionPointsLabel.TabIndex = 8
         Me.ActionPointsLabel.Text = "Action Points:"
         '
         'PlayerHealth
         '
         Me.PlayerHealth.AutoSize = True
-        Me.PlayerHealth.Location = New System.Drawing.Point(15, 129)
+        Me.PlayerHealth.Location = New System.Drawing.Point(143, 30)
+        Me.PlayerHealth.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
         Me.PlayerHealth.Name = "PlayerHealth"
-        Me.PlayerHealth.Size = New System.Drawing.Size(44, 13)
+        Me.PlayerHealth.Size = New System.Drawing.Size(57, 17)
         Me.PlayerHealth.TabIndex = 7
         Me.PlayerHealth.Text = "Health: "
         '
         'PlayerName
         '
         Me.PlayerName.AutoSize = True
-        Me.PlayerName.Location = New System.Drawing.Point(15, 24)
+        Me.PlayerName.Location = New System.Drawing.Point(20, 30)
+        Me.PlayerName.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
         Me.PlayerName.Name = "PlayerName"
-        Me.PlayerName.Size = New System.Drawing.Size(41, 13)
+        Me.PlayerName.Size = New System.Drawing.Size(53, 17)
         Me.PlayerName.TabIndex = 6
         Me.PlayerName.Text = "Name: "
         '
         'TurnNumLabel
         '
         Me.TurnNumLabel.AutoSize = True
-        Me.TurnNumLabel.Location = New System.Drawing.Point(347, 24)
+        Me.TurnNumLabel.Location = New System.Drawing.Point(463, 30)
+        Me.TurnNumLabel.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
         Me.TurnNumLabel.Name = "TurnNumLabel"
-        Me.TurnNumLabel.Size = New System.Drawing.Size(75, 13)
+        Me.TurnNumLabel.Size = New System.Drawing.Size(100, 17)
         Me.TurnNumLabel.TabIndex = 5
         Me.TurnNumLabel.Text = "Turn Number: "
         '
         'EndTurnButton
         '
-        Me.EndTurnButton.Location = New System.Drawing.Point(484, 72)
+        Me.EndTurnButton.Location = New System.Drawing.Point(646, 62)
+        Me.EndTurnButton.Margin = New System.Windows.Forms.Padding(4)
         Me.EndTurnButton.Name = "EndTurnButton"
-        Me.EndTurnButton.Size = New System.Drawing.Size(75, 47)
+        Me.EndTurnButton.Size = New System.Drawing.Size(100, 58)
         Me.EndTurnButton.TabIndex = 4
         Me.EndTurnButton.Text = "End Turn (T)"
         Me.EndTurnButton.UseVisualStyleBackColor = True
         '
         'TurretButton
         '
-        Me.TurretButton.Location = New System.Drawing.Point(368, 72)
+        Me.TurretButton.Location = New System.Drawing.Point(486, 62)
+        Me.TurretButton.Margin = New System.Windows.Forms.Padding(4)
         Me.TurretButton.Name = "TurretButton"
-        Me.TurretButton.Size = New System.Drawing.Size(75, 47)
+        Me.TurretButton.Size = New System.Drawing.Size(100, 58)
         Me.TurretButton.TabIndex = 3
         Me.TurretButton.Text = "Turret (R)"
         Me.TurretButton.UseVisualStyleBackColor = True
         '
         'BuildButton
         '
-        Me.BuildButton.Location = New System.Drawing.Point(253, 72)
+        Me.BuildButton.Location = New System.Drawing.Point(337, 62)
+        Me.BuildButton.Margin = New System.Windows.Forms.Padding(4)
         Me.BuildButton.Name = "BuildButton"
-        Me.BuildButton.Size = New System.Drawing.Size(75, 47)
+        Me.BuildButton.Size = New System.Drawing.Size(100, 58)
         Me.BuildButton.TabIndex = 2
         Me.BuildButton.Text = "Build (E)"
         Me.BuildButton.UseVisualStyleBackColor = True
         '
         'MoveButton
         '
-        Me.MoveButton.Location = New System.Drawing.Point(132, 72)
+        Me.MoveButton.Location = New System.Drawing.Point(176, 62)
+        Me.MoveButton.Margin = New System.Windows.Forms.Padding(4)
         Me.MoveButton.Name = "MoveButton"
-        Me.MoveButton.Size = New System.Drawing.Size(75, 47)
+        Me.MoveButton.Size = New System.Drawing.Size(100, 58)
         Me.MoveButton.TabIndex = 1
         Me.MoveButton.Text = "Move (W)"
         Me.MoveButton.UseVisualStyleBackColor = True
         '
         'ShootButton
         '
-        Me.ShootButton.Location = New System.Drawing.Point(17, 72)
+        Me.ShootButton.Location = New System.Drawing.Point(23, 62)
+        Me.ShootButton.Margin = New System.Windows.Forms.Padding(4)
         Me.ShootButton.Name = "ShootButton"
-        Me.ShootButton.Size = New System.Drawing.Size(75, 47)
+        Me.ShootButton.Size = New System.Drawing.Size(100, 58)
         Me.ShootButton.TabIndex = 0
         Me.ShootButton.Text = "Shoot (Q)"
         Me.ShootButton.UseVisualStyleBackColor = True
         '
         'Game
         '
-        Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
+        Me.AutoScaleDimensions = New System.Drawing.SizeF(8.0!, 16.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.AutoSize = True
         Me.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink
         Me.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch
-        Me.ClientSize = New System.Drawing.Size(586, 774)
+        Me.ClientSize = New System.Drawing.Size(781, 953)
         Me.Controls.Add(Me.GameHudGroup)
         Me.KeyPreview = True
+        Me.Margin = New System.Windows.Forms.Padding(4)
         Me.Name = "Game"
         Me.Text = "Form1"
         Me.GameHudGroup.ResumeLayout(False)
