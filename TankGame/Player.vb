@@ -2,11 +2,12 @@
     Inherits Entity
     Public playerNum As Integer
     Public playerName As String
-    Public shiftPercent = 0.1
     Public playerStats As PlayerStats
+
     Public turretStats As TurretStats
     Public turrets As List(Of Turret)
     Public turretImageFile As Image
+    Public currentTurret As Turret
 
     Public Sub New(gridCoordinate As Coordinate, actualCoordinate As Coordinate, playerNum As Integer, imageFile As Image, playerName As String, playerStats As PlayerStats, turretStats As TurretStats, turretImageFile As Image)
         MyBase.New(gridCoordinate, actualCoordinate, imageFile)
@@ -17,10 +18,11 @@
         Me.turretStats = turretStats
         Me.turretImageFile = turretImageFile
         Me.turrets = New List(Of Turret)
+        Me.currentTurret = Nothing
     End Sub
 
     Public Overloads Sub createElement(squareSize As Double, form As Form)
-        Dim shift As Double = squareSize * Me.shiftPercent
+        Dim shift As Double = squareSize * shiftPercent
         Dim pictureElement = New System.Windows.Forms.PictureBox()
         form.Controls.Add(pictureElement)
         pictureElement.Image = Me.imageFile
@@ -32,7 +34,7 @@
     End Sub
 
     Private Sub pictureElement_Click(ByVal sender As Object, ByVal e As EventArgs)
-        Dim correspondingGridSquare = Game.currentGame.grid.squares(Me.gridCoordinate.y)(Me.gridCoordinate.x)
+        Dim correspondingGridSquare = Game.currentGame.grid.gridSquaresGrid(Me.gridCoordinate.y)(Me.gridCoordinate.x)
         If correspondingGridSquare.changed = True Then
             Game.executeAction(Me.gridCoordinate)
         End If

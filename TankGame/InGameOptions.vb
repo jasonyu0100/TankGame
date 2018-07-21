@@ -3,14 +3,23 @@
 Public Class InGameOptions
     Public players As New List(Of Player)
     Public currentPlayerNum = 0
-    Public defaultTankLocation = Application.StartupPath() & "\resources\tank.jpg"
-    Public defaultTurretLocation = Application.StartupPath() & "\resources\turret.jpg"
-    Public defaultGridBoxLocation = Application.StartupPath() & "\resources\tile.jpg"
-    Public defaultSelectionBoxLocation = Application.StartupPath() & "\resources\red.jpg"
-    Public defaultHighLightBoxLocation = Application.StartupPath() & "\resources\green.jpg"
+    Public defaultTankLocation = Application.StartupPath() & "\resources\Images\tank.jpg"
+    Public defaultTurretLocation = Application.StartupPath() & "\resources\Images\turret.jpg"
+    Public defaultGridBoxLocation = Application.StartupPath() & "\resources\Images\tile.jpg"
+    Public defaultSelectionBoxLocation = Application.StartupPath() & "\resources\Images\red.jpg"
+    Public defaultHighLightBoxLocation = Application.StartupPath() & "\resources\Images\green.jpg"
+    Public defaultGrassBoxLocation = Application.StartupPath() & "\resources\Images\grass.jpg"
+    Public defaultRoadBoxLocation = Application.StartupPath() & "\resources\Images\road.jpg"
+    Public defaultWaterBoxLocation = Application.StartupPath() & "\resources\Images\water.jpg"
+    Public defaultMountainBoxLocation = Application.StartupPath() & "\resources\Images\mountain.jpg"
+    Public defaultMapLocation = Application.StartupPath() & "\resources\Maps\map.txt"
+
     Public gameInfo As GameInformation
     Public squareImages As SquareImages
+    Public entityImages As EnvironmentalImages
     Public moveCosts As MoveCosts
+    Public map As List(Of List(Of Char))
+    Public customMap As Boolean = False
     'Constants
     Public defaultShootCost = 4
     Public defaultMoveCost = 4
@@ -36,10 +45,25 @@ Public Class InGameOptions
             Me.gameInfo.cols = Me.ColumnsInput.Value
             Me.gameInfo.moveCosts = Me.moveCosts
             Me.gameInfo.actionPoints = Me.defaultActionPoints
+
             Me.squareImages.normalImage = Image.FromFile(GridBoxImage.ImageLocation)
             Me.squareImages.selectedImage = Image.FromFile(SelectedBoxImage.ImageLocation)
             Me.squareImages.highLightedImage = Image.FromFile(HighLightImageBox.ImageLocation)
-            Dim gameCore = New GameCore(Me.gameInfo, Me.squareImages)
+
+            Me.entityImages.Grass = Image.FromFile(GrassImageBox.ImageLocation)
+            Me.entityImages.Water = Image.FromFile(WaterImageBox.ImageLocation)
+            Me.entityImages.Road = Image.FromFile(RoadImageBox.ImageLocation)
+            Me.entityImages.Mountain = Image.FromFile(MountainImageBox.ImageLocation)
+
+            Me.gameInfo.squareImages = Me.squareImages
+            Me.gameInfo.entityImages = Me.entityImages
+
+            Me.gameInfo.map = getMap()
+            If Me.customMap = True Then
+                Me.gameInfo.rows = Me.gameInfo.map.Count
+                Me.gameInfo.cols = Me.gameInfo.map(0).Count
+            End If
+            Dim gameCore = New GameCore(Me.gameInfo)
             Game.loadGameCore(gameCore)
             Game.Show()
             Me.Hide()
@@ -107,6 +131,14 @@ Public Class InGameOptions
         GridBoxImage.ImageLocation = Me.defaultGridBoxLocation
         SelectedBoxImage.ImageLocation = Me.defaultSelectionBoxLocation
         HighLightImageBox.ImageLocation = Me.defaultHighLightBoxLocation
+        GrassImageBox.ImageLocation = Me.defaultGrassBoxLocation
+        WaterImageBox.ImageLocation = Me.defaultWaterBoxLocation
+        RoadImageBox.ImageLocation = Me.defaultRoadBoxLocation
+        MountainImageBox.ImageLocation = Me.defaultMountainBoxLocation
+
+        Me.map = Me.parseMap(Me.defaultMapLocation)
+        updateMapDisplay(Me.map)
+
         Me.moveCosts.shoot = defaultShootCost
         Me.moveCosts.move = defaultMoveCost
         Me.moveCosts.build = defaultBuildCost
@@ -116,6 +148,18 @@ Public Class InGameOptions
         Me.ArmorInput.Value = Me.defaultArmor
         Me.SpeedInput.Value = Me.defaultSpeed
         Me.AvailablePointsLabel.Text = "Available Points: " & Me.defaultStatPoints - (Me.AttackInput.Value + Me.ArmorInput.Value + Me.SpeedInput.Value)
+    End Sub
+
+    Private Sub updateMapDisplay(map As List(Of List(Of Char)))
+        Dim text As String = ""
+        For Each row As List(Of Char) In map
+            For Each letter As Char In row
+                text += letter
+                text += " "
+            Next
+            text += vbNewLine
+        Next
+        MapDisplay.Text = text
     End Sub
 
     Private Sub RowsInput_Validating(sender As Object, e As CancelEventArgs) Handles RowsInput.Validating
@@ -174,7 +218,6 @@ Public Class InGameOptions
         StartPromptText.Show()
     End Sub
 
-
     Private Sub AttackInput_Validating(sender As Object, e As CancelEventArgs) Handles AttackInput.Validating
         Dim newTotal = sender.value + SpeedInput.Value + ArmorInput.Value
         If newTotal > Me.defaultStatPoints Then
@@ -222,11 +265,103 @@ Public Class InGameOptions
             TurretImage.ImageLocation = fileDialog.FileName
         End If
     End Sub
-End Class
 
-Public Structure MoveCosts
-    Public shoot As Integer
-    Public move As Integer
-    Public turret As Integer
-    Public build As Integer
-End Structure
+    Private Sub ImportMapButton_Click(sender As Object, e As EventArgs) Handles ImportMapButton.Click
+        Me.CustomMapCheckBox.Checked = True
+        Dim fileDialog As New OpenFileDialog()
+        fileDialog.Filter = "TXT files|*.txt"
+        fileDialog.Title = "Select a TXT file"
+        If fileDialog.ShowDialog() = System.Windows.Forms.DialogResult.OK Then
+            Me.map = Me.parseMap(fileDialog.FileName)
+            updateMapDisplay(Me.map)
+        End If
+    End Sub
+
+    Private Function parseMap(filePath As String)
+        Dim fileReader As String
+        fileReader = My.Computer.FileSystem.ReadAllText(filePath)
+        Dim items() As String = fileReader.Split(Environment.NewLine)
+        Dim rows As Integer = items(0)
+        Dim cols As Integer = items(1)
+        Dim map = New List(Of List(Of Char))
+        For i = 0 To rows - 1
+            Dim row As List(Of Char) = New List(Of Char)
+            For j = 1 To cols
+                row.Add(items(2 + i)(j))
+            Next
+            map.Add(row)
+        Next
+        Return map
+    End Function
+
+    Private Function createEmptyMap(rows As Integer, columns As Integer)
+        Dim emptyMap = New List(Of List(Of Char))
+        For r = 0 To rows - 1
+            Dim row = New List(Of Char)
+            For c = 0 To columns - 1
+                row.Add(Grass.characterIdentifier)
+            Next
+            emptyMap.Add(row)
+        Next
+        Return emptyMap
+    End Function
+
+    Private Sub CustomMapCheckBox_CheckedChanged(sender As Object, e As EventArgs) Handles CustomMapCheckBox.CheckedChanged
+        customMap = Me.CustomMapCheckBox.Checked
+    End Sub
+
+    Private Function getMap()
+        Dim currentMap = New List(Of List(Of Char))
+        If Me.customMap = False Then
+            currentMap = createEmptyMap(Me.RowsInput.Value, Me.ColumnsInput.Value)
+        Else
+            currentMap = Me.map
+        End If
+        Return currentMap
+    End Function
+
+    Private Sub GrassBoxButton_Click(sender As Object, e As EventArgs) Handles GrassBoxButton.Click
+        Dim fileDialog As New OpenFileDialog()
+        fileDialog.Filter = "JPG Files|*.jpg"
+        fileDialog.Title = "Select a JPG file"
+        If fileDialog.ShowDialog() = System.Windows.Forms.DialogResult.OK Then
+            RoadImageBox.ImageLocation = fileDialog.FileName
+        End If
+    End Sub
+
+    Private Sub WaterBoxButton_Click(sender As Object, e As EventArgs) Handles WaterBoxButton.Click
+        Dim fileDialog As New OpenFileDialog()
+        fileDialog.Filter = "JPG Files|*.jpg"
+        fileDialog.Title = "Select a JPG file"
+        If fileDialog.ShowDialog() = System.Windows.Forms.DialogResult.OK Then
+            WaterImageBox.ImageLocation = fileDialog.FileName
+        End If
+    End Sub
+
+    Private Sub RoadBoxButton_Click(sender As Object, e As EventArgs) Handles RoadBoxButton.Click
+        Dim fileDialog As New OpenFileDialog()
+        fileDialog.Filter = "JPG Files|*.jpg"
+        fileDialog.Title = "Select a JPG file"
+        If fileDialog.ShowDialog() = System.Windows.Forms.DialogResult.OK Then
+            RoadImageBox.ImageLocation = fileDialog.FileName
+        End If
+    End Sub
+
+    Private Sub MountainBoxButton_Click(sender As Object, e As EventArgs) Handles MountainBoxButton.Click
+        Dim fileDialog As New OpenFileDialog()
+        fileDialog.Filter = "JPG Files|*.jpg"
+        fileDialog.Title = "Select a JPG file"
+        If fileDialog.ShowDialog() = System.Windows.Forms.DialogResult.OK Then
+            MountainImageBox.ImageLocation = fileDialog.FileName
+        End If
+    End Sub
+
+    Private Sub EmptyBoxButton_Click(sender As Object, e As EventArgs) Handles EmptyBoxButton.Click
+        Dim fileDialog As New OpenFileDialog()
+        fileDialog.Filter = "JPG Files|*.jpg"
+        fileDialog.Title = "Select a JPG file"
+        If fileDialog.ShowDialog() = System.Windows.Forms.DialogResult.OK Then
+            EmptyImageBox.ImageLocation = fileDialog.FileName
+        End If
+    End Sub
+End Class

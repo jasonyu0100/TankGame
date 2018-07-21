@@ -1,9 +1,7 @@
 ﻿Public Class Turret
     Inherits Entity
-    Public shiftPercent = 0.1
     Public turretStats As TurretStats
     Public playerNum As Integer
-    Public entityType As EntityType
 
     Public Sub New(gridCoordinate As Coordinate, actualCoordinate As Coordinate, playerNum As Integer, imageFile As Image, turretStats As TurretStats)
         MyBase.New(gridCoordinate, actualCoordinate, imageFile)
@@ -25,7 +23,7 @@
     End Sub
 
     Private Sub pictureElement_Click(ByVal sender As Object, ByVal e As EventArgs)
-        Dim correspondingGridSquare = Game.currentGame.grid.squares(Me.gridCoordinate.y)(Me.gridCoordinate.x)
+        Dim correspondingGridSquare = Game.currentGame.grid.gridSquaresGrid(Me.gridCoordinate.y)(Me.gridCoordinate.x)
         If correspondingGridSquare.changed = True Then
             Game.executeAction(Me.gridCoordinate)
         End If

@@ -73,6 +73,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Empty.vb" />
+    <Compile Include="EnvironmentalEntities.vb" />
     <Compile Include="GameCore.vb" />
     <Compile Include="InGameOptions.Designer.vb">
       <DependentUpon>InGameOptions.vb</DependentUpon>

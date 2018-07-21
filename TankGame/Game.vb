@@ -22,37 +22,41 @@
     End Sub
 
     Public Sub handleMove(move As GameMoves)
-        Dim currentPlayerStats = Me.currentGame.getCurrentPlayer().playerStats
+        Dim currentPlayer = Me.currentGame.getCurrentPlayer()
+        Dim currentPlayerStats = currentPlayer.playerStats
         Select Case move
             Case GameMoves.shoot
                 If currentPlayerStats.actionPoints < Me.currentGame.moveCosts.shoot Then
                     MsgBox("Not enough action points")
                 Else
-                    setUpAction(currentPlayerStats.shootRange, move)
+                    Me.currentGame.displayActionPositions(currentPlayerStats.shootRange, currentPlayer.gridCoordinate)
+                    Me.selectedAction = move
                 End If
             Case GameMoves.move
                 If currentPlayerStats.actionPoints < Me.currentGame.moveCosts.move Then
                     MsgBox("Not enough action points")
                 Else
-                    setUpAction(currentPlayerStats.moveRange, move)
+                    Me.currentGame.displayActionPositions(currentPlayerStats.moveRange, currentPlayer.gridCoordinate)
+                    Me.selectedAction = move
                 End If
             Case GameMoves.build
                 If currentPlayerStats.actionPoints < Me.currentGame.moveCosts.build Then
                     MsgBox("Not enough action points")
                 Else
-                    setUpAction(currentPlayerStats.buildRange, move)
+                    Me.currentGame.displayActionPositions(currentPlayerStats.buildRange, currentPlayer.gridCoordinate)
+                    Me.selectedAction = move
                 End If
             Case GameMoves.turret
-                Me.currentGame.displayPossibleTurrets()
-                Me.selectedAction = move
+                If currentPlayerStats.actionPoints < Me.currentGame.moveCosts.turret Then
+                    MsgBox("Not enough action points")
+                Else
+                    Me.currentGame.displayPossibleTurrets()
+                    Me.selectedAction = move
+                End If
             Case Else
                 MsgBox("Move is invalid")
         End Select
-    End Sub
-
-    Public Sub setUpAction(range As Integer, move As GameMoves)
-        Me.currentGame.displayActionPositions(range)
-        Me.selectedAction = move
+        Me.currentGame.updateHud(currentPlayer)
     End Sub
 
     Private Sub ShootButton_Click(sender As Object, e As EventArgs) Handles ShootButton.Click

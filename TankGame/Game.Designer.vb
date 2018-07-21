@@ -32,11 +32,21 @@ Partial Class Game
         Me.BuildButton = New System.Windows.Forms.Button()
         Me.MoveButton = New System.Windows.Forms.Button()
         Me.ShootButton = New System.Windows.Forms.Button()
+        Me.Label1 = New System.Windows.Forms.Label()
+        Me.Label2 = New System.Windows.Forms.Label()
+        Me.Label3 = New System.Windows.Forms.Label()
+        Me.Label4 = New System.Windows.Forms.Label()
+        Me.Label5 = New System.Windows.Forms.Label()
         Me.GameHudGroup.SuspendLayout()
         Me.SuspendLayout()
         '
         'GameHudGroup
         '
+        Me.GameHudGroup.Controls.Add(Me.Label5)
+        Me.GameHudGroup.Controls.Add(Me.Label4)
+        Me.GameHudGroup.Controls.Add(Me.Label3)
+        Me.GameHudGroup.Controls.Add(Me.Label2)
+        Me.GameHudGroup.Controls.Add(Me.Label1)
         Me.GameHudGroup.Controls.Add(Me.ActionPointsLabel)
         Me.GameHudGroup.Controls.Add(Me.PlayerHealth)
         Me.GameHudGroup.Controls.Add(Me.PlayerName)
@@ -58,7 +68,7 @@ Partial Class Game
         'ActionPointsLabel
         '
         Me.ActionPointsLabel.AutoSize = True
-        Me.ActionPointsLabel.Location = New System.Drawing.Point(245, 30)
+        Me.ActionPointsLabel.Location = New System.Drawing.Point(343, 30)
         Me.ActionPointsLabel.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
         Me.ActionPointsLabel.Name = "ActionPointsLabel"
         Me.ActionPointsLabel.Size = New System.Drawing.Size(94, 17)
@@ -68,7 +78,7 @@ Partial Class Game
         'PlayerHealth
         '
         Me.PlayerHealth.AutoSize = True
-        Me.PlayerHealth.Location = New System.Drawing.Point(143, 30)
+        Me.PlayerHealth.Location = New System.Drawing.Point(173, 30)
         Me.PlayerHealth.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
         Me.PlayerHealth.Name = "PlayerHealth"
         Me.PlayerHealth.Size = New System.Drawing.Size(57, 17)
@@ -88,7 +98,7 @@ Partial Class Game
         'TurnNumLabel
         '
         Me.TurnNumLabel.AutoSize = True
-        Me.TurnNumLabel.Location = New System.Drawing.Point(463, 30)
+        Me.TurnNumLabel.Location = New System.Drawing.Point(495, 30)
         Me.TurnNumLabel.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
         Me.TurnNumLabel.Name = "TurnNumLabel"
         Me.TurnNumLabel.Size = New System.Drawing.Size(100, 17)
@@ -145,6 +155,46 @@ Partial Class Game
         Me.ShootButton.Text = "Shoot (Q)"
         Me.ShootButton.UseVisualStyleBackColor = True
         '
+        'Label1
+        '
+        Me.Label1.Location = New System.Drawing.Point(20, 121)
+        Me.Label1.Name = "Label1"
+        Me.Label1.Size = New System.Drawing.Size(112, 76)
+        Me.Label1.TabIndex = 1
+        Me.Label1.Text = "Shoots a projectile that deals heavy damage!"
+        '
+        'Label2
+        '
+        Me.Label2.Location = New System.Drawing.Point(173, 124)
+        Me.Label2.Name = "Label2"
+        Me.Label2.Size = New System.Drawing.Size(112, 76)
+        Me.Label2.TabIndex = 9
+        Me.Label2.Text = "Moves your tank to a new location"
+        '
+        'Label3
+        '
+        Me.Label3.Location = New System.Drawing.Point(334, 121)
+        Me.Label3.Name = "Label3"
+        Me.Label3.Size = New System.Drawing.Size(112, 76)
+        Me.Label3.TabIndex = 10
+        Me.Label3.Text = "Builds a building in a designated location"
+        '
+        'Label4
+        '
+        Me.Label4.Location = New System.Drawing.Point(483, 121)
+        Me.Label4.Name = "Label4"
+        Me.Label4.Size = New System.Drawing.Size(112, 76)
+        Me.Label4.TabIndex = 11
+        Me.Label4.Text = "Commands your turret to do something"
+        '
+        'Label5
+        '
+        Me.Label5.Location = New System.Drawing.Point(644, 124)
+        Me.Label5.Name = "Label5"
+        Me.Label5.Size = New System.Drawing.Size(112, 76)
+        Me.Label5.TabIndex = 12
+        Me.Label5.Text = "Ends your turn"
+        '
         'Game
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(8.0!, 16.0!)
@@ -152,7 +202,7 @@ Partial Class Game
         Me.AutoSize = True
         Me.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink
         Me.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch
-        Me.ClientSize = New System.Drawing.Size(781, 953)
+        Me.ClientSize = New System.Drawing.Size(778, 953)
         Me.Controls.Add(Me.GameHudGroup)
         Me.KeyPreview = True
         Me.Margin = New System.Windows.Forms.Padding(4)
@@ -174,4 +224,9 @@ Partial Class Game
     Friend WithEvents PlayerName As Label
     Friend WithEvents TurnNumLabel As Label
     Friend WithEvents ActionPointsLabel As Label
+    Friend WithEvents Label5 As Label
+    Friend WithEvents Label4 As Label
+    Friend WithEvents Label3 As Label
+    Friend WithEvents Label2 As Label
+    Friend WithEvents Label1 As Label
 End Class

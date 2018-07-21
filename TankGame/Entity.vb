@@ -1,4 +1,5 @@
 ﻿Public Class Entity
+    Public Const shiftPercent = 0.03
     Public actualCoordinate As Coordinate
     Public gridCoordinate As Coordinate
     Public imageFile As Image
@@ -21,5 +22,4 @@
         Me.pictureElement = pictureElement
         form.Controls.Add(Me.pictureElement)
     End Sub
-
 End Class
