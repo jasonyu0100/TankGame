@@ -21,15 +21,29 @@ Public Class InGameOptions
     Public map As List(Of List(Of Char))
     Public customMap As Boolean = False
     'Constants
-    Public defaultShootCost = 4
-    Public defaultMoveCost = 4
-    Public defaultBuildCost = 4
-    Public defaultTurretCost = 4
-    Public defaultStatPoints = 18
+    Public defaultShootCost = 12
+    Public defaultGrassMoveCost = 5
+    Public defaultRoadMoveCost = 2
+    Public defaultWaterMoveCost = 7
+    Public defaultBuildCost = 15
+    Public defaultTurretShootCost = 6
+
+    Public availableExtraStats = 8
+    Public defaultStatCount = 2
+
     Public defaultAttack = 5
     Public defaultArmor = 5
     Public defaultSpeed = 5
-    Public defaultActionPoints = 8
+    Public defaultActionPoints = 20
+    Public defaultHealth = 100
+
+    Public defaultTurretHealth = 20
+    Public defaultTurretAttack = 3
+    Public defaultTurretRange = 3
+
+    Public defaultShootRange = 4
+    Public defaultMoveRange = 3
+    Public defaultBuildRange = 1
 
     Private Sub InGameOptions_Closed(sender As Object, e As EventArgs) Handles Me.Closed
         StartUp.Close()
@@ -58,11 +72,8 @@ Public Class InGameOptions
             Me.gameInfo.squareImages = Me.squareImages
             Me.gameInfo.entityImages = Me.entityImages
 
-            Me.gameInfo.map = getMap()
-            If Me.customMap = True Then
-                Me.gameInfo.rows = Me.gameInfo.map.Count
-                Me.gameInfo.cols = Me.gameInfo.map(0).Count
-            End If
+            miscellaneousChecks()
+
             Dim gameCore = New GameCore(Me.gameInfo)
             Game.loadGameCore(gameCore)
             Game.Show()
@@ -70,11 +81,39 @@ Public Class InGameOptions
         End If
     End Sub
 
+    Private Sub miscellaneousChecks()
+        Me.gameInfo.map = getMap()
+        If Me.customMap = True Then
+            Me.gameInfo.rows = Me.gameInfo.map.Count
+            Me.gameInfo.cols = Me.gameInfo.map(0).Count
+        End If
+
+        If Me.BallisticModeCheck.Checked Then
+            For Each player In players
+                player.playerStats.attack *= 1.5
+            Next
+        End If
+
+        If Me.ExtraHealthCheck.Checked Then
+            For Each player In players
+                player.playerStats.health *= 1.5
+            Next
+        End If
+
+        If Me.BlizModeCheck.Checked Then
+            For Each player In players
+                player.playerStats.actionPoints *= 1.5
+            Next
+        End If
+    End Sub
+
     Private Sub AddPlayerButton_Click(sender As Object, e As EventArgs) Handles AddPlayerButton.Click
         If (currentPlayerNum > Me.PlayerCountInput.Value - 1) Then
             MsgBox("Player Count Specified has been exceeded")
         Else
-            Dim currentPlayer = New Player(New Coordinate(0, 0), New Coordinate(0, 0), Me.currentPlayerNum, Image.FromFile(TankImage.ImageLocation), Me.NameInput.Text, Me.getCurrentPlayerStats(), Me.getCurrentTurretStats(), Image.FromFile(TurretImage.ImageLocation))
+            Dim turretImg = Image.FromFile(TurretImage.ImageLocation)
+            Dim playerImg = Image.FromFile(TankImage.ImageLocation)
+            Dim currentPlayer = New Player(New Coordinate(0, 0), New Coordinate(0, 0), Me.currentPlayerNum, playerImg, Me.NameInput.Text, Me.getCurrentPlayerStats(), Me.getCurrentTurretStats(), turretImg)
             Me.players.Add(currentPlayer)
             Me.currentPlayerNum += 1
             Me.NameInput.Text = ""
@@ -88,31 +127,31 @@ Public Class InGameOptions
     End Sub
 
     Private Sub resetStats()
-        Me.AttackInput.Value = Me.defaultAttack
-        Me.ArmorInput.Value = Me.defaultArmor
-        Me.SpeedInput.Value = Me.defaultSpeed
-        Me.AvailablePointsLabel.Text = "Available Points: " & Me.defaultStatPoints - (Me.AttackInput.Value + Me.ArmorInput.Value + Me.SpeedInput.Value)
+        Me.AttackInput.Value = defaultStatCount
+        Me.ArmorInput.Value = defaultStatCount
+        Me.SpeedInput.Value = defaultStatCount
+        Me.AvailablePointsLabel.Text = "Available Points: " & Me.availableExtraStats - (Me.AttackInput.Value + Me.ArmorInput.Value + Me.SpeedInput.Value)
     End Sub
 
     Private Function getCurrentPlayerStats()
         Dim currentPlayerStats = New PlayerStats
-        currentPlayerStats.health = 100
-        currentPlayerStats.attack = Me.AttackInput.Value
-        currentPlayerStats.speed = Me.SpeedInput.Value
-        currentPlayerStats.armor = Me.ArmorInput.Value
-        currentPlayerStats.shootRange = 5
-        currentPlayerStats.moveRange = 3
-        currentPlayerStats.buildRange = 1
-        currentPlayerStats.turretRange = Nothing
+        currentPlayerStats.health = Me.defaultHealth
+        currentPlayerStats.attack = Me.defaultAttack + Me.AttackInput.Value
+        currentPlayerStats.speed = Me.defaultSpeed + Me.SpeedInput.Value
+        currentPlayerStats.armor = Me.defaultArmor + Me.ArmorInput.Value
+
+        currentPlayerStats.shootRange = Me.defaultShootRange
+        currentPlayerStats.moveRange = Me.defaultMoveRange
+        currentPlayerStats.buildRange = Me.defaultBuildRange
         currentPlayerStats.actionPoints = Me.defaultActionPoints
         Return currentPlayerStats
     End Function
 
     Private Function getCurrentTurretStats()
         Dim currentTurretStats = New TurretStats
-        currentTurretStats.health = 20
-        currentTurretStats.attack = 5
-        currentTurretStats.shootRange = 4
+        currentTurretStats.health = Me.defaultTurretHealth
+        currentTurretStats.attack = Me.defaultTurretAttack
+        currentTurretStats.shootRange = Me.defaultTurretRange
         Return currentTurretStats
     End Function
 
@@ -140,14 +179,16 @@ Public Class InGameOptions
         updateMapDisplay(Me.map)
 
         Me.moveCosts.shoot = defaultShootCost
-        Me.moveCosts.move = defaultMoveCost
+        Me.moveCosts.grassMove = defaultGrassMoveCost
+        Me.moveCosts.roadMove = defaultRoadMoveCost
+        Me.moveCosts.waterMove = defaultWaterMoveCost
         Me.moveCosts.build = defaultBuildCost
-        Me.moveCosts.turret = defaultTurretCost
+        Me.moveCosts.turretShoot = defaultTurretShootCost
 
-        Me.AttackInput.Value = Me.defaultAttack
-        Me.ArmorInput.Value = Me.defaultArmor
-        Me.SpeedInput.Value = Me.defaultSpeed
-        Me.AvailablePointsLabel.Text = "Available Points: " & Me.defaultStatPoints - (Me.AttackInput.Value + Me.ArmorInput.Value + Me.SpeedInput.Value)
+        Me.AttackInput.Value = defaultStatCount
+        Me.ArmorInput.Value = defaultStatCount
+        Me.SpeedInput.Value = defaultStatCount
+        Me.AvailablePointsLabel.Text = "Available Points: " & (Me.availableExtraStats - (Me.AttackInput.Value + Me.ArmorInput.Value + Me.SpeedInput.Value))
     End Sub
 
     Private Sub updateMapDisplay(map As List(Of List(Of Char)))
@@ -216,45 +257,6 @@ Public Class InGameOptions
         StartGameButton.Hide()
         AddPlayerButton.Show()
         StartPromptText.Show()
-    End Sub
-
-    Private Sub AttackInput_Validating(sender As Object, e As CancelEventArgs) Handles AttackInput.Validating
-        Dim newTotal = sender.value + SpeedInput.Value + ArmorInput.Value
-        If newTotal > Me.defaultStatPoints Then
-            MsgBox("Not enough stat points")
-            e.Cancel = True
-        ElseIf (sender.value < Me.defaultAttack) Then
-            MsgBox("Minimum points exceeded")
-            e.Cancel = True
-        Else
-            Me.AvailablePointsLabel.Text = "Available Points: " & Me.defaultStatPoints - (Me.AttackInput.Value + Me.ArmorInput.Value + Me.SpeedInput.Value)
-        End If
-    End Sub
-
-    Private Sub SpeedInput_Validating(sender As Object, e As CancelEventArgs) Handles SpeedInput.Validating
-        Dim newTotal = sender.value + AttackInput.Value + ArmorInput.Value
-        If newTotal > Me.defaultStatPoints Then
-            MsgBox("Not enough stat points")
-            e.Cancel = True
-        ElseIf (sender.value < Me.defaultSpeed) Then
-            MsgBox("Minimum points exceeded")
-            e.Cancel = True
-        Else
-            Me.AvailablePointsLabel.Text = "Available Points: " & Me.defaultStatPoints - (Me.AttackInput.Value + Me.ArmorInput.Value + Me.SpeedInput.Value)
-        End If
-    End Sub
-
-    Private Sub ArmorInput_Validating(sender As Object, e As CancelEventArgs) Handles ArmorInput.Validating
-        Dim newTotal = sender.value + SpeedInput.Value + AttackInput.Value
-        If newTotal > Me.defaultStatPoints Then
-            MsgBox("Not enough stat points")
-            e.Cancel = True
-        ElseIf (sender.value < Me.defaultArmor) Then
-            MsgBox("Minimum points exceeded")
-            e.Cancel = True
-        Else
-            Me.AvailablePointsLabel.Text = "Available Points: " & Me.defaultStatPoints - (Me.AttackInput.Value + Me.ArmorInput.Value + Me.SpeedInput.Value)
-        End If
     End Sub
 
     Private Sub TurretImageButton_Click(sender As Object, e As EventArgs) Handles TurretImageButton.Click
@@ -356,12 +358,37 @@ Public Class InGameOptions
         End If
     End Sub
 
-    Private Sub EmptyBoxButton_Click(sender As Object, e As EventArgs) Handles EmptyBoxButton.Click
-        Dim fileDialog As New OpenFileDialog()
-        fileDialog.Filter = "JPG Files|*.jpg"
-        fileDialog.Title = "Select a JPG file"
-        If fileDialog.ShowDialog() = System.Windows.Forms.DialogResult.OK Then
-            EmptyImageBox.ImageLocation = fileDialog.FileName
+    Private Sub RandomMapButton_Click(sender As Object, e As EventArgs) Handles RandomMapButton.Click
+        Dim currentMap = New List(Of List(Of Char))
+        Dim possibleChars() = {Grass.characterIdentifier, Water.characterIdentifier, Mountain.characterIdentifier, Road.characterIdentifier}
+        For r = 0 To RowsInput.Value
+            Dim row = New List(Of Char)
+            For c = 0 To ColumnsInput.Value
+                Dim index = CInt(Math.Floor(Rnd() * possibleChars.Count))
+                row.Add(possibleChars(index))
+            Next
+            currentMap.Add(row)
+        Next
+        Me.map = currentMap
+        Me.CustomMapCheckBox.Checked = True
+        updateMapDisplay(Me.map)
+    End Sub
+
+    Private Sub AttackInput_ValueChanged(sender As Object, e As EventArgs) Handles AttackInput.ValueChanged
+
+    End Sub
+
+    Private Sub SpeedInput_ValueChanged(sender As Object, e As EventArgs) Handles SpeedInput.ValueChanged
+
+    End Sub
+
+    Private Sub ArmorInput_ValueChanged(sender As Object, e As EventArgs) Handles ArmorInput.ValueChanged
+        Dim newTotal = sender.value + SpeedInput.Value + ArmorInput.Value
+        If newTotal > Me.availableExtraStats Then
+            MsgBox("Not enough stat points")
+            sender.value -= 1
+        Else
+            Me.AvailablePointsLabel.Text = "Available Points: " & Me.availableExtraStats - (Me.AttackInput.Value + Me.ArmorInput.Value + Me.SpeedInput.Value)
         End If
     End Sub
 End Class

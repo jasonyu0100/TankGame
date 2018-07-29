@@ -4,6 +4,9 @@
     Public selectImageFile As Image
     Public changed As Boolean = False
     Public squareImages As SquareImages
+    Public label As Label
+    Public moveCost As Integer
+    Public showingLabel = False
     Public Sub New(gridCoordinate As Coordinate, actualCoordinate As Coordinate, squareImages As SquareImages)
         MyBase.New(gridCoordinate, actualCoordinate, squareImages.normalImage)
         Me.squareImages = squareImages
@@ -34,6 +37,25 @@
         form.Controls.Add(pictureElement)
         AddHandler pictureElement.Click, AddressOf pictureElement_Click
         Me.pictureElement = pictureElement
+    End Sub
+
+    Public Sub createLabel(cost As Integer, squareSize As Double, form As Form)
+        Me.showingLabel = True
+        Me.moveCost = cost
+        Dim label As Label = New System.Windows.Forms.Label()
+        If cost >= 10000 Then
+            label.Text = "X"
+        Else
+            label.Text = cost
+        End If
+        label.TextAlign = ContentAlignment.MiddleCenter
+        label.Size = New System.Drawing.Size(squareSize / 4, squareSize / 4)
+        label.BackColor = Color.DarkGray
+        label.ForeColor = Color.Beige
+        label.Location = New System.Drawing.Point(Me.actualCoordinate.x, Me.actualCoordinate.y)
+        form.Controls.Add(label)
+        label.BringToFront()
+        Me.label = label
     End Sub
 
     Private Sub pictureElement_Click(ByVal sender As Object, ByVal e As EventArgs)

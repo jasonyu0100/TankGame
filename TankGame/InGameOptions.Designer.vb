@@ -60,8 +60,6 @@ Partial Class InGameOptions
         Me.SelectedBoxButton = New System.Windows.Forms.Button()
         Me.SelectedBoxImage = New System.Windows.Forms.PictureBox()
         Me.GameStylingGroup = New System.Windows.Forms.GroupBox()
-        Me.EmptyBoxButton = New System.Windows.Forms.Button()
-        Me.EmptyImageBox = New System.Windows.Forms.PictureBox()
         Me.MountainBoxButton = New System.Windows.Forms.Button()
         Me.MountainImageBox = New System.Windows.Forms.PictureBox()
         Me.RoadBoxButton = New System.Windows.Forms.Button()
@@ -75,23 +73,21 @@ Partial Class InGameOptions
         Me.BindingSource1 = New System.Windows.Forms.BindingSource(Me.components)
         Me.ImportMapButton = New System.Windows.Forms.Button()
         Me.GameplaySettingsGroup = New System.Windows.Forms.GroupBox()
+        Me.Label2 = New System.Windows.Forms.Label()
         Me.Label1 = New System.Windows.Forms.Label()
         Me.CustomMapCheckBox = New System.Windows.Forms.CheckBox()
         Me.MapLabel = New System.Windows.Forms.Label()
         Me.RandomMapButton = New System.Windows.Forms.Button()
         Me.MapDisplay = New System.Windows.Forms.Label()
         Me.TeamModeLabel = New System.Windows.Forms.Label()
-        Me.NoBuildingLabel = New System.Windows.Forms.Label()
-        Me.NoTurretLabel = New System.Windows.Forms.Label()
-        Me.EnvironmentModeLabel = New System.Windows.Forms.Label()
+        Me.ExtraHealthLabel = New System.Windows.Forms.Label()
+        Me.BallisticModeLabel = New System.Windows.Forms.Label()
         Me.BlitzText = New System.Windows.Forms.Label()
         Me.TeamsModeCheck = New System.Windows.Forms.CheckBox()
-        Me.AntiFortniteModeCheck = New System.Windows.Forms.CheckBox()
-        Me.GunSlingerModeCheck = New System.Windows.Forms.CheckBox()
-        Me.EnvironmentalModeCheck = New System.Windows.Forms.CheckBox()
+        Me.ExtraHealthCheck = New System.Windows.Forms.CheckBox()
+        Me.BallisticModeCheck = New System.Windows.Forms.CheckBox()
         Me.BlizModeCheck = New System.Windows.Forms.CheckBox()
         Me.StartPromptText = New System.Windows.Forms.Label()
-        Me.Label2 = New System.Windows.Forms.Label()
         CType(Me.RowsInput, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.PlayerCountInput, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.PlayerCreationGroup.SuspendLayout()
@@ -107,7 +103,6 @@ Partial Class InGameOptions
         CType(Me.GridBoxImage, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.SelectedBoxImage, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.GameStylingGroup.SuspendLayout()
-        CType(Me.EmptyImageBox, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.MountainImageBox, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.RoadImageBox, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.WaterImageBox, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -502,8 +497,6 @@ Partial Class InGameOptions
         '
         'GameStylingGroup
         '
-        Me.GameStylingGroup.Controls.Add(Me.EmptyBoxButton)
-        Me.GameStylingGroup.Controls.Add(Me.EmptyImageBox)
         Me.GameStylingGroup.Controls.Add(Me.MountainBoxButton)
         Me.GameStylingGroup.Controls.Add(Me.MountainImageBox)
         Me.GameStylingGroup.Controls.Add(Me.RoadBoxButton)
@@ -524,27 +517,6 @@ Partial Class InGameOptions
         Me.GameStylingGroup.TabIndex = 30
         Me.GameStylingGroup.TabStop = False
         Me.GameStylingGroup.Text = "Game Styling"
-        '
-        'EmptyBoxButton
-        '
-        Me.EmptyBoxButton.Location = New System.Drawing.Point(371, 266)
-        Me.EmptyBoxButton.Margin = New System.Windows.Forms.Padding(4)
-        Me.EmptyBoxButton.Name = "EmptyBoxButton"
-        Me.EmptyBoxButton.Size = New System.Drawing.Size(100, 31)
-        Me.EmptyBoxButton.TabIndex = 42
-        Me.EmptyBoxButton.Text = "Empty Box"
-        Me.EmptyBoxButton.UseVisualStyleBackColor = True
-        '
-        'EmptyImageBox
-        '
-        Me.EmptyImageBox.ImageLocation = ""
-        Me.EmptyImageBox.Location = New System.Drawing.Point(371, 169)
-        Me.EmptyImageBox.Margin = New System.Windows.Forms.Padding(4)
-        Me.EmptyImageBox.Name = "EmptyImageBox"
-        Me.EmptyImageBox.Size = New System.Drawing.Size(100, 100)
-        Me.EmptyImageBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage
-        Me.EmptyImageBox.TabIndex = 41
-        Me.EmptyImageBox.TabStop = False
         '
         'MountainBoxButton
         '
@@ -670,14 +642,12 @@ Partial Class InGameOptions
         Me.GameplaySettingsGroup.Controls.Add(Me.MapDisplay)
         Me.GameplaySettingsGroup.Controls.Add(Me.ImportMapButton)
         Me.GameplaySettingsGroup.Controls.Add(Me.TeamModeLabel)
-        Me.GameplaySettingsGroup.Controls.Add(Me.NoBuildingLabel)
-        Me.GameplaySettingsGroup.Controls.Add(Me.NoTurretLabel)
-        Me.GameplaySettingsGroup.Controls.Add(Me.EnvironmentModeLabel)
+        Me.GameplaySettingsGroup.Controls.Add(Me.ExtraHealthLabel)
+        Me.GameplaySettingsGroup.Controls.Add(Me.BallisticModeLabel)
         Me.GameplaySettingsGroup.Controls.Add(Me.BlitzText)
         Me.GameplaySettingsGroup.Controls.Add(Me.TeamsModeCheck)
-        Me.GameplaySettingsGroup.Controls.Add(Me.AntiFortniteModeCheck)
-        Me.GameplaySettingsGroup.Controls.Add(Me.GunSlingerModeCheck)
-        Me.GameplaySettingsGroup.Controls.Add(Me.EnvironmentalModeCheck)
+        Me.GameplaySettingsGroup.Controls.Add(Me.ExtraHealthCheck)
+        Me.GameplaySettingsGroup.Controls.Add(Me.BallisticModeCheck)
         Me.GameplaySettingsGroup.Controls.Add(Me.BlizModeCheck)
         Me.GameplaySettingsGroup.Location = New System.Drawing.Point(12, 211)
         Me.GameplaySettingsGroup.Name = "GameplaySettingsGroup"
@@ -685,6 +655,15 @@ Partial Class InGameOptions
         Me.GameplaySettingsGroup.TabIndex = 32
         Me.GameplaySettingsGroup.TabStop = False
         Me.GameplaySettingsGroup.Text = "Gameplay Settings (Optional)"
+        '
+        'Label2
+        '
+        Me.Label2.AutoSize = True
+        Me.Label2.Location = New System.Drawing.Point(202, 243)
+        Me.Label2.Name = "Label2"
+        Me.Label2.Size = New System.Drawing.Size(148, 17)
+        Me.Label2.TabIndex = 44
+        Me.Label2.Text = "Enables Custom Maps"
         '
         'Label1
         '
@@ -733,35 +712,27 @@ Partial Class InGameOptions
         '
         'TeamModeLabel
         '
-        Me.TeamModeLabel.Location = New System.Drawing.Point(202, 211)
+        Me.TeamModeLabel.Location = New System.Drawing.Point(202, 205)
         Me.TeamModeLabel.Name = "TeamModeLabel"
         Me.TeamModeLabel.Size = New System.Drawing.Size(195, 31)
         Me.TeamModeLabel.TabIndex = 36
         Me.TeamModeLabel.Text = "Enables Teams"
         '
-        'NoBuildingLabel
+        'ExtraHealthLabel
         '
-        Me.NoBuildingLabel.Location = New System.Drawing.Point(202, 176)
-        Me.NoBuildingLabel.Name = "NoBuildingLabel"
-        Me.NoBuildingLabel.Size = New System.Drawing.Size(195, 25)
-        Me.NoBuildingLabel.TabIndex = 17
-        Me.NoBuildingLabel.Text = "Disable Buildings"
+        Me.ExtraHealthLabel.Location = New System.Drawing.Point(202, 156)
+        Me.ExtraHealthLabel.Name = "ExtraHealthLabel"
+        Me.ExtraHealthLabel.Size = New System.Drawing.Size(195, 25)
+        Me.ExtraHealthLabel.TabIndex = 17
+        Me.ExtraHealthLabel.Text = "Increases Health"
         '
-        'NoTurretLabel
+        'BallisticModeLabel
         '
-        Me.NoTurretLabel.Location = New System.Drawing.Point(202, 139)
-        Me.NoTurretLabel.Name = "NoTurretLabel"
-        Me.NoTurretLabel.Size = New System.Drawing.Size(195, 23)
-        Me.NoTurretLabel.TabIndex = 16
-        Me.NoTurretLabel.Text = "Disable Turrets"
-        '
-        'EnvironmentModeLabel
-        '
-        Me.EnvironmentModeLabel.Location = New System.Drawing.Point(202, 90)
-        Me.EnvironmentModeLabel.Name = "EnvironmentModeLabel"
-        Me.EnvironmentModeLabel.Size = New System.Drawing.Size(195, 28)
-        Me.EnvironmentModeLabel.TabIndex = 15
-        Me.EnvironmentModeLabel.Text = "Water, Earth, Fire and Air"
+        Me.BallisticModeLabel.Location = New System.Drawing.Point(202, 103)
+        Me.BallisticModeLabel.Name = "BallisticModeLabel"
+        Me.BallisticModeLabel.Size = New System.Drawing.Size(195, 23)
+        Me.BallisticModeLabel.TabIndex = 16
+        Me.BallisticModeLabel.Text = "Tank Damage Increased"
         '
         'BlitzText
         '
@@ -769,52 +740,42 @@ Partial Class InGameOptions
         Me.BlitzText.Name = "BlitzText"
         Me.BlitzText.Size = New System.Drawing.Size(195, 30)
         Me.BlitzText.TabIndex = 14
-        Me.BlitzText.Text = "All Damage is increased"
+        Me.BlitzText.Text = "More action points"
         '
         'TeamsModeCheck
         '
         Me.TeamsModeCheck.AutoSize = True
-        Me.TeamsModeCheck.Location = New System.Drawing.Point(22, 210)
+        Me.TeamsModeCheck.Location = New System.Drawing.Point(20, 204)
         Me.TeamsModeCheck.Name = "TeamsModeCheck"
         Me.TeamsModeCheck.Size = New System.Drawing.Size(73, 21)
         Me.TeamsModeCheck.TabIndex = 11
         Me.TeamsModeCheck.Text = "Teams"
         Me.TeamsModeCheck.UseVisualStyleBackColor = True
         '
-        'AntiFortniteModeCheck
+        'ExtraHealthCheck
         '
-        Me.AntiFortniteModeCheck.AutoSize = True
-        Me.AntiFortniteModeCheck.Location = New System.Drawing.Point(22, 174)
-        Me.AntiFortniteModeCheck.Name = "AntiFortniteModeCheck"
-        Me.AntiFortniteModeCheck.Size = New System.Drawing.Size(146, 21)
-        Me.AntiFortniteModeCheck.TabIndex = 9
-        Me.AntiFortniteModeCheck.Text = "Anti-Fortnite Mode"
-        Me.AntiFortniteModeCheck.UseVisualStyleBackColor = True
+        Me.ExtraHealthCheck.AutoSize = True
+        Me.ExtraHealthCheck.Location = New System.Drawing.Point(20, 155)
+        Me.ExtraHealthCheck.Name = "ExtraHealthCheck"
+        Me.ExtraHealthCheck.Size = New System.Drawing.Size(112, 21)
+        Me.ExtraHealthCheck.TabIndex = 9
+        Me.ExtraHealthCheck.Text = "Tanky Tanks"
+        Me.ExtraHealthCheck.UseVisualStyleBackColor = True
         '
-        'GunSlingerModeCheck
+        'BallisticModeCheck
         '
-        Me.GunSlingerModeCheck.AutoSize = True
-        Me.GunSlingerModeCheck.Location = New System.Drawing.Point(22, 129)
-        Me.GunSlingerModeCheck.Name = "GunSlingerModeCheck"
-        Me.GunSlingerModeCheck.Size = New System.Drawing.Size(144, 21)
-        Me.GunSlingerModeCheck.TabIndex = 8
-        Me.GunSlingerModeCheck.Text = "Gun Slinger Mode"
-        Me.GunSlingerModeCheck.UseVisualStyleBackColor = True
-        '
-        'EnvironmentalModeCheck
-        '
-        Me.EnvironmentalModeCheck.AutoSize = True
-        Me.EnvironmentalModeCheck.Location = New System.Drawing.Point(22, 89)
-        Me.EnvironmentalModeCheck.Name = "EnvironmentalModeCheck"
-        Me.EnvironmentalModeCheck.Size = New System.Drawing.Size(159, 21)
-        Me.EnvironmentalModeCheck.TabIndex = 6
-        Me.EnvironmentalModeCheck.Text = "Environmental Mode"
-        Me.EnvironmentalModeCheck.UseVisualStyleBackColor = True
+        Me.BallisticModeCheck.AutoSize = True
+        Me.BallisticModeCheck.Location = New System.Drawing.Point(20, 102)
+        Me.BallisticModeCheck.Name = "BallisticModeCheck"
+        Me.BallisticModeCheck.Size = New System.Drawing.Size(136, 21)
+        Me.BallisticModeCheck.TabIndex = 8
+        Me.BallisticModeCheck.Text = "Ballistic Upgrade"
+        Me.BallisticModeCheck.UseVisualStyleBackColor = True
         '
         'BlizModeCheck
         '
         Me.BlizModeCheck.AutoSize = True
-        Me.BlizModeCheck.Location = New System.Drawing.Point(22, 49)
+        Me.BlizModeCheck.Location = New System.Drawing.Point(20, 48)
         Me.BlizModeCheck.Name = "BlizModeCheck"
         Me.BlizModeCheck.Size = New System.Drawing.Size(95, 21)
         Me.BlizModeCheck.TabIndex = 0
@@ -828,15 +789,6 @@ Partial Class InGameOptions
         Me.StartPromptText.Size = New System.Drawing.Size(168, 36)
         Me.StartPromptText.TabIndex = 38
         Me.StartPromptText.Text = "Complete all Player Creation"
-        '
-        'Label2
-        '
-        Me.Label2.AutoSize = True
-        Me.Label2.Location = New System.Drawing.Point(202, 243)
-        Me.Label2.Name = "Label2"
-        Me.Label2.Size = New System.Drawing.Size(148, 17)
-        Me.Label2.TabIndex = 44
-        Me.Label2.Text = "Enables Custom Maps"
         '
         'InGameOptions
         '
@@ -870,7 +822,6 @@ Partial Class InGameOptions
         CType(Me.GridBoxImage, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.SelectedBoxImage, System.ComponentModel.ISupportInitialize).EndInit()
         Me.GameStylingGroup.ResumeLayout(False)
-        CType(Me.EmptyImageBox, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.MountainImageBox, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.RoadImageBox, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.WaterImageBox, System.ComponentModel.ISupportInitialize).EndInit()
@@ -919,18 +870,16 @@ Partial Class InGameOptions
     Friend WithEvents HighLightBoxButton As Button
     Friend WithEvents HighLightImageBox As PictureBox
     Friend WithEvents GameplaySettingsGroup As GroupBox
-    Friend WithEvents AntiFortniteModeCheck As CheckBox
-    Friend WithEvents GunSlingerModeCheck As CheckBox
-    Friend WithEvents EnvironmentalModeCheck As CheckBox
+    Friend WithEvents ExtraHealthCheck As CheckBox
+    Friend WithEvents BallisticModeCheck As CheckBox
     Friend WithEvents BlizModeCheck As CheckBox
     Friend WithEvents TeamsModeCheck As CheckBox
     Friend WithEvents TeamList As ComboBox
     Friend WithEvents TeamLabel As Label
     Friend WithEvents GridInfoLabel As Label
     Friend WithEvents TeamModeLabel As Label
-    Friend WithEvents NoBuildingLabel As Label
-    Friend WithEvents NoTurretLabel As Label
-    Friend WithEvents EnvironmentModeLabel As Label
+    Friend WithEvents ExtraHealthLabel As Label
+    Friend WithEvents BallisticModeLabel As Label
     Friend WithEvents BlitzText As Label
     Friend WithEvents TeamModeText As Label
     Friend WithEvents StartPromptText As Label
@@ -946,8 +895,6 @@ Partial Class InGameOptions
     Friend WithEvents GrassImageBox As PictureBox
     Friend WithEvents RandomMapButton As Button
     Friend WithEvents MapDisplay As Label
-    Friend WithEvents EmptyBoxButton As Button
-    Friend WithEvents EmptyImageBox As PictureBox
     Friend WithEvents MapLabel As Label
     Friend WithEvents CustomMapCheckBox As CheckBox
     Friend WithEvents Label1 As Label

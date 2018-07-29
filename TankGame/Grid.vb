@@ -1,6 +1,8 @@
 ﻿Public Class GameGrid
     Public rows As Integer
     Public cols As Integer
+    Public gameWidth As Integer
+    Public gameHeight As Integer
     Public gameElementGrid As List(Of ArrayList)
     Public gridSquaresGrid As List(Of List(Of Square))
     Public environmentGrid As List(Of List(Of EnvironmentalEntity)) 'Holds all environment information
@@ -10,6 +12,8 @@
         Me.gameElementGrid = New List(Of ArrayList)
         Me.rows = rows
         Me.cols = cols
+        Me.gameHeight = Game.Size.Height
+        Me.gameWidth = Game.Size.Width - 160
         Me.squareSize = Me.getSquareSize()
         Me.fillGrid()
     End Sub
@@ -46,6 +50,7 @@
                         Throw New Exception("Unidentifiable Character")
                 End Select
                 currentEnvironmentalEntity.createElement(Me.squareSize, Game)
+                environmentalRow.Add(currentEnvironmentalEntity)
             Next
             environmentalGrid.Add(environmentalRow)
         Next
@@ -92,12 +97,11 @@
     End Sub
 
     Private Function getSquareSize()
-        Dim width = Game.Size.Width
         Dim selectedSize As Double
         If Me.cols > Me.rows Then
-            selectedSize = width / Me.cols
+            selectedSize = Me.gameWidth / Me.cols
         Else
-            selectedSize = width / Me.rows
+            selectedSize = Me.gameWidth / Me.rows
         End If
         Return selectedSize
     End Function
@@ -108,6 +112,10 @@
                 If square.changed = True Then
                     square.changed = False
                     square.pictureElement.Image = square.imageFile
+                End If
+                If square.showingLabel = True Then
+                    Game.Controls.Remove(square.label)
+                    square.label = Nothing
                 End If
             Next
         Next

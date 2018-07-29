@@ -5,7 +5,7 @@
     End Sub
 
     Public Overloads Sub createElement(squareSize As Double, form As Form)
-        Dim shift As Double = squareSize * Me.shiftPercent
+        Dim shift As Double = squareSize * shiftPercent
         Dim pictureElement = New System.Windows.Forms.PictureBox()
         form.Controls.Add(pictureElement)
         pictureElement.Image = Me.imageFile
