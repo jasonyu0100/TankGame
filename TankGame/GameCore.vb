@@ -23,7 +23,7 @@
 
         'Setup Game
         Me.setUpPlayers()
-        Me.grid.createEnvironmentalGrid(Me.entityImages, Me.gameInfo.map)
+        Me.grid.environmentGrid = Me.grid.createEnvironmentalGrid(Me.entityImages, Me.gameInfo.map)
         Me.grid.createSquareGrid(Me.squareImages)
 
         'Sets up first turn
@@ -65,8 +65,18 @@
     End Function
 
     Public Function getCurrentPlayer()
-        Dim turn = Me.turnNumber Mod Me.playerCount
-        Dim currentPlayer = Me.players(turn)
+        Dim changeVal = 0
+        Dim validPlayer = False
+        Dim currentPlayer As Player = Nothing
+        While validPlayer = False
+            Dim turn = (Me.turnNumber + changeVal) Mod Me.playerCount
+            currentPlayer = Me.players(turn)
+            If currentPlayer.playerStats.health <= 0 Then
+                changeVal += 1
+            Else
+                validPlayer = True
+            End If
+        End While
         Return currentPlayer
     End Function
 
@@ -110,14 +120,96 @@
         Return True
     End Function
 
-    Public Sub displayActionPositions(range As Integer, coordinate As Coordinate)
+    Public Sub displayActionPositions(range As Integer, coordinate As Coordinate, move As GameMoves)
         Me.grid.clearSelected()
-        Dim availablePositions As List(Of Coordinate) = Me.availablePositions(range, coordinate)
+        Dim availablePositions = New List(Of Coordinate)
+        If move = GameMoves.move Then
+            availablePositions = Me.availableMovePositions(range, coordinate)
+            Dim costs As Dictionary(Of Tuple(Of Integer, Integer), Integer) = getSquareCosts(coordinate, availablePositions)
+            displayCosts(costs)
+        Else
+            availablePositions = Me.availableStraightPositions(range, coordinate)
+        End If
         For Each current As Coordinate In availablePositions
             Dim square = Me.grid.gridSquaresGrid(current.y)(current.x)
             square.setImageFile(SquareStyleEnum.Selected)
         Next
     End Sub
+
+    Public Sub displayCosts(costs As Dictionary(Of Tuple(Of Integer, Integer), Integer))
+        For Each value In costs
+            Dim coordTuple = value.Key
+            Dim cost = value.Value
+            Dim square = Me.grid.gridSquaresGrid(coordTuple.Item1)(coordTuple.Item2)
+            square.createLabel(cost, Me.grid.squareSize, Game)
+        Next
+    End Sub
+
+    Public Function getSquareCosts(playerCoordinate As Coordinate, availablePositions As List(Of Coordinate))
+        Dim visited = New Dictionary(Of Tuple(Of Integer, Integer), Integer)
+        Dim unvisited = New Dictionary(Of Tuple(Of Integer, Integer), Integer)
+        Dim infinity = 10000
+        For Each position In availablePositions
+            Dim coord = New Tuple(Of Integer, Integer)(position.y, position.x)
+            unvisited.Add(coord, 10000)
+        Next
+        Dim currentCoord = New Tuple(Of Integer, Integer)(playerCoordinate.y, playerCoordinate.x)
+        Dim currentCost = 0
+        unvisited.Remove(currentCoord)
+        visited.Add(currentCoord, currentCost)
+
+        Dim right = New Coordinate(0, 1)
+        Dim left = New Coordinate(0, -1)
+        Dim up = New Coordinate(-1, 0)
+        Dim down = New Coordinate(1, 0)
+        Dim vectors() As Coordinate = {right, left, up, down}
+        Do While (unvisited.Count > 0)
+            For Each vector In vectors
+                Dim neighbour = New Tuple(Of Integer, Integer)(currentCoord.Item1 + vector.y, currentCoord.Item2 + vector.x)
+                If validCoord(New Coordinate(neighbour.Item1, neighbour.Item2)) And unvisited.ContainsKey(neighbour) Then
+                    Dim newCost = currentCost + getSquareCost(neighbour)
+                    If newCost < unvisited(neighbour) Then
+                        unvisited(neighbour) = newCost
+                    End If
+                End If
+            Next
+            currentCoord = getMinCoordinate(unvisited)
+            currentCost = unvisited(currentCoord)
+            visited.Add(currentCoord, currentCost)
+            unvisited.Remove(currentCoord)
+        Loop
+        Return visited
+    End Function
+
+    Public Function getMinCoordinate(unvisited As Dictionary(Of Tuple(Of Integer, Integer), Integer))
+        Dim minCost = 100000
+        Dim minCoord As Tuple(Of Integer, Integer) = Nothing
+        For Each kvp As KeyValuePair(Of Tuple(Of Integer, Integer), Integer) In unvisited
+            Dim coordinate = kvp.Key
+            Dim cost = kvp.Value
+            If cost < minCost Then
+                minCost = cost
+                minCoord = coordinate
+            End If
+        Next
+        Return minCoord
+    End Function
+
+    Private Function getSquareCost(coordinate As Tuple(Of Integer, Integer))
+        Dim cost = 0
+        Dim environmentSquare = grid.environmentGrid(coordinate.Item1)(coordinate.Item2)
+        If environmentSquare.entityType = EntityType.Grass Then
+            cost = Me.moveCosts.grassMove
+        ElseIf environmentSquare.entityType = EntityType.Water Then
+            cost = Me.moveCosts.waterMove
+        ElseIf environmentSquare.entityType = EntityType.Road Then
+            cost = Me.moveCosts.roadMove
+        ElseIf environmentSquare.entityType = EntityType.Mountain Then
+            cost = 10000
+        End If
+        Return cost
+    End Function
+
 
     Public Sub displayPossibleTurrets()
         Me.grid.clearSelected()
@@ -129,16 +221,46 @@
         Next
     End Sub
 
-    Private Function availablePositions(range As Integer, coordinate As Coordinate)
+    Private Function availableMovePositions(range As Integer, coordinate As Coordinate)
+        Dim seen = New HashSet(Of Tuple(Of Integer, Integer))
+        Dim available = New List(Of Coordinate)
+        Dim stack = New List(Of Coordinate)
+        stack.Add(coordinate)
+        seen.Add(New Tuple(Of Integer, Integer)(coordinate.y, coordinate.x))
+
+        Dim right = New Coordinate(0, 1)
+        Dim left = New Coordinate(0, -1)
+        Dim up = New Coordinate(-1, 0)
+        Dim down = New Coordinate(1, 0)
+        Dim vectors() As Coordinate = {right, left, up, down}
+        For i = 1 To range
+            Dim newStack = New List(Of Coordinate)
+            For Each currentCoordinate In stack
+                For Each vector As Coordinate In vectors
+                    Dim newCoord = New Coordinate(currentCoordinate.y + vector.y, currentCoordinate.x + vector.x)
+                    Dim tuple = New Tuple(Of Integer, Integer)(newCoord.y, newCoord.x)
+                    If Me.validCoord(newCoord) And Not seen.Contains(tuple) Then
+                        available.Add(newCoord)
+                        newStack.Add(newCoord)
+                        seen.Add(tuple)
+                    End If
+                Next
+            Next
+            stack = newStack
+        Next
+        Return available
+    End Function
+
+    Private Function availableStraightPositions(range As Integer, coordinate As Coordinate)
         Dim available = New List(Of Coordinate)
         Dim right = New Coordinate(0, 1)
         Dim left = New Coordinate(0, -1)
         Dim up = New Coordinate(-1, 0)
         Dim down = New Coordinate(1, 0)
-        availableDirectionPositions(coordinate, right, range, available)
-        availableDirectionPositions(coordinate, left, range, available)
-        availableDirectionPositions(coordinate, up, range, available)
-        availableDirectionPositions(coordinate, down, range, available)
+        Dim vectors() As Coordinate = {right, left, up, down}
+        For Each vector As Coordinate In vectors
+            availableDirectionPositions(coordinate, vector, range, available)
+        Next
         Return available
     End Function
 
@@ -150,6 +272,11 @@
             valid = Me.validCoord(newCoord)
             If valid Then
                 available.Add(newCoord)
+                Dim destinationEnvironment = Me.grid.environmentGrid(newCoord.y)(newCoord.x)
+                Dim value As Entity = Me.grid.gameElementGrid(newCoord.y)(newCoord.x)
+                If value.entityType = EntityType.Player Or value.entityType = EntityType.Turret Or destinationEnvironment.entityType = EntityType.Mountain Then
+                    valid = False
+                End If
             End If
             counter += 1
         End While
@@ -193,14 +320,32 @@
                 MsgBox("Can't move to a turrets location")
             Case EntityType.Empty
                 setSquareStyle(SquareStyleEnum.Normal, currentPlayer.gridCoordinate)
-                Me.grid.moveEntity(currentPlayer.gridCoordinate, gridCoord)
-                setSquareStyle(SquareStyleEnum.Highlight, gridCoord)
-                MsgBox("You have moved to x:" & gridCoord.x & " y:" & gridCoord.y)
-                currentPlayer.playerStats.actionPoints -= Me.moveCosts.move
-                Me.updateHud(currentPlayer)
+                Dim destinationEnvironment = Me.grid.environmentGrid(gridCoord.y)(gridCoord.x)
+                If destinationEnvironment.entityType = EntityType.Mountain Then
+                    MsgBox("Can't move tank onto a mountain")
+                Else
+                    Dim square = Me.grid.gridSquaresGrid(gridCoord.y)(gridCoord.x)
+                    If square.moveCost >= 10000 Then
+                        MsgBox("Unable to move to current square!")
+                    Else
+                        If currentPlayer.playerStats.actionPoints - square.moveCost < 0 Then
+                            MsgBox("Not enough action points")
+                        Else
+                            completeMoveMove(currentPlayer, square.moveCost, gridCoord)
+                        End If
+                    End If
+                End If
             Case Else
                 Throw New Exception("Entity type is invalid: " & selectedEntityType.ToString)
         End Select
+    End Sub
+
+    Private Sub completeMoveMove(currentPlayer As Player, cost As Integer, gridCoord As Coordinate)
+        Me.grid.moveEntity(currentPlayer.gridCoordinate, gridCoord)
+        setSquareStyle(SquareStyleEnum.Highlight, gridCoord)
+        MsgBox("You have moved to x:" & gridCoord.x & " y:" & gridCoord.y)
+        currentPlayer.playerStats.actionPoints -= cost
+        Me.updateHud(currentPlayer)
     End Sub
 
     Public Sub build(gridCoord As Coordinate)
@@ -214,15 +359,22 @@
             Case EntityType.Turret
                 MsgBox("Can't build on another turret")
             Case EntityType.Empty
-                Dim newTurret As Turret = New Turret(gridCoord, selectedEntity.actualCoordinate, currentPlayer.playerNum, currentPlayer.turretImageFile, currentPlayer.turretStats)
-                newTurret.createElement(Me.grid.squareSize, Game)
-                newTurret.pictureElement.BringToFront()
-                Me.grid.deleteGridCell(gridCoord)
-                Me.grid.gameElementGrid(gridCoord.y)(gridCoord.x) = newTurret
-                currentPlayer.turrets.Add(newTurret)
-                MsgBox("You have built at x:" & gridCoord.x & " y:" & gridCoord.y)
-                currentPlayer.playerStats.actionPoints -= Me.moveCosts.build
-                Me.updateHud(currentPlayer)
+                Dim destinationEnvironment = Me.grid.environmentGrid(gridCoord.y)(gridCoord.x)
+                If destinationEnvironment.entityType = EntityType.Water Then
+                    MsgBox("Can't build turret onto a water")
+                ElseIf destinationEnvironment.entityType = EntityType.Mountain Then
+                    MsgBox("Can't build turret onto a mountain")
+                Else
+                    Dim newTurret As Turret = New Turret(gridCoord, selectedEntity.actualCoordinate, currentPlayer.playerNum, currentPlayer.turretImageFile, currentPlayer.turretStats)
+                    newTurret.createElement(Me.grid.squareSize, Game)
+                    newTurret.pictureElement.BringToFront()
+                    Me.grid.deleteGridCell(gridCoord)
+                    Me.grid.gameElementGrid(gridCoord.y)(gridCoord.x) = newTurret
+                    currentPlayer.turrets.Add(newTurret)
+                    MsgBox("You have built at x:" & gridCoord.x & " y:" & gridCoord.y)
+                    currentPlayer.playerStats.actionPoints -= Me.moveCosts.build
+                    Me.updateHud(currentPlayer)
+                End If
             Case Else
                 Throw New Exception("Entity type is invalid: " & selectedEntityType.ToString)
         End Select
@@ -233,10 +385,10 @@
         Dim currentPlayer = Me.getCurrentPlayer()
         Dim shootRange = currentPlayer.turretStats.shootRange
         currentPlayer.currentTurret = Me.grid.gameElementGrid(gridCoord.y)(gridCoord.x)
-        Me.displayActionPositions(shootRange, gridCoord)
+        Me.displayActionPositions(shootRange, gridCoord, GameMoves.turretShoot)
         Dim square = Me.grid.gridSquaresGrid(gridCoord.y)(gridCoord.x)
         square.setImageFile(SquareStyleEnum.Highlight)
-        Game.selectedAction = Game.GameMoves.turretShoot
+        Game.selectedAction = GameMoves.turretShoot
     End Sub
 
     Public Sub turretShoot(gridCoord As Coordinate)
@@ -249,25 +401,46 @@
                 Dim otherPlayer As Player = selectedEntity
                 MsgBox("You have shot at x:" & gridCoord.x & " y:" & gridCoord.y & " which has hit player: " & otherPlayer.playerName)
                 otherPlayer.playerStats.health -= currentTurret.turretStats.attack * 5 - (otherPlayer.playerStats.armor * 0.2)
-                currentPlayer.playerStats.actionPoints -= Me.moveCosts.turret
-                Me.updateHud(currentPlayer)
+                completeTurretShoot(currentPlayer)
             Case EntityType.Turret
                 Dim otherTurret As Turret = selectedEntity
-                Dim parentPlayer = Me.players(otherTurret.playerNum)
-                MsgBox("You have shot at x:" & gridCoord.x & " y:" & gridCoord.y & " which has hit " & parentPlayer.playerName & "' turret")
+                MsgBox("You have shot at x:" & gridCoord.x & " y:" & gridCoord.y & " which has hit " & Me.players(otherTurret.playerNum).playerName & "' turret")
                 otherTurret.turretStats.health -= currentTurret.turretStats.attack * 5 - (otherTurret.turretStats.armor * 0.2)
-                currentPlayer.playerStats.actionPoints -= Me.moveCosts.turret
-                Me.updateHud(currentPlayer)
+                completeTurretShoot(currentPlayer)
             Case EntityType.Empty
                 MsgBox("You have shot at x:" & gridCoord.x & " y:" & gridCoord.y & " which is empty")
-                currentPlayer.playerStats.actionPoints -= Me.moveCosts.shoot
-                Me.updateHud(currentPlayer)
+                completeTurretShoot(currentPlayer)
             Case Else
                 Throw New Exception("Entity type is invalid: " & selectedEntity.entityType.ToString)
         End Select
         setSquareStyle(SquareStyleEnum.Highlight, currentPlayer.gridCoordinate)
         setSquareStyle(SquareStyleEnum.Normal, currentTurret.gridCoordinate)
         currentPlayer.currentTurret = Nothing
+    End Sub
+
+    Private Sub completeTurretShoot(currentPlayer As Player)
+        currentPlayer.playerStats.actionPoints -= Me.moveCosts.turretShoot
+        Me.updateHud(currentPlayer)
+    End Sub
+
+    Public Sub checkWinCondition()
+        Dim lost = 0
+        Dim currentAlivePlayer As Player = Nothing
+        For Each player In players
+            If player.playerStats.health <= 0 Then
+                Me.grid.deleteGridCell(player.gridCoordinate)
+                lost += 1
+            Else
+                currentAlivePlayer = player
+            End If
+        Next
+        If lost < playerCount - 1 Then
+
+        ElseIf lost = playerCount - 1 Then
+            MsgBox(currentAlivePlayer.playerName & " has won!!!")
+        ElseIf lost = playerCount Then
+            MsgBox("Nobody has won!")
+        End If
     End Sub
 End Class
 
@@ -286,8 +459,11 @@ End Structure
 Public Structure MoveCosts
     Public shoot As Integer
     Public move As Integer
-    Public turret As Integer
+    Public grassMove As Integer
+    Public waterMove As Integer
+    Public roadMove As Integer
     Public build As Integer
+    Public turretShoot As Integer
 End Structure
 
 Public Enum EntityType

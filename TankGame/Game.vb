@@ -29,25 +29,21 @@
                 If currentPlayerStats.actionPoints < Me.currentGame.moveCosts.shoot Then
                     MsgBox("Not enough action points")
                 Else
-                    Me.currentGame.displayActionPositions(currentPlayerStats.shootRange, currentPlayer.gridCoordinate)
+                    Me.currentGame.displayActionPositions(currentPlayerStats.shootRange, currentPlayer.gridCoordinate, move)
                     Me.selectedAction = move
                 End If
             Case GameMoves.move
-                If currentPlayerStats.actionPoints < Me.currentGame.moveCosts.move Then
-                    MsgBox("Not enough action points")
-                Else
-                    Me.currentGame.displayActionPositions(currentPlayerStats.moveRange, currentPlayer.gridCoordinate)
-                    Me.selectedAction = move
-                End If
+                Me.currentGame.displayActionPositions(currentPlayerStats.moveRange, currentPlayer.gridCoordinate, move)
+                Me.selectedAction = move
             Case GameMoves.build
                 If currentPlayerStats.actionPoints < Me.currentGame.moveCosts.build Then
                     MsgBox("Not enough action points")
                 Else
-                    Me.currentGame.displayActionPositions(currentPlayerStats.buildRange, currentPlayer.gridCoordinate)
+                    Me.currentGame.displayActionPositions(currentPlayerStats.buildRange, currentPlayer.gridCoordinate, move)
                     Me.selectedAction = move
                 End If
             Case GameMoves.turret
-                If currentPlayerStats.actionPoints < Me.currentGame.moveCosts.turret Then
+                If currentPlayerStats.actionPoints < Me.currentGame.moveCosts.turretShoot Then
                     MsgBox("Not enough action points")
                 Else
                     Me.currentGame.displayPossibleTurrets()
@@ -90,6 +86,7 @@
             Case Else
                 MsgBox("Action was not selected")
         End Select
+        Me.currentGame.checkWinCondition()
     End Sub
 
     Private Sub Game_KeyPress(sender As Object, e As KeyPressEventArgs) Handles Me.KeyPress
@@ -107,14 +104,18 @@
         End Select
     End Sub
 
-    Public Enum GameMoves
-        shoot
-        move
-        build
-        turret
-        turretShoot
-    End Enum
+    Private Sub Game_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        SetStyle(ControlStyles.SupportsTransparentBackColor, True)
+    End Sub
 End Class
+
+Public Enum GameMoves
+    shoot
+    move
+    build
+    turret
+    turretShoot
+End Enum
 
 Public Structure GameKeyMapping
     Public shoot As Char
