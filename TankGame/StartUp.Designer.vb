@@ -29,8 +29,9 @@ Partial Class StartUp
         '
         'StartGameButton
         '
-        Me.StartGameButton.Location = New System.Drawing.Point(86, 169)
-        Me.StartGameButton.Margin = New System.Windows.Forms.Padding(4)
+        Me.StartGameButton.ForeColor = System.Drawing.Color.Black
+        Me.StartGameButton.Location = New System.Drawing.Point(85, 169)
+        Me.StartGameButton.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
         Me.StartGameButton.Name = "StartGameButton"
         Me.StartGameButton.Size = New System.Drawing.Size(199, 28)
         Me.StartGameButton.TabIndex = 1
@@ -41,7 +42,8 @@ Partial Class StartUp
         '
         Me.GameLabel.AutoSize = True
         Me.GameLabel.Font = New System.Drawing.Font("Microsoft Sans Serif", 24.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.GameLabel.Location = New System.Drawing.Point(78, 80)
+        Me.GameLabel.ForeColor = System.Drawing.Color.White
+        Me.GameLabel.Location = New System.Drawing.Point(77, 80)
         Me.GameLabel.Name = "GameLabel"
         Me.GameLabel.Size = New System.Drawing.Size(227, 46)
         Me.GameLabel.TabIndex = 2
@@ -49,7 +51,9 @@ Partial Class StartUp
         '
         'SettingsButton
         '
-        Me.SettingsButton.Location = New System.Drawing.Point(86, 240)
+        Me.SettingsButton.ForeColor = System.Drawing.Color.Black
+        Me.SettingsButton.Location = New System.Drawing.Point(85, 240)
+        Me.SettingsButton.Margin = New System.Windows.Forms.Padding(3, 2, 3, 2)
         Me.SettingsButton.Name = "SettingsButton"
         Me.SettingsButton.Size = New System.Drawing.Size(199, 30)
         Me.SettingsButton.TabIndex = 3
@@ -60,11 +64,13 @@ Partial Class StartUp
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(8.0!, 16.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
+        Me.BackColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
         Me.ClientSize = New System.Drawing.Size(379, 321)
         Me.Controls.Add(Me.SettingsButton)
         Me.Controls.Add(Me.GameLabel)
         Me.Controls.Add(Me.StartGameButton)
-        Me.Margin = New System.Windows.Forms.Padding(4)
+        Me.ForeColor = System.Drawing.Color.Cornsilk
+        Me.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
         Me.Name = "StartUp"
         Me.Text = "StartUp"
         Me.ResumeLayout(False)

@@ -1,4 +1,7 @@
-﻿Public Class GameGrid
+﻿''' <summary>
+''' Stores state information of elements, grid squares, and environments
+''' </summary>
+Public Class GameGrid
     Public rows As Integer
     Public cols As Integer
     Public gameWidth As Integer
@@ -18,6 +21,9 @@
         Me.fillGrid()
     End Sub
 
+    ''' <summary>
+    ''' Fills element grid with empty
+    ''' </summary>
     Public Sub fillGrid()
         For r As Integer = 0 To Me.rows
             gameElementGrid.Add(New ArrayList)
@@ -28,6 +34,12 @@
         Next
     End Sub
 
+    ''' <summary>
+    ''' Creates environment grid based on map
+    ''' </summary>
+    ''' <param name="environmentalImages"></param>
+    ''' <param name="map"></param>
+    ''' <returns></returns>
     Public Function createEnvironmentalGrid(environmentalImages As EnvironmentalImages, map As List(Of List(Of Char)))
         Dim environmentalGrid = New List(Of List(Of EnvironmentalEntity))
         For r = 0 To map.Count - 1
@@ -57,21 +69,40 @@
         Return environmentalGrid
     End Function
 
+    ''' <summary>
+    ''' Transform grid coordinate to actual coordinate
+    ''' </summary>
+    ''' <param name="currentCoordinate"></param>
+    ''' <returns></returns>
     Private Function gridCoordToActual(currentCoordinate As Coordinate)
         Dim actualCoordinate = New Coordinate(currentCoordinate.y * Me.squareSize, currentCoordinate.x * Me.squareSize)
         Return actualCoordinate
     End Function
 
+    ''' <summary>
+    ''' Updates grid cell
+    ''' </summary>
+    ''' <param name="currentEntity"></param>
+    ''' <param name="currentCoordinate"></param>
     Public Sub updateGridCell(currentEntity As Entity, currentCoordinate As Coordinate)
         Me.gameElementGrid(currentCoordinate.y)(currentCoordinate.x) = currentEntity
     End Sub
 
+    ''' <summary>
+    ''' Deletes element and picture
+    ''' </summary>
+    ''' <param name="currentCoordinate"></param>
     Public Sub deleteGridCell(currentCoordinate As Coordinate)
         Dim pictureElement = Me.gameElementGrid(currentCoordinate.y)(currentCoordinate.x).pictureElement
         Me.gameElementGrid(currentCoordinate.y)(currentCoordinate.x) = New Empty(currentCoordinate, gridCoordToActual(currentCoordinate))
         Game.Controls.Remove(pictureElement)
     End Sub
 
+    ''' <summary>
+    ''' Moves entity from one place to another
+    ''' </summary>
+    ''' <param name="startCoordinate"></param>
+    ''' <param name="endCoordinate"></param>
     Public Sub moveEntity(startCoordinate As Coordinate, endCoordinate As Coordinate)
         deleteGridCell(endCoordinate)
         Dim value = Me.gameElementGrid(startCoordinate.y)(startCoordinate.x)
@@ -83,6 +114,10 @@
         value.gridCoordinate = endCoordinate
     End Sub
 
+    ''' <summary>
+    ''' Creates square grid which is the framework of grid displayed
+    ''' </summary>
+    ''' <param name="squareImages"></param>
     Public Sub createSquareGrid(squareImages As SquareImages)
         Me.gridSquaresGrid = New List(Of List(Of Square))
         For r = 0 To Me.rows - 1
@@ -96,6 +131,10 @@
         Next
     End Sub
 
+    ''' <summary>
+    ''' Gets square size based on game width and rows and cols
+    ''' </summary>
+    ''' <returns></returns>
     Private Function getSquareSize()
         Dim selectedSize As Double
         If Me.cols > Me.rows Then
@@ -106,6 +145,9 @@
         Return selectedSize
     End Function
 
+    ''' <summary>
+    ''' Clears selected elements in grid
+    ''' </summary>
     Public Sub clearSelected()
         For Each row In Me.gridSquaresGrid
             For Each square In row

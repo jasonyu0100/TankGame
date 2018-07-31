@@ -1,4 +1,8 @@
-﻿Public Class Entity
+﻿''' <summary>
+''' Defines an entity, that has a coordinate and picture
+''' Parent of all other classes occupying grid
+''' </summary>
+Public Class Entity
     Public Const shiftPercent = 0.03
     Public actualCoordinate As Coordinate
     Public gridCoordinate As Coordinate

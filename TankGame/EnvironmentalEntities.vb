@@ -1,4 +1,7 @@
-﻿Public Class EnvironmentalEntity
+﻿''' <summary>
+''' Represents the terrain of given square
+''' </summary>
+Public Class EnvironmentalEntity
     Inherits Entity
     Public Sub New(gridCoordinate As Coordinate, actualCoordinate As Coordinate, imageFile As Image)
         MyBase.New(gridCoordinate, actualCoordinate, imageFile)
@@ -16,6 +19,11 @@
         Me.pictureElement = pictureElement
     End Sub
 
+    ''' <summary>
+    ''' Executes action assigned to grid square in general
+    ''' </summary>
+    ''' <param name="sender"></param>
+    ''' <param name="e"></param>
     Private Sub pictureElement_Click(ByVal sender As Object, ByVal e As EventArgs)
         Dim correspondingGridSquare = Game.currentGame.grid.gridSquaresGrid(Me.gridCoordinate.y)(Me.gridCoordinate.x)
         If correspondingGridSquare.changed = True Then
@@ -53,10 +61,12 @@ End Class
 
 Public Class Mountain
     Inherits EnvironmentalEntity
+    Public health As Integer
     Public Const characterIdentifier = "m"
     Public Sub New(gridCoordinate As Coordinate, actualCoordinate As Coordinate, imageFile As Image)
         MyBase.New(gridCoordinate, actualCoordinate, imageFile)
         Me.entityType = EntityType.Mountain
+        Me.health = 100
     End Sub
 End Class
 

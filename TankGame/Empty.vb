@@ -1,4 +1,7 @@
-﻿Public Class Empty
+﻿''' <summary>
+''' Shows that a grid square is unoccupied
+''' </summary>
+Public Class Empty
     Inherits Entity
     Public Sub New(gridCoordinate As Coordinate, actualCoordinate As Coordinate)
         MyBase.New(gridCoordinate, actualCoordinate, Nothing)

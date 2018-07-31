@@ -3,8 +3,8 @@
     Public selectedAction As String
     Public gameKeyMapping As GameKeyMapping
 
-
     Public Sub loadGameCore(currentGame As GameCore)
+        ' Assigns the key mappings for actions
         Me.currentGame = currentGame
         Me.gameKeyMapping.shoot = "q"
         Me.gameKeyMapping.move = "w"
@@ -21,8 +21,12 @@
         Me.currentGame.startTurn()
     End Sub
 
+    ''' <summary>
+    ''' Handles action commanded by user to be executed
+    ''' </summary>
+    ''' <param name="move"></param>
     Public Sub handleMove(move As GameMoves)
-        Dim currentPlayer = Me.currentGame.getCurrentPlayer()
+        Dim currentPlayer As Player = Me.currentGame.getCurrentPlayer()
         Dim currentPlayerStats = currentPlayer.playerStats
         Select Case move
             Case GameMoves.shoot
@@ -33,8 +37,12 @@
                     Me.selectedAction = move
                 End If
             Case GameMoves.move
-                Me.currentGame.displayActionPositions(currentPlayerStats.moveRange, currentPlayer.gridCoordinate, move)
-                Me.selectedAction = move
+                If currentPlayer.traversals >= 2 Then
+                    MsgBox("Max traversals made!")
+                Else
+                    Me.currentGame.displayActionPositions(currentPlayerStats.moveRange, currentPlayer.gridCoordinate, move)
+                    Me.selectedAction = move
+                End If
             Case GameMoves.build
                 If currentPlayerStats.actionPoints < Me.currentGame.moveCosts.build Then
                     MsgBox("Not enough action points")
@@ -43,7 +51,9 @@
                     Me.selectedAction = move
                 End If
             Case GameMoves.turret
-                If currentPlayerStats.actionPoints < Me.currentGame.moveCosts.turretShoot Then
+                If currentPlayer.turrets.Count = 0 Then
+                    MsgBox("You have no turrets built")
+                ElseIf currentPlayerStats.actionPoints < Me.currentGame.moveCosts.turretShoot Then
                     MsgBox("Not enough action points")
                 Else
                     Me.currentGame.displayPossibleTurrets()
@@ -104,8 +114,30 @@
         End Select
     End Sub
 
+    ''' <summary>
+    ''' On load defines text of buttons with custom costs
+    ''' </summary>
+    ''' <param name="sender"></param>
+    ''' <param name="e"></param>
     Private Sub Game_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        SetStyle(ControlStyles.SupportsTransparentBackColor, True)
+        Me.ShootButton.Text = "Shoot (Q) C:" & InGameOptions.defaultShootCost
+        Me.BuildButton.Text = "Build (E) C:" & InGameOptions.defaultBuildCost
+        Me.TurretButton.Text = "Turret Shoot (R) C:" & InGameOptions.defaultTurretShootCost
+        Me.MoveButton.Text = "Move (W) "
+        Me.EndTurnButton.Text = "End Turn (T) "
+    End Sub
+
+    ''' <summary>
+    ''' Handles maximisation and minimisation to full screen
+    ''' </summary>
+    ''' <param name="sender"></param>
+    ''' <param name="e"></param>
+    Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
+        If WindowState = FormWindowState.Normal Then
+            WindowState = FormWindowState.Maximized
+        Else
+            WindowState = FormWindowState.Normal
+        End If
     End Sub
 End Class
 

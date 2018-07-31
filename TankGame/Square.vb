@@ -49,7 +49,7 @@
             label.Text = cost
         End If
         label.TextAlign = ContentAlignment.MiddleCenter
-        label.Size = New System.Drawing.Size(squareSize / 4, squareSize / 4)
+        label.Size = New System.Drawing.Size(squareSize / 3 + 10, squareSize / 5)
         label.BackColor = Color.DarkGray
         label.ForeColor = Color.Beige
         label.Location = New System.Drawing.Point(Me.actualCoordinate.x, Me.actualCoordinate.y)

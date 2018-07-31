@@ -3,6 +3,8 @@
 Public Class InGameOptions
     Public players As New List(Of Player)
     Public currentPlayerNum = 0
+
+    'Imports pictures
     Public defaultTankLocation = Application.StartupPath() & "\resources\Images\tank.jpg"
     Public defaultTurretLocation = Application.StartupPath() & "\resources\Images\turret.jpg"
     Public defaultGridBoxLocation = Application.StartupPath() & "\resources\Images\tile.jpg"
@@ -14,35 +16,39 @@ Public Class InGameOptions
     Public defaultMountainBoxLocation = Application.StartupPath() & "\resources\Images\mountain.jpg"
     Public defaultMapLocation = Application.StartupPath() & "\resources\Maps\map.txt"
 
+    Public shootSoundEffectLocation = Application.StartupPath() & "\resources\Sound\shot.wav"
+    Public moveSoundEffectLocation = Application.StartupPath() & "\resources\Sound\move.wav"
+
+    'Game information structures
     Public gameInfo As GameInformation
     Public squareImages As SquareImages
     Public entityImages As EnvironmentalImages
     Public moveCosts As MoveCosts
     Public map As List(Of List(Of Char))
     Public customMap As Boolean = False
-    'Constants
-    Public defaultShootCost = 12
-    Public defaultGrassMoveCost = 5
-    Public defaultRoadMoveCost = 2
-    Public defaultWaterMoveCost = 7
-    Public defaultBuildCost = 15
-    Public defaultTurretShootCost = 6
 
+    'Constants
+    'Costs
+    Public defaultShootCost = 10
+    Public defaultGrassMoveCost = 4
+    Public defaultRoadMoveCost = 2
+    Public defaultWaterMoveCost = 6
+    Public defaultBuildCost = 16
+    Public defaultTurretShootCost = 5
+    'Stats
     Public availableExtraStats = 8
     Public defaultStatCount = 2
-
     Public defaultAttack = 5
     Public defaultArmor = 5
     Public defaultSpeed = 5
-    Public defaultActionPoints = 20
-    Public defaultHealth = 100
-
-    Public defaultTurretHealth = 20
+    Public defaultActionPoints = 25
+    Public defaultHealth = 250
+    Public defaultTurretHealth = 50
     Public defaultTurretAttack = 3
-    Public defaultTurretRange = 3
-
-    Public defaultShootRange = 4
-    Public defaultMoveRange = 3
+    Public defaultTurretRange = 2
+    'Ranges
+    Public defaultShootRange = 3
+    Public defaultMoveRange = 2
     Public defaultBuildRange = 1
 
     Private Sub InGameOptions_Closed(sender As Object, e As EventArgs) Handles Me.Closed
@@ -116,7 +122,7 @@ Public Class InGameOptions
             Dim currentPlayer = New Player(New Coordinate(0, 0), New Coordinate(0, 0), Me.currentPlayerNum, playerImg, Me.NameInput.Text, Me.getCurrentPlayerStats(), Me.getCurrentTurretStats(), turretImg)
             Me.players.Add(currentPlayer)
             Me.currentPlayerNum += 1
-            Me.NameInput.Text = ""
+            Me.NameInput.Text = "Player " & Me.currentPlayerNum
             Me.resetStats()
             If Me.currentPlayerNum = Me.PlayerCountInput.Value Then
                 StartGameButton.Show()
@@ -189,6 +195,8 @@ Public Class InGameOptions
         Me.ArmorInput.Value = defaultStatCount
         Me.SpeedInput.Value = defaultStatCount
         Me.AvailablePointsLabel.Text = "Available Points: " & (Me.availableExtraStats - (Me.AttackInput.Value + Me.ArmorInput.Value + Me.SpeedInput.Value))
+
+        Me.NameInput.Text = "Player 0"
     End Sub
 
     Private Sub updateMapDisplay(map As List(Of List(Of Char)))
@@ -391,4 +399,5 @@ Public Class InGameOptions
             Me.AvailablePointsLabel.Text = "Available Points: " & Me.availableExtraStats - (Me.AttackInput.Value + Me.ArmorInput.Value + Me.SpeedInput.Value)
         End If
     End Sub
+
 End Class
