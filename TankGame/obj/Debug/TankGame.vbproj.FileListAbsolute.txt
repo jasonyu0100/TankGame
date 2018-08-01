@@ -54,3 +54,4 @@ C:\Users\Jason Yu\Documents\GitHub\TankGame\TankGame\obj\Debug\TankGame.pdb
 \\SR8137CF01-FS02\StudentUsers\2019\432518663\Desktop\TankGame\TankGame\obj\Debug\TankGame.exe
 \\SR8137CF01-FS02\StudentUsers\2019\432518663\Desktop\TankGame\TankGame\obj\Debug\TankGame.xml
 \\SR8137CF01-FS02\StudentUsers\2019\432518663\Desktop\TankGame\TankGame\obj\Debug\TankGame.pdb
+C:\Users\Jason Yu\Documents\GitHub\TankGame\TankGame\obj\Debug\TankGame.QuickStart.resources

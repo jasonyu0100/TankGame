@@ -3,6 +3,8 @@
     Public selectedAction As String
     Public gameKeyMapping As GameKeyMapping
 
+    Public originCoord As Coordinate = New Coordinate(50, 150)
+
     Public Sub loadGameCore(currentGame As GameCore)
         ' Assigns the key mappings for actions
         Me.currentGame = currentGame
@@ -37,7 +39,7 @@
                     Me.selectedAction = move
                 End If
             Case GameMoves.move
-                If currentPlayer.traversals >= 2 Then
+                If currentPlayer.traversals >= InGameOptions.maxTraversals Then
                     MsgBox("Max traversals made!")
                 Else
                     Me.currentGame.displayActionPositions(currentPlayerStats.moveRange, currentPlayer.gridCoordinate, move)
@@ -46,6 +48,8 @@
             Case GameMoves.build
                 If currentPlayerStats.actionPoints < Me.currentGame.moveCosts.build Then
                     MsgBox("Not enough action points")
+                ElseIf currentPlayer.turrets.Count >= InGameOptions.maxTurrets Then
+                    MsgBox("Max turrets built!")
                 Else
                     Me.currentGame.displayActionPositions(currentPlayerStats.buildRange, currentPlayer.gridCoordinate, move)
                     Me.selectedAction = move
@@ -127,18 +131,6 @@
         Me.EndTurnButton.Text = "End Turn (T) "
     End Sub
 
-    ''' <summary>
-    ''' Handles maximisation and minimisation to full screen
-    ''' </summary>
-    ''' <param name="sender"></param>
-    ''' <param name="e"></param>
-    Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
-        If WindowState = FormWindowState.Normal Then
-            WindowState = FormWindowState.Maximized
-        Else
-            WindowState = FormWindowState.Normal
-        End If
-    End Sub
 End Class
 
 Public Enum GameMoves

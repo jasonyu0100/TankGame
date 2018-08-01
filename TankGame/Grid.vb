@@ -15,8 +15,8 @@ Public Class GameGrid
         Me.gameElementGrid = New List(Of ArrayList)
         Me.rows = rows
         Me.cols = cols
-        Me.gameHeight = Game.Size.Height
-        Me.gameWidth = Game.Size.Width - 160
+        Me.gameHeight = Game.Size.Height - Game.originCoord.y
+        Me.gameWidth = Game.Size.Width - Game.originCoord.x
         Me.squareSize = Me.getSquareSize()
         Me.fillGrid()
     End Sub
@@ -28,7 +28,8 @@ Public Class GameGrid
         For r As Integer = 0 To Me.rows
             gameElementGrid.Add(New ArrayList)
             For c As Integer = 0 To Me.cols
-                Dim current = New Empty(New Coordinate(r, c), New Coordinate(r * Me.squareSize, c * Me.squareSize))
+                Dim gridCoord = New Coordinate(r, c)
+                Dim current = New Empty(gridCoord, gridCoordToActual(gridCoord))
                 gameElementGrid(r).Add(current)
             Next
         Next
@@ -74,8 +75,8 @@ Public Class GameGrid
     ''' </summary>
     ''' <param name="currentCoordinate"></param>
     ''' <returns></returns>
-    Private Function gridCoordToActual(currentCoordinate As Coordinate)
-        Dim actualCoordinate = New Coordinate(currentCoordinate.y * Me.squareSize, currentCoordinate.x * Me.squareSize)
+    Public Function gridCoordToActual(currentCoordinate As Coordinate)
+        Dim actualCoordinate = New Coordinate(Game.originCoord.y + currentCoordinate.y * Me.squareSize, Game.originCoord.x + currentCoordinate.x * Me.squareSize)
         Return actualCoordinate
     End Function
 
@@ -123,8 +124,8 @@ Public Class GameGrid
         For r = 0 To Me.rows - 1
             Me.gridSquaresGrid.Add(New List(Of Square))
             For c = 0 To Me.cols - 1
-                Dim coord = New Coordinate(r * Me.squareSize, c * Me.squareSize)
-                Dim currentSquare = New Square(New Coordinate(r, c), New Coordinate(r * Me.squareSize, c * Me.squareSize), squareImages)
+                Dim coord = New Coordinate(r, c)
+                Dim currentSquare = New Square(coord, Me.gridCoordToActual(coord), squareImages)
                 currentSquare.createElement(Me.squareSize, Game)
                 Me.gridSquaresGrid(r).Add(currentSquare)
             Next

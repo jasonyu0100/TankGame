@@ -220,13 +220,6 @@ TankGame
  <param name="sender"></param>
  <param name="e"></param>
 </member>
-<member name="M:TankGame.Game.Button1_Click(System.Object,System.EventArgs)">
- <summary>
- Handles maximisation and minimisation to full screen
- </summary>
- <param name="sender"></param>
- <param name="e"></param>
-</member>
 <member name="T:TankGame.GameGrid">
  <summary>
  Stores state information of elements, grid squares, and environments

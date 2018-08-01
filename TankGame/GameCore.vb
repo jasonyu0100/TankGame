@@ -39,7 +39,7 @@ Public Class GameCore
     Private Sub setUpPlayers()
         For playerNum = 0 To playerCount - 1
             Dim startingCoord As Coordinate = startingCoordinate(playerNum)
-            Dim actualCoord As Coordinate = New Coordinate(startingCoord.y * Me.grid.squareSize, startingCoord.x * Me.grid.squareSize)
+            Dim actualCoord As Coordinate = Me.grid.gridCoordToActual(startingCoord)
             Dim currentPlayer = Me.players(playerNum)
             currentPlayer.actualCoordinate = actualCoord
             currentPlayer.gridCoordinate = startingCoord
@@ -119,7 +119,10 @@ Public Class GameCore
     Public Sub startTurn()
         Me.grid.clearSelected()
         Dim previousPlayer As Player = Me.getCurrentPlayer()
-        previousPlayer.playerStats.actionPoints = Me.gameInfo.actionPoints
+        previousPlayer.playerStats.actionPoints += Me.gameInfo.actionPoints
+        If previousPlayer.playerStats.actionPoints > previousPlayer.playerStats.maxActionPoints Then
+            previousPlayer.playerStats.actionPoints = previousPlayer.playerStats.maxActionPoints
+        End If
         previousPlayer.traversals = 0
         setSquareStyle(SquareStyleEnum.Normal, previousPlayer.gridCoordinate)
 
@@ -417,7 +420,7 @@ Public Class GameCore
             mountain.health -= currentPlayer.playerStats.attack * 5
             If mountain.health < 0 Then
                 Game.Controls.Remove(mountain.pictureElement)
-                Dim newSquare = New Grass(mountain.gridCoordinate, mountain.actualCoordinate, InGameOptions.GrassImageBox.Image)
+                Dim newSquare = New Grass(mountain.gridCoordinate, mountain.actualCoordinate, Image.FromFile(InGameOptions.GrassImageBox.ImageLocation))
                 newSquare.createElement(Me.grid.squareSize, Game)
                 newSquare.pictureElement.BringToFront()
                 Me.grid.environmentGrid(gridCoord.y)(gridCoord.x) = newSquare

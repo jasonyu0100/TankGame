@@ -33,7 +33,7 @@ Public Class InGameOptions
     Public defaultGrassMoveCost = 4
     Public defaultRoadMoveCost = 2
     Public defaultWaterMoveCost = 6
-    Public defaultBuildCost = 16
+    Public defaultBuildCost = 15
     Public defaultTurretShootCost = 5
     'Stats
     Public availableExtraStats = 8
@@ -41,15 +41,19 @@ Public Class InGameOptions
     Public defaultAttack = 5
     Public defaultArmor = 5
     Public defaultSpeed = 5
-    Public defaultActionPoints = 25
-    Public defaultHealth = 250
+    Public defaultActionPoints = 20
+    Public defaultMaxActionPoints = 36
+    Public defaultHealth = 200
     Public defaultTurretHealth = 50
-    Public defaultTurretAttack = 3
-    Public defaultTurretRange = 2
+    Public defaultTurretAttack = 4
+    Public defaultTurretRange = 3
     'Ranges
-    Public defaultShootRange = 3
-    Public defaultMoveRange = 2
+    Public defaultShootRange = 4
+    Public defaultMoveRange = 3
     Public defaultBuildRange = 1
+    'Misc Max turrets
+    Public maxTurrets = 4
+    Public maxTraversals = 2
 
     Private Sub InGameOptions_Closed(sender As Object, e As EventArgs) Handles Me.Closed
         StartUp.Close()
@@ -109,6 +113,7 @@ Public Class InGameOptions
         If Me.BlizModeCheck.Checked Then
             For Each player In players
                 player.playerStats.actionPoints *= 1.5
+                player.playerStats.maxActionPoints *= 1.5
             Next
         End If
     End Sub
@@ -150,6 +155,7 @@ Public Class InGameOptions
         currentPlayerStats.moveRange = Me.defaultMoveRange
         currentPlayerStats.buildRange = Me.defaultBuildRange
         currentPlayerStats.actionPoints = Me.defaultActionPoints
+        currentPlayerStats.maxActionPoints = Me.defaultMaxActionPoints
         Return currentPlayerStats
     End Function
 
@@ -254,10 +260,6 @@ Public Class InGameOptions
         End If
     End Sub
 
-    Private Sub TeamsModeCheck_CheckedChanged(sender As Object, e As EventArgs) Handles TeamsModeCheck.CheckedChanged
-        TeamModeText.Visible = Not TeamModeText.Visible
-        TeamList.Visible = Not TeamList.Visible
-    End Sub
 
     Private Sub PlayerCountInput_ValueChanged(sender As Object, e As EventArgs) Handles PlayerCountInput.ValueChanged
         Me.currentPlayerNum = 0
@@ -382,15 +384,27 @@ Public Class InGameOptions
         updateMapDisplay(Me.map)
     End Sub
 
-    Private Sub AttackInput_ValueChanged(sender As Object, e As EventArgs) Handles AttackInput.ValueChanged
-
+    Private Sub ArmorInput_ValueChanged(sender As Object, e As EventArgs) Handles ArmorInput.ValueChanged
+        Dim newTotal = sender.value + SpeedInput.Value + AttackInput.Value
+        If newTotal > Me.availableExtraStats Then
+            MsgBox("Not enough stat points")
+            sender.value -= 1
+        Else
+            Me.AvailablePointsLabel.Text = "Available Points: " & Me.availableExtraStats - (Me.AttackInput.Value + Me.ArmorInput.Value + Me.SpeedInput.Value)
+        End If
     End Sub
 
     Private Sub SpeedInput_ValueChanged(sender As Object, e As EventArgs) Handles SpeedInput.ValueChanged
-
+        Dim newTotal = sender.value + AttackInput.Value + ArmorInput.Value
+        If newTotal > Me.availableExtraStats Then
+            MsgBox("Not enough stat points")
+            sender.value -= 1
+        Else
+            Me.AvailablePointsLabel.Text = "Available Points: " & Me.availableExtraStats - (Me.AttackInput.Value + Me.ArmorInput.Value + Me.SpeedInput.Value)
+        End If
     End Sub
 
-    Private Sub ArmorInput_ValueChanged(sender As Object, e As EventArgs) Handles ArmorInput.ValueChanged
+    Private Sub AttackInput_ValueChanged(sender As Object, e As EventArgs) Handles AttackInput.ValueChanged
         Dim newTotal = sender.value + SpeedInput.Value + ArmorInput.Value
         If newTotal > Me.availableExtraStats Then
             MsgBox("Not enough stat points")

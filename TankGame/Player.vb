@@ -68,4 +68,5 @@ Public Structure PlayerStats
     Public buildRange As Integer
     Public turretRange As Integer
     Public actionPoints As Integer
+    Public maxActionPoints As Integer
 End Structure
