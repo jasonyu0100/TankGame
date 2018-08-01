@@ -66,7 +66,7 @@ Public Class Mountain
     Public Sub New(gridCoordinate As Coordinate, actualCoordinate As Coordinate, imageFile As Image)
         MyBase.New(gridCoordinate, actualCoordinate, imageFile)
         Me.entityType = EntityType.Mountain
-        Me.health = 100
+        Me.health = 75
     End Sub
 End Class
 

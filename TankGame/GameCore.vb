@@ -389,7 +389,7 @@ Public Class GameCore
             Case EntityType.Player
                 Dim otherPlayer As Player = selectedEntity
                 'MsgBox("You have shot at x:" & gridCoord.x & " y:" & gridCoord.y & " which has hit player: " & otherPlayer.playerName)
-                otherPlayer.playerStats.health -= currentPlayer.playerStats.attack * 5 - (otherPlayer.playerStats.armor * 0.2)
+                otherPlayer.playerStats.health -= currentPlayer.playerStats.attack * 5 - (otherPlayer.playerStats.armor)
                 currentPlayer.playerStats.actionPoints -= Me.moveCosts.shoot
                 otherPlayer.healthLabel.Text = otherPlayer.playerStats.health
                 Me.updateHud(currentPlayer)
@@ -403,7 +403,7 @@ Public Class GameCore
             Case EntityType.Turret
                 Dim turret As Turret = selectedEntity
                 'MsgBox("You have shot at x:" & gridCoord.x & " y:" & gridCoord.y & " which has hit player " & turret.playerNum & "'s turret")
-                turret.turretStats.health -= currentPlayer.playerStats.attack * 5 - (turret.turretStats.armor * 0.2)
+                turret.turretStats.health -= currentPlayer.playerStats.attack * 5 - (turret.turretStats.armor)
                 currentPlayer.playerStats.actionPoints -= Me.moveCosts.shoot
                 turret.healthLabel.Text = turret.turretStats.health
                 Me.updateHud(currentPlayer)
@@ -528,13 +528,13 @@ Public Class GameCore
             Case EntityType.Player
                 Dim otherPlayer As Player = selectedEntity
                 'MsgBox("You have shot at x:" & gridCoord.x & " y:" & gridCoord.y & " which has hit player: " & otherPlayer.playerName)
-                otherPlayer.playerStats.health -= currentTurret.turretStats.attack * 5 - (otherPlayer.playerStats.armor * 0.2)
+                otherPlayer.playerStats.health -= currentTurret.turretStats.attack * 5 - (otherPlayer.playerStats.armor)
                 otherPlayer.healthLabel.Text = otherPlayer.playerStats.health
                 completeTurretShoot(currentPlayer)
             Case EntityType.Turret
                 Dim otherTurret As Turret = selectedEntity
                 'MsgBox("You have shot at x:" & gridCoord.x & " y:" & gridCoord.y & " which has hit " & Me.players(otherTurret.playerNum).playerName & "' turret")
-                otherTurret.turretStats.health -= currentTurret.turretStats.attack * 5 - (otherTurret.turretStats.armor * 0.2)
+                otherTurret.turretStats.health -= currentTurret.turretStats.attack * 5 - (otherTurret.turretStats.armor)
                 otherTurret.healthLabel.Text = otherTurret.turretStats.health
                 completeTurretShoot(currentPlayer)
             Case EntityType.Empty

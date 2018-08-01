@@ -36,13 +36,13 @@ Public Class InGameOptions
     Public defaultBuildCost = 15
     Public defaultTurretShootCost = 5
     'Stats
-    Public availableExtraStats = 8
-    Public defaultStatCount = 2
+    Public availableExtraStats = 5
+    Public defaultStatCount = 1
     Public defaultAttack = 5
     Public defaultArmor = 5
     Public defaultSpeed = 5
     Public defaultActionPoints = 20
-    Public defaultMaxActionPoints = 36
+    Public defaultMaxActionPoints = 40
     Public defaultHealth = 200
     Public defaultTurretHealth = 50
     Public defaultTurretAttack = 4
